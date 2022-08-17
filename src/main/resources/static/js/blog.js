@@ -45,3 +45,20 @@ function checkSignup() {
     sessionStorage.removeItem("resultDTO");
     return true;
 }
+
+
+function checkPassword() {
+    var password = document.getElementById("password");
+    var password_repeat = document.getElementById("password_repeat");
+    var pwdRegex = /^(?=.*[0-9])(?=.*[a-zA-Z]).{8,30}$/;
+    if (!pwdRegex.test(password)) {
+        alert("您的密码复杂度太低（密码中必须包含字母、数字）");
+        password.focus();
+        return false;
+    }
+    if(password.value != password_repeat.value) {
+        alert("两次输入的密码不匹配，请重新输入！")
+        password_repeat.focus();
+        return false;
+    }
+}

@@ -64,6 +64,7 @@
             overflow: hidden;
             position: relative;
             width: 100%;
+            margin: auto;
         }
 
         .container__form {
@@ -239,63 +240,82 @@
     <script th:inline="javascript">
         window.onload = function () {
             var resultDTO = [[${resultDTO}]];
+            var email = [[${email}]];
             if (resultDTO != null && sessionStorage.getItem("resultDTO") == null) {
                 sessionStorage.setItem("resultDTO", true);
-                alert(resultDTO.message);
+                if (resultDTO.getCode() == 4) {
+                    var sendEmail = confirm("邮箱未验证，注意查看你的邮件。\n或者你想要再来一封验证邮件？")
+                    if (true == sendEmail) {
+                        window.location.href("/login/signup?email=" + email);
+                    }
+                }
+                else {
+                    alert(resultDTO.message);
+                }
             }
-
+            return;
         }
     </script>
 </head>
 
 <body>
-<div class="container">
-    <!-- Sign Up -->
-    <div class="container__form container--signup">
-        <form action="/login/signup" method="post" class="form" id="form1">
-            <h2 class="form__title">Sign Up</h2>
-            <input type="text" placeholder="User" class="input" name="signup_user" />
-            <input type="email" placeholder="Email" class="input" name="email" th:value="${email}"/>
-<!--            <input type="password" placeholder="Password" class="input" name="signup_password" th:value="${signup_password}"/>-->
-            <div class="github-login">
-                <a th:href="@{http://github.com/login/oauth/authorize(client_id=${clientId}, redirect_url=${#httpServletRequest.getRequestURL()+'callback'},scope='user',state=1)}"
-                   style="text-decoration: none;color: black">
-                    <img src="/images/github-fill.png" alt="" class="github-login-icon">
-                    <span>使用GitHub账号登录</span>
-                </a>
-            </div>
-            <button class="btn" type="submit" onclick="return checkSignup()">Sign Up</button>
-        </form>
-    </div>
+<div style="width: -webkit-fill-available;">
+    <div class="container">
+        <!-- Sign Up -->
+        <div class="container__form container--signup">
+            <form action="/login/signup" method="post" class="form" id="form1">
+                <h2 class="form__title">Sign Up</h2>
+                <input type="text" placeholder="User" class="input" name="signup_user"/>
+                <input type="email" placeholder="Email" class="input" name="email" th:value="${email}"/>
+                <!--            <input type="password" placeholder="Password" class="input" name="signup_password" th:value="${signup_password}"/>-->
+                <div class="github-login">
+                    <a th:href="@{http://github.com/login/oauth/authorize(client_id=${clientId}, redirect_url=${#httpServletRequest.getRequestURL()+'callback'},scope='user',state=1)}"
+                       style="text-decoration: none;color: black">
+                        <img src="/images/github-fill.png" alt="" class="github-login-icon">
+                        <span>使用GitHub账号登录</span>
+                    </a>
+                </div>
+                <button class="btn" type="submit" onclick="return checkSignup()">Sign Up</button>
+            </form>
+        </div>
 
-    <!-- Sign In -->
-    <div class="container__form container--signin">
-        <form action="/login/signin" method="post" class="form" id="form2">
-            <h2 class="form__title">Sign In</h2>
-            <input type="email" placeholder="Email" class="input" id="signin_email" name="email" th:value="${email}"/>
-            <input type="password" placeholder="Password" class="input" id="signin_password" name="signin_password" th:value="${signin_password}"/>
-            <div class="github-login">
-                <a th:href="@{http://github.com/login/oauth/authorize(client_id=${clientId}, redirect_url=${#httpServletRequest.getRequestURL()+'callback'},scope='user',state=1)}"
-                   style="text-decoration: none;color: black">
-                    <img src="/images/github-fill.png" alt="" class="github-login-icon">
-                    <span>使用GitHub账号登录</span>
-                </a>
-            </div>
-            <a href="#" class="link">Forgot your password?</a>
-            <button class="btn" type="submit" onclick="return checkSignin()">Sign In</button>
-        </form>
-    </div>
+        <!-- Sign In -->
+        <div class="container__form container--signin">
+            <form action="/login/signin" method="post" class="form" id="form2">
+                <h2 class="form__title">Sign In</h2>
+                <input type="email" placeholder="Email" class="input" id="signin_email" name="email"
+                       th:value="${email}"/>
+                <input type="password" placeholder="Password" class="input" id="signin_password" name="signin_password"
+                       th:value="${signin_password}"/>
+                <div class="github-login">
+                    <a th:href="@{http://github.com/login/oauth/authorize(client_id=${clientId}, redirect_url=${#httpServletRequest.getRequestURL()+'callback'},scope='user',state=1)}"
+                       style="text-decoration: none;color: black">
+                        <img src="/images/github-fill.png" alt="" class="github-login-icon">
+                        <span>使用GitHub账号登录</span>
+                    </a>
+                </div>
+                <a href="#" class="link">Forgot your password?</a>
+                <button class="btn" type="submit" onclick="return checkSignin()">Sign In</button>
+            </form>
+        </div>
 
-    <!-- Overlay -->
-    <div class="container__overlay">
-        <div class="overlay">
-            <div class="overlay__panel overlay--left">
-                <button class="btn" id="signIn">Sign In</button>
-            </div>
-            <div class="overlay__panel overlay--right">
-                <button class="btn" id="signUp">Sign Up</button>
+        <!-- Overlay -->
+        <div class="container__overlay">
+            <div class="overlay">
+                <div class="overlay__panel overlay--left">
+                    <button class="btn" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay__panel overlay--right">
+                    <button class="btn" id="signUp">Sign Up</button>
+                </div>
             </div>
         </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 13px">
+        <a href="/" style="color: black; text-decoration: none">
+            <button>&lt; 返回主页 &gt;</button>
+        </a>
     </div>
 </div>
 

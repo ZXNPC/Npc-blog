@@ -26,7 +26,7 @@ import java.util.UUID;
 public class LoginController {
     @Value("${github.client.id}")
     private String clientId;
-    @Value("${signup.user.waiting.expiration}")
+    @Value("${signup.user.expiration}")
     private Long expiration;
     @Autowired
     private UserService userService;
@@ -61,53 +61,44 @@ public class LoginController {
             model.addAttribute("resultDTO", resultDTO);
             model.addAttribute("email", email);
             model.addAttribute("signin_password", password);
-            return "/login";
+            return "redirect:/login";
         }
         return null;
     }
 
     @PostMapping("/login/signup")
-    public String signup(@RequestParam(value = "signup_user") String userName,
+    public String signup(@RequestParam(value = "signup_user", required = false) String userName,
                          @RequestParam(value = "email") String email,
                          Model model,
                          HttpServletRequest request) {
-        Object info = userService.checkEmail(email);
-        if (info != null) {
-            // 邮箱已存在，请直接登录
+        String token = UUID.randomUUID().toString();
+        Object info = userService.saveEmail(userName, email, token);
+        if (info.getClass().equals(ResultDTO.class)) {
+            // 邮箱已存在
             ResultDTO resultDTO = (ResultDTO) info;
             model.addAttribute("resultDTO", resultDTO);
-            return "/login";
+            return "redirect:/login";
+        } else {
+            // 邮箱不存在
+            String url = String.join("/", Arrays.copyOfRange(request.getRequestURL().toString().split("/"), 0, 3))
+                    + "/verify?token=" + token;
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("2946310156@qq.com");
+            message.setTo(email);
+            message.setSubject("NPC Blog 邮箱验证");
+            message.setText("此邮件为系统自动生成，请勿直接回复。\n请点击以下链接验证你的邮箱地址：\n" + url + "\n该链接将于"
+                    + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(System.currentTimeMillis() + 604800000) + "过期。\n" +
+                    "你的个人登录token为：" + token);
+            try {
+                mailSender.send(message);
+            } catch (MailException e) {
+                e.printStackTrace();
+                return null;
+            }
+            model.addAttribute("resultDTO", ResultDTO.okOf(email));
+            return "redirect:/login";
         }
-
-        String token = UUID.randomUUID().toString();
-        UserWaiting userWaiting = new UserWaiting();
-        userWaiting.setName(userName);
-        userWaiting.setEmail(email);
-        userWaiting.setExpirationTime(System.currentTimeMillis() + expiration);
-        UserWaitingMap.add(token, userWaiting);
-
-        String url = String.join("/", Arrays.copyOfRange(request.getRequestURL().toString().split("/"), 0, 3))
-                + "/tokenLogin/" + token;
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("2946310156@qq.com");
-        message.setTo(email);
-        message.setSubject("NPC Blog 邮箱验证");
-        message.setText("此邮件为系统自动生成，请勿直接回复。\n请点击以下链接验证你的邮箱地址：\n" + url + "\n该链接将于"
-                + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(userWaiting.getExpirationTime()) + "过期。\n" +
-                "你的个人登录token为：" + token);
-        try {
-            mailSender.send(message);
-        } catch (MailException e) {
-            e.printStackTrace();
-            return null;
-        }
-        model.addAttribute("resultDTO", ResultDTO.okOf(email));
-        return "/login";
     }
 
-    @GetMapping("/tokenLogin/{token}")
-    public String tokenLogin(@PathVariable(value = "token") String token) {
-        UserWaiting userWaiting = UserWaitingMap.get(token);
-        User user = userService.saveOrUpdate(token, userWaiting);
-    }
+
 }

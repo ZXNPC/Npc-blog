@@ -1,13 +1,10 @@
 package com.example.blognpc.exception;
 
-import com.example.blognpc.exception.ICustomizeErrorCode;
-import lombok.Data;
-
-public class CustomizeErrorException extends RuntimeException {
+public class CustomizeException extends RuntimeException {
     private Integer code;
     private String message;
 
-    public CustomizeErrorException(ICustomizeErrorCode errorCode) {
+    public CustomizeException(ICustomizeErrorCode errorCode) {
         this.code = errorCode.getCode();
         this.message = errorCode.getMessage();
     }

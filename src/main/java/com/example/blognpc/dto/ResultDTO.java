@@ -1,6 +1,8 @@
 package com.example.blognpc.dto;
 
+import com.example.blognpc.exception.CustomizeException;
 import com.example.blognpc.exception.ICustomizeErrorCode;
+import com.example.blognpc.exception.LoginException;
 import lombok.Data;
 
 @Data
@@ -34,5 +36,13 @@ public class ResultDTO<T> {
         resultDTO.setCode(200);
         resultDTO.setMessage("验证邮件已发送至 " + email + " ，请注意查收");
         return resultDTO;
+    }
+
+    public static ResultDTO errorOf(CustomizeException e) {
+        return errorOf(e.getCode(), e.getMessage());
+    }
+
+    public static ResultDTO errorOf(LoginException e) {
+        return errorOf(e.getCode(), e.getMessage());
     }
 }

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Verify</title>
+    <script src="/js/blog.js" type="application/javascript"></script>
+    <style>
+        :root {
+            /* COLORS */
+            --white: #e9e9e9;
+            --gray: #333;
+            --blue: #0367a6;
+            --lightblue: #008997;
+
+            /* RADII */
+            --button-radius: 0.7rem;
+
+            /* SIZES */
+            --max-width: 758px;
+            --max-height: 420px;
+
+            font-size: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+            Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        }
+
+        body {
+            align-items: center;
+            background-color: var(--white);
+            /*background: url(/images/ocean.jpg);*/
+            /* 决定背景图像的位置是在视口内固定，或者随着包含它的区块滚动。 */
+            /* https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-attachment */
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: grid;
+            height: 100vh;
+            place-items: center;
+        }
+
+        .container {
+            background-color: var(--white);
+            border-radius: var(--button-radius);
+            box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25),
+            0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);
+            height: var(--max-height);
+            max-width: var(--max-width);
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            margin: auto;
+        }
+
+        .btn {
+            background-color: var(--blue);
+            background-image: linear-gradient(90deg, var(--blue) 0%, var(--lightblue) 74%);
+            border-radius: 20px;
+            border: 1px solid var(--blue);
+            color: var(--white);
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: bold;
+            letter-spacing: 0.1rem;
+            padding: 0.9rem 4rem;
+            text-transform: uppercase;
+            transition: transform 80ms ease-in;
+        }
+
+        .form > .btn {
+            margin-top: 0rem;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn:focus {
+            outline: none;
+        }
+
+        .form {
+            background-color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 3rem;
+            height: 100%;
+            text-align: center;
+        }
+
+        .input {
+            background-color: #fff;
+            border: none;
+            padding: 0.9rem 0.9rem;
+            margin: 0.5rem 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="datetime">
+        <script type="application/javascript">
+            var userName = [[${userName}]];
+            document.write(userName + ", ");
+            now = new Date(),hour = now.getHours();
+            if(hour < 6){document.write("凌晨好！");}
+            else if (hour < 9){document.write("早上好！");}
+            else if (hour < 12){document.write("上午好！");}
+            else if (hour < 14){document.write("中午好！");}
+            else if (hour < 17){document.write("下午好！");}
+            else if (hour < 19){document.write("傍晚好！");}
+            else if (hour < 22){document.write("晚上好！");}
+            else {document.write("夜里好！");}
+        </script>
+    </div>
+    <div>你的邮箱已确认，请设置登录密码。</div>
+    <form th:action="@{/verify(token=${token})}" method="post" class="form">
+        <input type="password" placeholder="Password" class="input" id="password" name="password">
+        <input type="password" placeholder="Again plz" class="input" id="password_repeat">
+        <button class="btn" type="submit" onclick="return checkPassword()">Verify</button>
+    </form>
+
+</div>
+
+</body>
+</html>

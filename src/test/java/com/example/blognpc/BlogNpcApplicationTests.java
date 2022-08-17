@@ -72,4 +72,9 @@ class BlogNpcApplicationTests {
         long currentTimeMillis = System.currentTimeMillis();
         System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(currentTimeMillis));
     }
+
+    @Test
+    public void avatarTest() {
+
+    }
 }

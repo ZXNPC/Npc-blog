@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author NPC
- * @since 2022-08-13
+ * @since 2022-08-17
  */
 @ApiModel(value = "User对象", description = "")
 public class User implements Serializable {
@@ -30,15 +30,17 @@ public class User implements Serializable {
 
     private String password;
 
-    private Long gmtCreate;
-
-    private Long gmtModified;
-
     private String bio;
 
     private String avatarUrl;
 
     private String token;
+
+    private Long gmtCreate;
+
+    private Long gmtModified;
+
+    private Boolean complete;
 
     public Long getId() {
         return id;
@@ -75,20 +77,6 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    public Long getGmtCreate() {
-        return gmtCreate;
-    }
-
-    public void setGmtCreate(Long gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-    public Long getGmtModified() {
-        return gmtModified;
-    }
-
-    public void setGmtModified(Long gmtModified) {
-        this.gmtModified = gmtModified;
-    }
     public String getBio() {
         return bio;
     }
@@ -110,6 +98,27 @@ public class User implements Serializable {
     public void setToken(String token) {
         this.token = token;
     }
+    public Long getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Long gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+    public Long getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(Long gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+    public Boolean getComplete() {
+        return complete;
+    }
+
+    public void setComplete(Boolean complete) {
+        this.complete = complete;
+    }
 
     @Override
     public String toString() {
@@ -119,11 +128,12 @@ public class User implements Serializable {
             ", name=" + name +
             ", email=" + email +
             ", password=" + password +
-            ", gmtCreate=" + gmtCreate +
-            ", gmtModified=" + gmtModified +
             ", bio=" + bio +
             ", avatarUrl=" + avatarUrl +
             ", token=" + token +
+            ", gmtCreate=" + gmtCreate +
+            ", gmtModified=" + gmtModified +
+            ", complete=" + complete +
         "}";
     }
 }
