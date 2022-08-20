@@ -27,17 +27,17 @@ function checkSignup() {
     var email = document.getElementById("signup_email");
     var email_test = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
 
-    if ("" == user) {
+    if ("" == user.value) {
         alert("用户名为空");
         user.focus();
         return false;
     }
-    if ("" == email) {
+    if ("" == email.value) {
         alert("邮箱为空");
         email.focus();
         return false;
     }
-    else if (email_test.test(email)) {
+    else if (email_test.test(email.value) == false) {
         alert("邮箱格式错误");
         email.focus();
         return false;
@@ -51,8 +51,8 @@ function checkPassword() {
     var password = document.getElementById("password");
     var password_repeat = document.getElementById("password_repeat");
     var pwdRegex = /^(?=.*[0-9])(?=.*[a-zA-Z]).{8,30}$/;
-    if (!pwdRegex.test(password)) {
-        alert("您的密码复杂度太低（密码中必须包含字母、数字）");
+    if (pwdRegex.test(password.value) == false) {
+        alert("您的密码复杂度太低（密码中必须包含字母、数字），且字数在8-30字");
         password.focus();
         return false;
     }

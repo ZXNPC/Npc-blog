@@ -68,7 +68,7 @@
         }
 
         .form > .btn {
-            margin-top: 0rem;
+            margin-top: 1rem;
         }
 
         .btn:active {
@@ -98,32 +98,73 @@
             width: 100%;
         }
     </style>
+    <script th:inline="javascript">
+        window.onload = function () {
+            var resultDTO = [[${resultDTO}]];
+            var email = [[${email}]];
+            if (resultDTO != null && resultDTO.code != null && sessionStorage.getItem("resultDTO") == null) {
+                sessionStorage.setItem("resultDTO", true);
+                if (resultDTO.code == 5 || resultDTO.code == 6) {
+                    var sendEmail = confirm(resultDTO.message + "\n或者你想要再来一封验证邮件？");
+                    if (true == sendEmail) {
+                        const form = document.createElement("form");
+                        form.method = "post";
+                        form.action = "/login/signup?email=" + email;
+                        document.body.appendChild(form);
+                        form.submit();
+                    }
+                } else {
+                    alert(resultDTO.message);
+                }
+                window.location.href = "/login?signin_email=" + email;
+            }
+            return;
+        }
+    </script>
 </head>
 <body>
 
-<div class="container">
-    <div id="datetime">
-        <script type="application/javascript">
-            var userName = [[${userName}]];
-            document.write(userName + ", ");
-            now = new Date(),hour = now.getHours();
-            if(hour < 6){document.write("凌晨好！");}
-            else if (hour < 9){document.write("早上好！");}
-            else if (hour < 12){document.write("上午好！");}
-            else if (hour < 14){document.write("中午好！");}
-            else if (hour < 17){document.write("下午好！");}
-            else if (hour < 19){document.write("傍晚好！");}
-            else if (hour < 22){document.write("晚上好！");}
-            else {document.write("夜里好！");}
-        </script>
+<div style="width: -webkit-fill-available;">
+    <div class="container">
+        <form th:action="@{/verify(token=${token})}" method="post" class="form">
+            <div>
+                <span th:text="${userName} + '，'"></span>
+                <span id="datetime">
+                <script type="application/javascript">
+                    now = new Date(), hour = now.getHours();
+                    if (hour < 6) {
+                        document.write("凌晨好！");
+                    } else if (hour < 9) {
+                        document.write("早上好！");
+                    } else if (hour < 12) {
+                        document.write("上午好！");
+                    } else if (hour < 14) {
+                        document.write("中午好！");
+                    } else if (hour < 17) {
+                        document.write("下午好！");
+                    } else if (hour < 19) {
+                        document.write("傍晚好！");
+                    } else if (hour < 22) {
+                        document.write("晚上好！");
+                    } else {
+                        document.write("夜里好！");
+                    }
+                </script>
+            </span>
+                <br>
+                <h4>你的邮箱已确认，请设置登录密码。</h4>
+            </div>
+            <input type="password" placeholder="Password" class="input" id="password" name="password">
+            <input type="password" placeholder="Again plz" class="input" id="password_repeat">
+            <button class="btn" type="submit" onclick="return checkPassword()">Verify</button>
+        </form>
     </div>
-    <div>你的邮箱已确认，请设置登录密码。</div>
-    <form th:action="@{/verify(token=${token})}" method="post" class="form">
-        <input type="password" placeholder="Password" class="input" id="password" name="password">
-        <input type="password" placeholder="Again plz" class="input" id="password_repeat">
-        <button class="btn" type="submit" onclick="return checkPassword()">Verify</button>
-    </form>
 
+    <div style="text-align: center; margin-top: 13px">
+        <a href="/" style="color: black; text-decoration: none">
+            <button>&lt; 返回主页 &gt;</button>
+        </a>
+    </div>
 </div>
 
 </body>

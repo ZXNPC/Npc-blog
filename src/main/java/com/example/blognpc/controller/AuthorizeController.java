@@ -1,7 +1,8 @@
 package com.example.blognpc.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.blognpc.dto.AccessTokenDTO;
+import com.example.blognpc.dto.ResultDTO;
+import com.example.blognpc.enums.LoginErrorCode;
 import com.example.blognpc.model.GithubUser;
 import com.example.blognpc.model.User;
 import com.example.blognpc.provider.GithubProvider;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -33,8 +35,9 @@ public class AuthorizeController {
     @GetMapping("/callback")
     public String callback(@RequestParam("code") String code,
                            @RequestParam("state") String state,
-                           HttpServletResponse response
-                           ) {
+                           HttpServletResponse response,
+                           RedirectAttributes redirectAttributes
+    ) {
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setClientId(clientId);
         accessTokenDTO.setCode(code);
@@ -42,15 +45,21 @@ public class AuthorizeController {
         accessTokenDTO.setRedirectUri(redirectUri);
         accessTokenDTO.setState(state);
         String accessToken = GithubProvider.getAccessToken(accessTokenDTO);
+        if (accessToken == null) {
+            log.error("Getting accesstoken failed.");
+            redirectAttributes.addFlashAttribute("resultDTO", ResultDTO.errorOf(LoginErrorCode.GITHUB_OAUTH_ERROR));
+            return "redirect:/login";
+        }
         GithubUser githubUser = GithubProvider.getUser(accessToken);
         if (githubUser != null && githubUser.getId() != null) {
             User user = userService.saveOrUpdate(githubUser);
             response.addCookie(new Cookie("token", user.getToken()));
-        }
-        else {
+            return "redirect:/";
+        } else {
             log.error("callback get github error, {}", githubUser);
+            redirectAttributes.addFlashAttribute("resultDTO", ResultDTO.errorOf(LoginErrorCode.GITHUB_OAUTH_ERROR));
+            return "redirect:/login";
         }
-        return "redirect:/";
     }
 
     @GetMapping("/logout")

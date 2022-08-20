@@ -241,15 +241,24 @@
         window.onload = function () {
             var resultDTO = [[${resultDTO}]];
             var email = [[${email}]];
-            if (resultDTO != null && sessionStorage.getItem("resultDTO") == null) {
+            var fromSignup = [[${from_signup}]];
+            console.log(fromSignup);
+            if ("true" == fromSignup) {
+                const container = document.querySelector(".container");
+                container.classList.add("right-panel-active");
+            }
+            if (resultDTO != null && resultDTO.code != null && sessionStorage.getItem("resultDTO") == null) {
                 sessionStorage.setItem("resultDTO", true);
-                if (resultDTO.getCode() == 4) {
-                    var sendEmail = confirm("邮箱未验证，注意查看你的邮件。\n或者你想要再来一封验证邮件？")
+                if (resultDTO.code == 4) {
+                    var sendEmail = confirm("邮箱未验证，注意查看你的邮件。\n或者你想要再来一封验证邮件？");
                     if (true == sendEmail) {
-                        window.location.href("/login/signup?email=" + email);
+                        const form = document.createElement("form");
+                        form.method = "post";
+                        form.action = "/login/signup?email=" + email;
+                        document.body.appendChild(form);
+                        form.submit();
                     }
-                }
-                else {
+                } else {
                     alert(resultDTO.message);
                 }
             }
@@ -265,8 +274,9 @@
         <div class="container__form container--signup">
             <form action="/login/signup" method="post" class="form" id="form1">
                 <h2 class="form__title">Sign Up</h2>
-                <input type="text" placeholder="User" class="input" name="signup_user"/>
-                <input type="email" placeholder="Email" class="input" name="email" th:value="${email}"/>
+                <input type="text" placeholder="User" class="input" id="signup_user" name="signup_user"/>
+                <input type="email" placeholder="Email" class="input" name="email" id="signup_email"
+                       th:value="${email}"/>
                 <!--            <input type="password" placeholder="Password" class="input" name="signup_password" th:value="${signup_password}"/>-->
                 <div class="github-login">
                     <a th:href="@{http://github.com/login/oauth/authorize(client_id=${clientId}, redirect_url=${#httpServletRequest.getRequestURL()+'callback'},scope='user',state=1)}"

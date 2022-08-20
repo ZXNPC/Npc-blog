@@ -74,7 +74,8 @@ class BlogNpcApplicationTests {
     }
 
     @Test
-    public void avatarTest() {
-
+    public void booleanTest() {
+        Boolean t = true;
+        System.out.printf(t.toString());
     }
 }
