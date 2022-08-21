@@ -243,13 +243,13 @@
             var email = [[${email}]];
             var fromSignup = [[${from_signup}]];
             console.log(fromSignup);
-            if ("true" == fromSignup) {
+            if ("false" == fromSignup) {
                 const container = document.querySelector(".container");
                 container.classList.add("right-panel-active");
             }
             if (resultDTO != null && resultDTO.code != null && sessionStorage.getItem("resultDTO") == null) {
                 sessionStorage.setItem("resultDTO", true);
-                if (resultDTO.code == 4) {
+                if (resultDTO.code == 104 || resultDTO.code == 205) {
                     var sendEmail = confirm("邮箱未验证，注意查看你的邮件。\n或者你想要再来一封验证邮件？");
                     if (true == sendEmail) {
                         const form = document.createElement("form");

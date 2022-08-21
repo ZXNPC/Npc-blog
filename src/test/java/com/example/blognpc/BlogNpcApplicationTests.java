@@ -1,5 +1,8 @@
 package com.example.blognpc;
 
+import com.example.blognpc.mapper.QuestionMapper;
+import com.example.blognpc.model.Question;
+import com.example.blognpc.service.QuestionService;
 import org.apache.tomcat.util.security.MD5Encoder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,8 @@ import java.util.Map;
 class BlogNpcApplicationTests {
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private QuestionService questionService;
     @Test
     public void emailTest() {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -77,5 +82,17 @@ class BlogNpcApplicationTests {
     public void booleanTest() {
         Boolean t = true;
         System.out.printf(t.toString());
+    }
+
+    @Test
+    public void selectByIdNullTest() {
+        Question question = new Question();
+        question.setId(2L);
+        question.setTitle("title");
+        question.setDescription("description");
+        question.setTag("tag");
+        question.setCreator(4L);
+        questionService.createOrUpdate(question);
+        System.out.printf(question.toString());
     }
 }

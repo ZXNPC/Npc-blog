@@ -1,7 +1,6 @@
 package com.example.blognpc.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.blognpc.dto.ResultDTO;
 import com.example.blognpc.enums.AccountIdEnum;
 import com.example.blognpc.enums.LoginErrorCode;
 import com.example.blognpc.exception.LoginException;
@@ -54,21 +53,22 @@ public class UserService {
             user.setGmtModified(System.currentTimeMillis());
             user.setComplete(true);
             userMapper.updateById(user);
+            log.info("User verified via github: ", user);
         }
         return user;
     }
 
-    public Object passwordLogin(String email, String originalPassword) {
+    public User passwordSignin(String email, String originalPassword) {
         String password = DigestUtils.md5DigestAsHex(DigestUtils.md5DigestAsHex(originalPassword.getBytes(StandardCharsets.UTF_8)).getBytes(StandardCharsets.UTF_8));
         List<User> users = userMapper.selectList(new QueryWrapper<User>().eq("email", email));
         User userdb = users.size() == 0 ? null : users.get(0);
         if (userdb == null) {
             // 用户不存在，抛出一些异常信息
-            return ResultDTO.errorOf(LoginErrorCode.EMAIL_NOT_FOUND);
+            throw new LoginException(LoginErrorCode.EMAIL_NOT_FOUND);
         } else {
             if (userdb.getComplete() == false) {
                 // 用户信息不完整（未验证邮箱和设置密码），返回错误信息
-                return ResultDTO.errorOf(LoginErrorCode.EMAIL_UNVERIFIED);
+                throw new LoginException(LoginErrorCode.EMAIL_UNVERIFIED_SIGNIN);
             }
 
             // 用户存在，检验密码是否正确
@@ -77,30 +77,26 @@ public class UserService {
                 return userdb;
             } else {
                 // 密码错误，返回出错
-                return ResultDTO.errorOf(LoginErrorCode.PASSWORD_NOT_CORRECT);
+                throw new LoginException(LoginErrorCode.PASSWORD_NOT_CORRECT);
             }
         }
     }
 
-    public Object saveByEmail(String userName, String email, String token) {
-        List<User> users = userMapper.selectList(new QueryWrapper<User>().eq("email", email));
+    public User saveByEmail(User user) {
+        List<User> users = userMapper.selectList(new QueryWrapper<User>().eq("email", user.getEmail()));
         User userdb = users.size() == 0 ? null : users.get(0);
         if (userdb == null) {
-            User user = new User();
             user.setAccountId(AccountIdEnum.DEFAULT_ACCOUNT_ID.getCode());
-            user.setName(userName);
-            user.setEmail(email);
-            user.setPassword("");
+            user.setPassword(UUID.randomUUID().toString());
             user.setBio(null);
             user.setAvatarUrl("https://avatars.dicebear.com/api/identicon/" + user.getName() + ".svg");
-            user.setToken(token);
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             user.setComplete(false);
             userMapper.insert(user);
             return user;
         } else {
-            if (userName == null) {
+            if (user.getName() == null) {
                 // 用户名为空，说明直接来自于 js post
                 userdb.setGmtModified(System.currentTimeMillis());
                 userMapper.updateById(userdb);
@@ -108,9 +104,10 @@ public class UserService {
             }
             if (userdb.getComplete() == false) {
                 // 邮箱未验证
-                return ResultDTO.errorOf(LoginErrorCode.EMAIL_UNVERIFIED);
+                throw new LoginException(LoginErrorCode.EMAIL_UNVERIFIED_SIGNUP);
             } else {
-                return ResultDTO.errorOf(LoginErrorCode.EMAIL_FOUND);
+                // 邮箱已注册
+                throw new LoginException(LoginErrorCode.EMAIL_FOUND);
             }
         }
     }
@@ -133,27 +130,27 @@ public class UserService {
         }
     }
 
-    public Object verifyExpiration(String token, Long expirationTime) {
+    public User verifyExpiration(String token, String email, Long expirationTime) {
         List<User> users = userMapper.selectList(new QueryWrapper<User>().eq("token", token));
         User user = users.size() == 0 ? null : users.get(0);
         if (user == null) {
             // 用户未找到或者信息已经被清除
-            return ResultDTO.errorOf(LoginErrorCode.TOKEN_NOT_FOUND);
+            throw new LoginException(LoginErrorCode.TOKEN_NOT_FOUND);
         } else {
             if (user.getComplete() == true) {
                 // 用户信息已完整，说明已验证用户重新点击链接进行验证
                 // TODO:也许我可以在用户多次点击链接的情况下做一个小彩蛋
-                return ResultDTO.errorOf(LoginErrorCode.EMAIL_ALREADY_VERIFIED);
+                throw new LoginException(LoginErrorCode.EMAIL_ALREADY_VERIFIED);
             }
             // 用户找到了，注意已验证的用户再次点击链接验证
-            if (user.getGmtModified() + expiration != expirationTime) {
+            if (user.getGmtModified() + expiration != expirationTime || !email.equals(user.getEmail())) {
                 // 过期时间不匹配，说明链接遭到篡改
-                return ResultDTO.errorOf(LoginErrorCode.EXPIRATION_UNCORRECT);
+                throw new LoginException(LoginErrorCode.LINK_NOT_CORRECT);
             } else {
                 // 过期时间匹配
                 if (System.currentTimeMillis() >= expirationTime) {
                     // 链接已经过期（但是还没到定时刷新数据库删除的时候）
-                    return ResultDTO.errorOf(LoginErrorCode.TOKEN_REACH_EXPIRATION);
+                    throw new LoginException(LoginErrorCode.TOKEN_REACH_EXPIRATION);
                 } else {
                     // 链接未过期
                     return user;

@@ -104,7 +104,7 @@
             var email = [[${email}]];
             if (resultDTO != null && resultDTO.code != null && sessionStorage.getItem("resultDTO") == null) {
                 sessionStorage.setItem("resultDTO", true);
-                if (resultDTO.code == 5 || resultDTO.code == 6) {
+                if (resultDTO.code == 206 || resultDTO.code == 207) {
                     var sendEmail = confirm(resultDTO.message + "\n或者你想要再来一封验证邮件？");
                     if (true == sendEmail) {
                         const form = document.createElement("form");
@@ -155,7 +155,7 @@
                 <h4>你的邮箱已确认，请设置登录密码。</h4>
             </div>
             <input type="password" placeholder="Password" class="input" id="password" name="password">
-            <input type="password" placeholder="Again plz" class="input" id="password_repeat">
+            <input type="password" placeholder="Again plz" class="input" id="password_repeat" name="password_repeat">
             <button class="btn" type="submit" onclick="return checkPassword()">Verify</button>
         </form>
     </div>

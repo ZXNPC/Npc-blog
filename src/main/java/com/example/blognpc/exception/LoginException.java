@@ -17,4 +17,20 @@ public class LoginException extends RuntimeException{
     public Integer getCode() {
         return code;
     }
+
+    public Boolean is1xxSigninError() {
+        if (code >= 100 && code < 200) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Boolean is2xxSignupError() {
+        if (code >= 200 && code < 300) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

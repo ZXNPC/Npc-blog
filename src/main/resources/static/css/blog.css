@@ -7,3 +7,8 @@ body {
     color: #666;
     text-align: center;
 }
+
+.main {
+    background-color: white;
+    margin: auto;
+}
