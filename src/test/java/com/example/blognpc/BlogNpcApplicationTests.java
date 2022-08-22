@@ -33,6 +33,8 @@ class BlogNpcApplicationTests {
     private JavaMailSender mailSender;
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private QuestionMapper questionMapper;
     @Test
     public void emailTest() {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -86,13 +88,6 @@ class BlogNpcApplicationTests {
 
     @Test
     public void selectByIdNullTest() {
-        Question question = new Question();
-        question.setId(2L);
-        question.setTitle("title");
-        question.setDescription("description");
-        question.setTag("tag");
-        question.setCreator(4L);
-        questionService.createOrUpdate(question);
-        System.out.printf(question.toString());
+        Question question = questionMapper.selectById(null);
     }
 }

@@ -1,726 +1,90 @@
-2022-08-21 11:13:08.714  INFO 17840 --- [main] c.e.blognpc.BlogNpcApplicationTests      : Starting BlogNpcApplicationTests using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 17840 (started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 11:13:08.735  INFO 17840 --- [main] c.e.blognpc.BlogNpcApplicationTests      : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 11:13:10.095  INFO 17840 --- [main] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 11:13:12.218  INFO 17840 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 11:13:13.057  WARN 17840 --- [main] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 11:13:13.058  WARN 17840 --- [main] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 11:13:13.059  WARN 17840 --- [main] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 11:13:13.115  INFO 17840 --- [main] c.e.blognpc.BlogNpcApplicationTests      : Started BlogNpcApplicationTests in 4.825 seconds (JVM running for 6.595)
-2022-08-21 11:13:18.891  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 15444 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 11:13:18.893  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 11:13:18.957  INFO 15444 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2022-08-21 11:13:18.957  INFO 15444 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2022-08-21 11:13:19.787  INFO 15444 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 11:13:20.066  INFO 15444 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 11:13:20.076  INFO 15444 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 11:13:20.076  INFO 15444 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 11:13:20.146  INFO 15444 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-08-21 11:13:20.146  INFO 15444 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1188 ms
-2022-08-21 11:13:21.175  INFO 15444 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 11:13:21.193  INFO 15444 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 11:13:21.389  INFO 15444 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 11:13:21.541  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 11:13:21.542  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 11:13:21.542  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 11:13:21.565  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 3.031 seconds (JVM running for 3.958)
-2022-08-21 11:13:31.819  INFO 15444 --- [http-nio-8887-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-08-21 11:13:31.821  INFO 15444 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-08-21 11:13:31.822  INFO 15444 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2022-08-21 11:13:32.106  WARN 15444 --- [http-nio-8887-exec-1] o.a.c.util.SessionIdGeneratorBase        : Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [272] milliseconds.
-2022-08-21 12:43:57.657  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 15444 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 12:43:57.657  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 12:43:57.950  INFO 15444 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 12:43:57.993  INFO 15444 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 12:43:57.993  INFO 15444 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 12:43:57.993  INFO 15444 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 12:43:58.011  INFO 15444 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-08-21 12:43:58.012  INFO 15444 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 352 ms
-2022-08-21 12:43:58.440  INFO 15444 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 12:43:58.446  INFO 15444 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 12:43:58.521  INFO 15444 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 12:43:58.567  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 12:43:58.568  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 12:43:58.568  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 12:43:58.581  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 0.957 seconds (JVM running for 5440.973)
-2022-08-21 12:43:58.583  INFO 15444 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
-2022-08-21 12:45:01.516  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 15444 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 12:45:01.516  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 12:45:01.795  INFO 15444 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 12:45:01.837  INFO 15444 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 12:45:01.838  INFO 15444 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 12:45:01.838  INFO 15444 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 12:45:01.858  INFO 15444 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-08-21 12:45:01.858  INFO 15444 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 340 ms
-2022-08-21 12:45:02.264  INFO 15444 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 12:45:02.272  INFO 15444 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 12:45:02.322  INFO 15444 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 12:45:02.360  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 12:45:02.360  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 12:45:02.360  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 12:45:02.372  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 0.882 seconds (JVM running for 5504.765)
-2022-08-21 12:45:02.374  INFO 15444 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
-2022-08-21 13:34:05.458  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 15444 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 13:34:05.458  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 13:34:05.763  INFO 15444 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 13:34:05.800  INFO 15444 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 13:34:05.801  INFO 15444 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 13:34:05.801  INFO 15444 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 13:34:05.823  INFO 15444 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-08-21 13:34:05.824  INFO 15444 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 363 ms
-2022-08-21 13:34:06.218  INFO 15444 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 13:34:06.222  INFO 15444 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 13:34:06.265  INFO 15444 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 13:34:06.299  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 13:34:06.299  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 13:34:06.299  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 13:34:06.309  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 0.877 seconds (JVM running for 8448.702)
-2022-08-21 13:34:06.310  INFO 15444 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
-2022-08-21 13:34:07.965  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 15444 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 13:34:07.966  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 13:34:08.186  INFO 15444 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 13:34:08.219  INFO 15444 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 13:34:08.220  INFO 15444 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 13:34:08.220  INFO 15444 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 13:34:08.237  INFO 15444 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-08-21 13:34:08.237  INFO 15444 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 270 ms
-2022-08-21 13:34:08.643  INFO 15444 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 13:34:08.647  INFO 15444 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 13:34:08.691  INFO 15444 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 13:34:08.723  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 13:34:08.723  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 13:34:08.723  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 13:34:08.737  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 0.79 seconds (JVM running for 8451.13)
-2022-08-21 13:34:08.738  INFO 15444 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
-2022-08-21 13:34:15.232  INFO 15444 --- [http-nio-8887-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-08-21 13:34:15.233  INFO 15444 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-08-21 13:34:15.234  INFO 15444 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2022-08-21 13:34:28.365  INFO 15444 --- [http-nio-8887-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2022-08-21 13:34:28.593  INFO 15444 --- [http-nio-8887-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2022-08-21 15:09:42.171  INFO 15444 --- [Thread-19] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2022-08-21 15:09:42.182  INFO 15444 --- [Thread-19] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2022-08-21 15:09:42.273  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 15444 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 15:09:42.274  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 15:09:42.705  INFO 15444 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 15:09:42.764  INFO 15444 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 15:09:42.764  INFO 15444 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 15:09:42.764  INFO 15444 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 15:09:42.788  INFO 15444 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-08-21 15:09:42.788  INFO 15444 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 511 ms
-2022-08-21 15:09:42.796  WARN 15444 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'authorizeController' defined in file [D:\IdeaProjects\npc-blog\target\classes\com\example\blognpc\controller\AuthorizeController.class]: Post-processing of merged bean definition failed; nested exception is java.lang.IllegalStateException: Failed to introspect Class [com.example.blognpc.controller.AuthorizeController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@3feb645d]
-2022-08-21 15:09:42.797  INFO 15444 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
-2022-08-21 15:09:42.802  INFO 15444 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
-
-Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-2022-08-21 15:09:42.831 ERROR 15444 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
-
-org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'authorizeController' defined in file [D:\IdeaProjects\npc-blog\target\classes\com\example\blognpc\controller\AuthorizeController.class]: Post-processing of merged bean definition failed; nested exception is java.lang.IllegalStateException: Failed to introspect Class [com.example.blognpc.controller.AuthorizeController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@3feb645d]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:597) ~[spring-beans-5.3.22.jar:5.3.22]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.22.jar:5.3.22]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.22.jar:5.3.22]
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.22.jar:5.3.22]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.22.jar:5.3.22]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.22.jar:5.3.22]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:955) ~[spring-beans-5.3.22.jar:5.3.22]
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918) ~[spring-context-5.3.22.jar:5.3.22]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) ~[spring-context-5.3.22.jar:5.3.22]
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147) ~[spring-boot-2.7.2.jar:2.7.2]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734) ~[spring-boot-2.7.2.jar:2.7.2]
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408) ~[spring-boot-2.7.2.jar:2.7.2]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308) ~[spring-boot-2.7.2.jar:2.7.2]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-2.7.2.jar:2.7.2]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-2.7.2.jar:2.7.2]
-	at com.example.blognpc.BlogNpcApplication.main(BlogNpcApplication.java:14) ~[classes/:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:566) ~[na:na]
-	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) ~[spring-boot-devtools-2.7.2.jar:2.7.2]
-Caused by: java.lang.IllegalStateException: Failed to introspect Class [com.example.blognpc.controller.AuthorizeController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@3feb645d]
-	at org.springframework.util.ReflectionUtils.getDeclaredFields(ReflectionUtils.java:743) ~[spring-core-5.3.22.jar:5.3.22]
-	at org.springframework.util.ReflectionUtils.doWithLocalFields(ReflectionUtils.java:675) ~[spring-core-5.3.22.jar:5.3.22]
-	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.buildResourceMetadata(CommonAnnotationBeanPostProcessor.java:377) ~[spring-context-5.3.22.jar:5.3.22]
-	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.findResourceMetadata(CommonAnnotationBeanPostProcessor.java:358) ~[spring-context-5.3.22.jar:5.3.22]
-	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessMergedBeanDefinition(CommonAnnotationBeanPostProcessor.java:306) ~[spring-context-5.3.22.jar:5.3.22]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyMergedBeanDefinitionPostProcessors(AbstractAutowireCapableBeanFactory.java:1116) ~[spring-beans-5.3.22.jar:5.3.22]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:594) ~[spring-beans-5.3.22.jar:5.3.22]
-	... 20 common frames omitted
-Caused by: java.lang.NoClassDefFoundError: Lcom/example/blognpc/service/UserService;
-	at java.base/java.lang.Class.getDeclaredFields0(Native Method) ~[na:na]
-	at java.base/java.lang.Class.privateGetDeclaredFields(Class.java:3061) ~[na:na]
-	at java.base/java.lang.Class.getDeclaredFields(Class.java:2248) ~[na:na]
-	at org.springframework.util.ReflectionUtils.getDeclaredFields(ReflectionUtils.java:738) ~[spring-core-5.3.22.jar:5.3.22]
-	... 26 common frames omitted
-Caused by: java.lang.ClassNotFoundException: com.example.blognpc.service.UserService
-	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:581) ~[na:na]
-	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:178) ~[na:na]
-	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:521) ~[na:na]
-	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
-	at java.base/java.lang.Class.forName(Class.java:398) ~[na:na]
-	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:145) ~[spring-boot-devtools-2.7.2.jar:2.7.2]
-	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:521) ~[na:na]
-	... 30 common frames omitted
-
-2022-08-21 15:09:44.334  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 15444 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 15:09:44.334  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 15:09:44.554  INFO 15444 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 15:09:44.583  INFO 15444 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 15:09:44.583  INFO 15444 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 15:09:44.584  INFO 15444 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 15:09:44.601  INFO 15444 --- [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
-2022-08-21 15:09:44.601  INFO 15444 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 265 ms
-2022-08-21 15:09:44.608  WARN 15444 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'authorizeController' defined in file [D:\IdeaProjects\npc-blog\target\classes\com\example\blognpc\controller\AuthorizeController.class]: Post-processing of merged bean definition failed; nested exception is java.lang.IllegalStateException: Failed to introspect Class [com.example.blognpc.controller.AuthorizeController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@141dc87d]
-2022-08-21 15:09:44.608  INFO 15444 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
-2022-08-21 15:09:44.613  INFO 15444 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
-
-Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-2022-08-21 15:09:44.616 ERROR 15444 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
-
-org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'authorizeController' defined in file [D:\IdeaProjects\npc-blog\target\classes\com\example\blognpc\controller\AuthorizeController.class]: Post-processing of merged bean definition failed; nested exception is java.lang.IllegalStateException: Failed to introspect Class [com.example.blognpc.controller.AuthorizeController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@141dc87d]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:597) ~[spring-beans-5.3.22.jar:5.3.22]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.22.jar:5.3.22]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.22.jar:5.3.22]
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.22.jar:5.3.22]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.22.jar:5.3.22]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.22.jar:5.3.22]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:955) ~[spring-beans-5.3.22.jar:5.3.22]
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918) ~[spring-context-5.3.22.jar:5.3.22]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) ~[spring-context-5.3.22.jar:5.3.22]
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147) ~[spring-boot-2.7.2.jar:2.7.2]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734) ~[spring-boot-2.7.2.jar:2.7.2]
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408) ~[spring-boot-2.7.2.jar:2.7.2]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308) ~[spring-boot-2.7.2.jar:2.7.2]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-2.7.2.jar:2.7.2]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-2.7.2.jar:2.7.2]
-	at com.example.blognpc.BlogNpcApplication.main(BlogNpcApplication.java:14) ~[classes/:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:566) ~[na:na]
-	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) ~[spring-boot-devtools-2.7.2.jar:2.7.2]
-Caused by: java.lang.IllegalStateException: Failed to introspect Class [com.example.blognpc.controller.AuthorizeController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@141dc87d]
-	at org.springframework.util.ReflectionUtils.getDeclaredFields(ReflectionUtils.java:743) ~[spring-core-5.3.22.jar:5.3.22]
-	at org.springframework.util.ReflectionUtils.doWithLocalFields(ReflectionUtils.java:675) ~[spring-core-5.3.22.jar:5.3.22]
-	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.buildResourceMetadata(CommonAnnotationBeanPostProcessor.java:377) ~[spring-context-5.3.22.jar:5.3.22]
-	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.findResourceMetadata(CommonAnnotationBeanPostProcessor.java:358) ~[spring-context-5.3.22.jar:5.3.22]
-	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessMergedBeanDefinition(CommonAnnotationBeanPostProcessor.java:306) ~[spring-context-5.3.22.jar:5.3.22]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyMergedBeanDefinitionPostProcessors(AbstractAutowireCapableBeanFactory.java:1116) ~[spring-beans-5.3.22.jar:5.3.22]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:594) ~[spring-beans-5.3.22.jar:5.3.22]
-	... 20 common frames omitted
-Caused by: java.lang.NoClassDefFoundError: Lcom/example/blognpc/service/UserService;
-	at java.base/java.lang.Class.getDeclaredFields0(Native Method) ~[na:na]
-	at java.base/java.lang.Class.privateGetDeclaredFields(Class.java:3061) ~[na:na]
-	at java.base/java.lang.Class.getDeclaredFields(Class.java:2248) ~[na:na]
-	at org.springframework.util.ReflectionUtils.getDeclaredFields(ReflectionUtils.java:738) ~[spring-core-5.3.22.jar:5.3.22]
-	... 26 common frames omitted
-Caused by: java.lang.ClassNotFoundException: com.example.blognpc.service.UserService
-	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:581) ~[na:na]
-	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:178) ~[na:na]
-	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:521) ~[na:na]
-	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
-	at java.base/java.lang.Class.forName(Class.java:398) ~[na:na]
-	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:145) ~[spring-boot-devtools-2.7.2.jar:2.7.2]
-	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:521) ~[na:na]
-	... 30 common frames omitted
-
-2022-08-21 15:10:01.919  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 15444 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 15:10:01.919  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 15:10:02.214  INFO 15444 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 15:10:02.263  INFO 15444 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 15:10:02.264  INFO 15444 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 15:10:02.264  INFO 15444 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 15:10:02.291  INFO 15444 --- [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
-2022-08-21 15:10:02.292  INFO 15444 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 371 ms
-2022-08-21 15:10:02.782  INFO 15444 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 15:10:02.787  INFO 15444 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 15:10:02.855  INFO 15444 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 15:10:02.895  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:10:02.895  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:10:02.896  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:10:02.923  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 1.045 seconds (JVM running for 14205.315)
-2022-08-21 15:10:02.925  INFO 15444 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
-2022-08-21 15:10:04.705  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 15444 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 15:10:04.706  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 15:10:04.941  INFO 15444 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 15:10:04.970  INFO 15444 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 15:10:04.970  INFO 15444 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 15:10:04.970  INFO 15444 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 15:10:04.987  INFO 15444 --- [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
-2022-08-21 15:10:04.987  INFO 15444 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 280 ms
-2022-08-21 15:10:05.349  INFO 15444 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 15:10:05.353  INFO 15444 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 15:10:05.398  INFO 15444 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 15:10:05.421  INFO 15444 --- [http-nio-8887-exec-1] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-08-21 15:10:05.422  INFO 15444 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-08-21 15:10:05.423  INFO 15444 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2022-08-21 15:10:05.431  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:10:05.431  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:10:05.431  WARN 15444 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:10:05.443  INFO 15444 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 0.75 seconds (JVM running for 14207.835)
-2022-08-21 15:10:05.444  INFO 15444 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
-2022-08-21 15:10:06.486  INFO 15444 --- [http-nio-8887-exec-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
-2022-08-21 15:10:06.499  INFO 15444 --- [http-nio-8887-exec-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
-2022-08-21 15:10:06.505  WARN 15444 --- [http-nio-8887-exec-5] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.example.blognpc.exception.LoginException: GitHub日常抽风，请再试一次或者使用邮箱注册及登录]
-2022-08-21 15:10:26.416  INFO 15444 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
-2022-08-21 15:10:26.423  INFO 15444 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
-2022-08-21 15:10:29.508  INFO 6992 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 6992 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 15:10:29.509  INFO 6992 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 15:10:29.544  INFO 6992 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2022-08-21 15:10:29.544  INFO 6992 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2022-08-21 15:10:30.314  INFO 6992 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 15:10:30.554  INFO 6992 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 15:10:30.561  INFO 6992 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 15:10:30.561  INFO 6992 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 15:10:30.639  INFO 6992 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-08-21 15:10:30.639  INFO 6992 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1095 ms
-2022-08-21 15:10:31.751  INFO 6992 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 15:10:31.767  INFO 6992 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 15:10:31.973  INFO 6992 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 15:10:32.128  WARN 6992 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:10:32.129  WARN 6992 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:10:32.129  WARN 6992 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:10:32.154  INFO 6992 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 2.922 seconds (JVM running for 3.831)
-2022-08-21 15:10:35.579  INFO 6992 --- [http-nio-8887-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-08-21 15:10:35.580  INFO 6992 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-08-21 15:10:35.581  INFO 6992 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2022-08-21 15:10:35.635  INFO 6992 --- [http-nio-8887-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2022-08-21 15:10:35.917  INFO 6992 --- [http-nio-8887-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2022-08-21 15:10:36.380  WARN 6992 --- [http-nio-8887-exec-1] o.a.c.util.SessionIdGeneratorBase        : Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [423] milliseconds.
-2022-08-21 15:10:49.507  WARN 6992 --- [http-nio-8887-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.example.blognpc.exception.LoginException: GitHub日常抽风，请再试一次或者使用邮箱注册及登录]
-2022-08-21 15:11:47.811  INFO 6992 --- [Thread-4] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2022-08-21 15:11:47.830  INFO 6992 --- [Thread-4] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2022-08-21 15:11:47.926  INFO 6992 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 6992 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 15:11:47.927  INFO 6992 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 15:11:48.345  INFO 6992 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 15:11:48.424  INFO 6992 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 15:11:48.425  INFO 6992 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 15:11:48.426  INFO 6992 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 15:11:48.470  INFO 6992 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-08-21 15:11:48.471  INFO 6992 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 540 ms
-2022-08-21 15:11:48.943  INFO 6992 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 15:11:48.948  INFO 6992 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 15:11:49.014  INFO 6992 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 15:11:49.068  INFO 6992 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 1.178 seconds (JVM running for 80.744)
-2022-08-21 15:11:49.069  INFO 6992 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
-2022-08-21 15:11:50.907  INFO 6992 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 6992 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 15:11:50.908  INFO 6992 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 15:11:51.321  INFO 6992 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 15:11:51.355  INFO 6992 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 15:11:51.355  INFO 6992 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 15:11:51.355  INFO 6992 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 15:11:51.372  INFO 6992 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-08-21 15:11:51.372  INFO 6992 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 459 ms
-2022-08-21 15:11:51.783  INFO 6992 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 15:11:51.789  INFO 6992 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 15:11:51.847  INFO 6992 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 15:11:51.903  WARN 6992 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:11:51.904  WARN 6992 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:11:51.904  WARN 6992 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:11:51.922  INFO 6992 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 1.058 seconds (JVM running for 83.598)
-2022-08-21 15:11:51.923  INFO 6992 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
-2022-08-21 15:11:53.267  INFO 6992 --- [http-nio-8887-exec-4] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-08-21 15:11:53.268  INFO 6992 --- [http-nio-8887-exec-4] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-08-21 15:11:53.269  INFO 6992 --- [http-nio-8887-exec-4] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2022-08-21 15:11:57.246  INFO 6992 --- [http-nio-8887-exec-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
-2022-08-21 15:11:57.257  INFO 6992 --- [http-nio-8887-exec-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
-2022-08-21 15:12:00.284  WARN 6992 --- [http-nio-8887-exec-7] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.example.blognpc.exception.LoginException: GitHub日常抽风，请再试一次或者使用邮箱注册及登录]
-2022-08-21 15:12:12.205  INFO 6992 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
-2022-08-21 15:12:12.213  INFO 6992 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
-2022-08-21 15:12:15.144  INFO 15252 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 15252 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 15:12:15.145  INFO 15252 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 15:12:15.185  INFO 15252 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2022-08-21 15:12:15.185  INFO 15252 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2022-08-21 15:12:16.035  INFO 15252 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 15:12:16.282  INFO 15252 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 15:12:16.289  INFO 15252 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 15:12:16.289  INFO 15252 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 15:12:16.382  INFO 15252 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-08-21 15:12:16.382  INFO 15252 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1196 ms
-2022-08-21 15:12:17.405  INFO 15252 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 15:12:17.422  INFO 15252 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 15:12:17.635  INFO 15252 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 15:12:17.794  WARN 15252 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:12:17.795  WARN 15252 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:12:17.795  WARN 15252 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:12:17.823  INFO 15252 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 3.003 seconds (JVM running for 3.962)
-2022-08-21 15:12:22.342  INFO 15252 --- [http-nio-8887-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-08-21 15:12:22.344  INFO 15252 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-08-21 15:12:22.345  INFO 15252 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2022-08-21 15:12:26.394  INFO 15252 --- [http-nio-8887-exec-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2022-08-21 15:12:26.646  INFO 15252 --- [http-nio-8887-exec-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2022-08-21 15:12:47.808  WARN 15252 --- [http-nio-8887-exec-5] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.example.blognpc.exception.LoginException: GitHub日常抽风，请再试一次或者使用邮箱注册及登录]
-2022-08-21 15:12:48.156  INFO 15252 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2022-08-21 15:12:48.172  INFO 15252 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2022-08-21 15:13:18.541  INFO 13808 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 13808 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 15:13:18.542  INFO 13808 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 15:13:18.575  INFO 13808 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2022-08-21 15:13:18.576  INFO 13808 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2022-08-21 15:13:19.357  INFO 13808 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 15:13:19.602  INFO 13808 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 15:13:19.608  INFO 13808 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 15:13:19.609  INFO 13808 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 15:13:19.682  INFO 13808 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-08-21 15:13:19.682  INFO 13808 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1106 ms
-2022-08-21 15:13:20.673  INFO 13808 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 15:13:20.691  INFO 13808 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 15:13:20.909  INFO 13808 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 15:13:20.962  INFO 13808 --- [http-nio-8887-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-08-21 15:13:20.964  INFO 13808 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-08-21 15:13:20.965  INFO 13808 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2022-08-21 15:13:21.082  WARN 13808 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:13:21.083  WARN 13808 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:13:21.083  WARN 13808 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:13:21.111  INFO 13808 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 2.854 seconds (JVM running for 3.716)
-2022-08-21 15:13:25.937  INFO 13808 --- [http-nio-8887-exec-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2022-08-21 15:13:26.159  INFO 13808 --- [http-nio-8887-exec-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2022-08-21 15:13:49.212  WARN 13808 --- [http-nio-8887-exec-5] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.example.blognpc.exception.LoginException: GitHub日常抽风，请再试一次或者使用邮箱注册及登录]
-2022-08-21 15:41:59.474  INFO 13808 --- [Thread-4] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2022-08-21 15:41:59.486  INFO 13808 --- [Thread-4] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2022-08-21 15:41:59.567  INFO 13808 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 13808 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 15:41:59.567  INFO 13808 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 15:41:59.896  INFO 13808 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 15:41:59.930  INFO 13808 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 15:41:59.931  INFO 13808 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 15:41:59.931  INFO 13808 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 15:41:59.949  INFO 13808 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-08-21 15:41:59.949  INFO 13808 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 378 ms
-2022-08-21 15:42:00.368  INFO 13808 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 15:42:00.374  INFO 13808 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 15:42:00.425  INFO 13808 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 15:42:00.474  INFO 13808 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 0.94 seconds (JVM running for 1723.08)
-2022-08-21 15:42:00.477  INFO 13808 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
-2022-08-21 15:42:03.008  INFO 2456 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 2456 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 15:42:03.009  INFO 2456 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 15:42:03.056  INFO 2456 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2022-08-21 15:42:03.056  INFO 2456 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2022-08-21 15:42:03.786  INFO 2456 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 15:42:04.000  INFO 2456 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 15:42:04.006  INFO 2456 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 15:42:04.006  INFO 2456 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 15:42:04.075  INFO 2456 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-08-21 15:42:04.075  INFO 2456 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1018 ms
-2022-08-21 15:42:05.030  INFO 2456 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 15:42:05.045  INFO 2456 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 15:42:05.245  INFO 2456 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 15:42:05.394  WARN 2456 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:42:05.395  WARN 2456 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:42:05.395  WARN 2456 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:42:05.422  INFO 2456 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 2.682 seconds (JVM running for 3.677)
-2022-08-21 15:42:05.511  INFO 2456 --- [http-nio-8887-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-08-21 15:42:05.512  INFO 2456 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-08-21 15:42:05.513  INFO 2456 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2022-08-21 15:42:05.775  WARN 2456 --- [http-nio-8887-exec-1] o.a.c.util.SessionIdGeneratorBase        : Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [253] milliseconds.
-2022-08-21 15:43:27.213  INFO 11072 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 11072 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 15:43:27.214  INFO 11072 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 15:43:27.251  INFO 11072 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2022-08-21 15:43:27.252  INFO 11072 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2022-08-21 15:43:28.044  INFO 11072 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 15:43:28.298  INFO 11072 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 15:43:28.305  INFO 11072 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 15:43:28.305  INFO 11072 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 15:43:28.389  INFO 11072 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-08-21 15:43:28.389  INFO 11072 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1137 ms
-2022-08-21 15:43:29.425  INFO 11072 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 15:43:29.442  INFO 11072 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 15:43:29.663  INFO 11072 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 15:43:29.757  INFO 11072 --- [http-nio-8887-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-08-21 15:43:29.758  INFO 11072 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-08-21 15:43:29.760  INFO 11072 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2022-08-21 15:43:29.842  WARN 11072 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:43:29.842  WARN 11072 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:43:29.843  WARN 11072 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:43:29.873  INFO 11072 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 3.032 seconds (JVM running for 4.14)
-2022-08-21 15:43:30.031  WARN 11072 --- [http-nio-8887-exec-1] o.a.c.util.SessionIdGeneratorBase        : Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [258] milliseconds.
-2022-08-21 15:46:52.220  INFO 11072 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 11072 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 15:46:52.220  INFO 11072 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 15:46:52.548  INFO 11072 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 15:46:52.586  INFO 11072 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 15:46:52.587  INFO 11072 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 15:46:52.587  INFO 11072 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 15:46:52.605  INFO 11072 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-08-21 15:46:52.605  INFO 11072 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 383 ms
-2022-08-21 15:46:52.991  INFO 11072 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 15:46:52.997  INFO 11072 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 15:46:53.049  INFO 11072 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 15:46:53.092  WARN 11072 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:46:53.092  WARN 11072 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:46:53.093  WARN 11072 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:46:53.106  INFO 11072 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 0.909 seconds (JVM running for 207.373)
-2022-08-21 15:46:53.109  INFO 11072 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation delta:
-
-
-==========================
-CONDITION EVALUATION DELTA
-==========================
-
-
-Positive matches:
------------------
-
-    None
-
-
-Negative matches:
------------------
-
-   ErrorMvcAutoConfiguration.DefaultErrorViewResolverConfiguration#conventionErrorViewResolver:
-      Did not match:
-         - @ConditionalOnMissingBean (types: org.springframework.boot.autoconfigure.web.servlet.error.ErrorViewResolver; SearchStrategy: all) found beans of type 'org.springframework.boot.autoconfigure.web.servlet.error.ErrorViewResolver' customizeExceptionResolver (OnBeanCondition)
-
-
-Exclusions:
------------
-
-    None
-
-
-Unconditional classes:
-----------------------
-
-    None
-
-
-
-2022-08-21 15:46:55.564  INFO 11072 --- [http-nio-8887-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-08-21 15:46:55.565  INFO 11072 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-08-21 15:46:55.566  INFO 11072 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2022-08-21 15:47:06.571  INFO 20432 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 20432 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 15:47:06.572  INFO 20432 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 15:47:06.610  INFO 20432 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2022-08-21 15:47:06.610  INFO 20432 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2022-08-21 15:47:07.319  INFO 20432 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 15:47:07.562  INFO 20432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 15:47:07.568  INFO 20432 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 15:47:07.568  INFO 20432 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 15:47:07.626  INFO 20432 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-08-21 15:47:07.627  INFO 20432 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1016 ms
-2022-08-21 15:47:08.623  INFO 20432 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 15:47:08.640  INFO 20432 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 15:47:08.833  INFO 20432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 15:47:08.929  INFO 20432 --- [http-nio-8887-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-08-21 15:47:08.931  INFO 20432 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-08-21 15:47:08.932  INFO 20432 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2022-08-21 15:47:08.984  WARN 20432 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:47:08.985  WARN 20432 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:47:08.985  WARN 20432 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:47:09.013  INFO 20432 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 2.698 seconds (JVM running for 3.517)
-2022-08-21 15:47:09.192  WARN 20432 --- [http-nio-8887-exec-1] o.a.c.util.SessionIdGeneratorBase        : Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [249] milliseconds.
-2022-08-21 15:47:10.859  INFO 20432 --- [http-nio-8887-exec-9] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2022-08-21 15:47:11.038  INFO 20432 --- [http-nio-8887-exec-9] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2022-08-21 15:47:11.072  WARN 20432 --- [http-nio-8887-exec-9] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.example.blognpc.exception.LoginException: GitHub日常抽风，请再试一次或者使用邮箱注册及登录]
-2022-08-21 15:47:14.374  WARN 20432 --- [http-nio-8887-exec-4] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.example.blognpc.exception.LoginException: 邮箱正确，但是密码错误]
-2022-08-21 15:52:56.505  WARN 20432 --- [http-nio-8887-exec-9] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.example.blognpc.exception.LoginException: GitHub日常抽风，请再试一次或者使用邮箱注册及登录]
-2022-08-21 15:57:07.943  INFO 20432 --- [Thread-4] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2022-08-21 15:57:07.954  INFO 20432 --- [Thread-4] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2022-08-21 15:57:08.038  INFO 20432 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 20432 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 15:57:08.039  INFO 20432 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 15:57:08.393  INFO 20432 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 15:57:08.433  INFO 20432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 15:57:08.433  INFO 20432 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 15:57:08.433  INFO 20432 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 15:57:08.456  INFO 20432 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-08-21 15:57:08.456  INFO 20432 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 414 ms
-2022-08-21 15:57:08.940  INFO 20432 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 15:57:08.945  INFO 20432 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 15:57:08.993  INFO 20432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 15:57:09.039  INFO 20432 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 1.029 seconds (JVM running for 603.544)
-2022-08-21 15:57:09.042  INFO 20432 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation delta:
-
-
-==========================
-CONDITION EVALUATION DELTA
-==========================
-
-
-Positive matches:
------------------
-
-   ErrorMvcAutoConfiguration.DefaultErrorViewResolverConfiguration#conventionErrorViewResolver matched:
-      - @ConditionalOnBean (types: org.springframework.web.servlet.DispatcherServlet; SearchStrategy: all) found bean 'dispatcherServlet'; @ConditionalOnMissingBean (types: org.springframework.boot.autoconfigure.web.servlet.error.ErrorViewResolver; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-
-Negative matches:
------------------
-
-    None
-
-
-Exclusions:
------------
-
-    None
-
-
-Unconditional classes:
-----------------------
-
-    None
-
-
-
-2022-08-21 15:57:10.751  INFO 20432 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 20432 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 15:57:10.751  INFO 20432 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 15:57:10.962  INFO 20432 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 15:57:10.992  INFO 20432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 15:57:10.992  INFO 20432 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 15:57:10.992  INFO 20432 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 15:57:11.008  INFO 20432 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-08-21 15:57:11.009  INFO 20432 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 256 ms
-2022-08-21 15:57:11.361  INFO 20432 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 15:57:11.365  INFO 20432 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 15:57:11.408  INFO 20432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 15:57:11.420  INFO 20432 --- [http-nio-8887-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-08-21 15:57:11.422  INFO 20432 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-08-21 15:57:11.422  INFO 20432 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
-2022-08-21 15:57:11.452  WARN 20432 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:57:11.452  WARN 20432 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:57:11.453  WARN 20432 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 15:57:11.467  INFO 20432 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 0.734 seconds (JVM running for 605.972)
-2022-08-21 15:57:11.470  INFO 20432 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation delta:
-
-
-==========================
-CONDITION EVALUATION DELTA
-==========================
-
-
-Positive matches:
------------------
-
-    None
-
-
-Negative matches:
------------------
-
-   ErrorMvcAutoConfiguration.DefaultErrorViewResolverConfiguration#conventionErrorViewResolver:
-      Did not match:
-         - @ConditionalOnMissingBean (types: org.springframework.boot.autoconfigure.web.servlet.error.ErrorViewResolver; SearchStrategy: all) found beans of type 'org.springframework.boot.autoconfigure.web.servlet.error.ErrorViewResolver' customizeExceptionResolver (OnBeanCondition)
-
-
-Exclusions:
------------
-
-    None
-
-
-Unconditional classes:
-----------------------
-
-    None
-
-
-
-2022-08-21 15:57:18.240  INFO 20432 --- [http-nio-8887-exec-8] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
-2022-08-21 15:57:18.251  INFO 20432 --- [http-nio-8887-exec-8] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
-2022-08-21 16:17:08.620  INFO 20432 --- [Thread-11] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
-2022-08-21 16:17:08.632  INFO 20432 --- [Thread-11] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
-2022-08-21 16:17:08.692  INFO 20432 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 20432 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 16:17:08.692  INFO 20432 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 16:17:08.954  INFO 20432 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 16:17:08.990  INFO 20432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 16:17:08.991  INFO 20432 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 16:17:08.991  INFO 20432 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 16:17:09.010  INFO 20432 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2022-08-21 16:17:09.010  INFO 20432 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 316 ms
-2022-08-21 16:17:09.019  WARN 20432 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'authorizeController': Unsatisfied dependency expressed through field 'userService'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.example.blognpc.service.UserService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
-2022-08-21 16:17:09.020  INFO 20432 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
-2022-08-21 16:17:09.026  INFO 20432 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
-
-Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-2022-08-21 16:17:09.041 ERROR 20432 --- [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
-
-***************************
-APPLICATION FAILED TO START
-***************************
-
-Description:
-
-Field userService in com.example.blognpc.controller.AuthorizeController required a bean of type 'com.example.blognpc.service.UserService' that could not be found.
-
-The injection point has the following annotations:
-	- @org.springframework.beans.factory.annotation.Autowired(required=true)
-
-
-Action:
-
-Consider defining a bean of type 'com.example.blognpc.service.UserService' in your configuration.
-
-2022-08-21 16:17:11.000  INFO 20432 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 20432 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 16:17:11.001  INFO 20432 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 16:17:11.264  INFO 20432 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 16:17:11.306  INFO 20432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 16:17:11.306  INFO 20432 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 16:17:11.306  INFO 20432 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 16:17:11.325  INFO 20432 --- [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
-2022-08-21 16:17:11.325  INFO 20432 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 323 ms
-2022-08-21 16:17:11.716  INFO 20432 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 16:17:11.720  INFO 20432 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 16:17:11.779  INFO 20432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 16:17:11.824  WARN 20432 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 16:17:11.824  WARN 20432 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 16:17:11.825  WARN 20432 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 16:17:11.837  INFO 20432 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 0.855 seconds (JVM running for 1806.342)
-2022-08-21 16:17:11.839  INFO 20432 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
-2022-08-21 16:17:13.341  INFO 20432 --- [http-nio-8887-exec-1] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-08-21 16:17:13.343  INFO 20432 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-08-21 16:17:13.344  INFO 20432 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2022-08-21 16:17:18.843  INFO 20432 --- [http-nio-8887-exec-3] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
-2022-08-21 16:17:18.853  INFO 20432 --- [http-nio-8887-exec-3] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
-2022-08-21 17:15:13.016  INFO 20432 --- [Thread-15] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
-2022-08-21 17:15:13.019  INFO 20432 --- [Thread-15] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
-2022-08-21 17:15:13.092  INFO 20432 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 20432 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 17:15:13.092  INFO 20432 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 17:15:13.346  INFO 20432 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 17:15:13.387  INFO 20432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 17:15:13.388  INFO 20432 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 17:15:13.388  INFO 20432 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 17:15:13.406  INFO 20432 --- [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
-2022-08-21 17:15:13.406  INFO 20432 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 311 ms
-2022-08-21 17:15:13.812  INFO 20432 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 17:15:13.817  INFO 20432 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 17:15:13.875  INFO 20432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 17:15:13.911  WARN 20432 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 17:15:13.911  WARN 20432 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 17:15:13.911  WARN 20432 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 17:15:13.923  INFO 20432 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 0.847 seconds (JVM running for 5288.044)
-2022-08-21 17:15:13.924  INFO 20432 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
-2022-08-21 17:15:15.887  INFO 20432 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 20432 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 17:15:15.888  INFO 20432 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 17:15:15.982  INFO 15312 --- [main] c.e.blognpc.BlogNpcApplicationTests      : Starting BlogNpcApplicationTests using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 15312 (started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 17:15:15.984  INFO 15312 --- [main] c.e.blognpc.BlogNpcApplicationTests      : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 17:15:16.222  INFO 20432 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 17:15:16.263  INFO 20432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
-2022-08-21 17:15:16.264  INFO 20432 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2022-08-21 17:15:16.264  INFO 20432 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
-2022-08-21 17:15:16.282  INFO 20432 --- [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
-2022-08-21 17:15:16.282  INFO 20432 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 392 ms
-2022-08-21 17:15:16.706  INFO 20432 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2022-08-21 17:15:16.711  INFO 20432 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 17:15:16.759  INFO 20432 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
-2022-08-21 17:15:16.795  WARN 20432 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 17:15:16.796  WARN 20432 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 17:15:16.796  WARN 20432 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 17:15:16.812  INFO 20432 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 0.952 seconds (JVM running for 5290.933)
-2022-08-21 17:15:16.813  INFO 20432 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
-2022-08-21 17:15:16.994  INFO 15312 --- [main] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 17:15:19.104  INFO 15312 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 17:15:19.639  WARN 15312 --- [main] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 17:15:19.640  WARN 15312 --- [main] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 17:15:19.640  WARN 15312 --- [main] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 17:15:19.679  INFO 15312 --- [main] c.e.blognpc.BlogNpcApplicationTests      : Started BlogNpcApplicationTests in 4.222 seconds (JVM running for 5.303)
-2022-08-21 17:15:20.006  INFO 15312 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2022-08-21 17:15:20.605  INFO 15312 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2022-08-21 17:15:20.675  INFO 15312 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2022-08-21 17:15:20.681  INFO 15312 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2022-08-21 17:15:46.979  INFO 13164 --- [main] c.e.blognpc.BlogNpcApplicationTests      : Starting BlogNpcApplicationTests using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 13164 (started by NPC in D:\IdeaProjects\npc-blog)
-2022-08-21 17:15:46.981  INFO 13164 --- [main] c.e.blognpc.BlogNpcApplicationTests      : No active profile set, falling back to 1 default profile: "default"
-2022-08-21 17:15:47.889  INFO 13164 --- [main] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
-2022-08-21 17:15:49.587  INFO 13164 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2022-08-21 17:15:50.135  WARN 13164 --- [main] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 17:15:50.136  WARN 13164 --- [main] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 17:15:50.136  WARN 13164 --- [main] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
-2022-08-21 17:15:50.176  INFO 13164 --- [main] c.e.blognpc.BlogNpcApplicationTests      : Started BlogNpcApplicationTests in 3.515 seconds (JVM running for 4.405)
-2022-08-21 17:15:50.475  INFO 13164 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2022-08-21 17:15:51.055  INFO 13164 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2022-08-21 17:15:51.120  INFO 13164 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2022-08-21 17:15:51.125  INFO 13164 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-08-22 10:36:05.589  INFO 18064 --- [main] c.e.blognpc.BlogNpcApplicationTests      : Starting BlogNpcApplicationTests using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 18064 (started by NPC in D:\IdeaProjects\npc-blog)
+2022-08-22 10:36:05.596  INFO 18064 --- [main] c.e.blognpc.BlogNpcApplicationTests      : No active profile set, falling back to 1 default profile: "default"
+2022-08-22 10:36:06.678  INFO 18064 --- [main] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
+2022-08-22 10:36:08.573  INFO 18064 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2022-08-22 10:36:09.179  WARN 18064 --- [main] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
+2022-08-22 10:36:09.180  WARN 18064 --- [main] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
+2022-08-22 10:36:09.180  WARN 18064 --- [main] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
+2022-08-22 10:36:09.222  INFO 18064 --- [main] c.e.blognpc.BlogNpcApplicationTests      : Started BlogNpcApplicationTests in 3.981 seconds (JVM running for 5.028)
+2022-08-22 10:36:09.673  INFO 18064 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-08-22 10:36:10.453  INFO 18064 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-08-22 10:36:10.524  INFO 18064 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-08-22 10:36:10.532  INFO 18064 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-08-22 10:58:35.653  INFO 13712 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 13712 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
+2022-08-22 10:58:35.654  INFO 13712 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
+2022-08-22 10:58:35.691  INFO 13712 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-08-22 10:58:35.692  INFO 13712 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-08-22 10:58:36.492  INFO 13712 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
+2022-08-22 10:58:36.830  INFO 13712 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
+2022-08-22 10:58:36.839  INFO 13712 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-08-22 10:58:36.840  INFO 13712 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
+2022-08-22 10:58:36.940  INFO 13712 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-08-22 10:58:36.940  INFO 13712 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1248 ms
+2022-08-22 10:58:37.972  INFO 13712 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-08-22 10:58:37.989  INFO 13712 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2022-08-22 10:58:38.181  INFO 13712 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
+2022-08-22 10:58:38.315  WARN 13712 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
+2022-08-22 10:58:38.316  WARN 13712 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
+2022-08-22 10:58:38.316  WARN 13712 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
+2022-08-22 10:58:38.343  INFO 13712 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 2.969 seconds (JVM running for 3.891)
+2022-08-22 10:58:38.528  INFO 13712 --- [http-nio-8887-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-08-22 10:58:38.529  INFO 13712 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-08-22 10:58:38.530  INFO 13712 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2022-08-22 10:58:38.812  WARN 13712 --- [http-nio-8887-exec-1] o.a.c.util.SessionIdGeneratorBase        : Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [271] milliseconds.
+2022-08-22 11:34:55.601  INFO 13712 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 13712 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
+2022-08-22 11:34:55.601  INFO 13712 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
+2022-08-22 11:34:55.955  INFO 13712 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
+2022-08-22 11:34:55.999  INFO 13712 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
+2022-08-22 11:34:56.000  INFO 13712 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-08-22 11:34:56.000  INFO 13712 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
+2022-08-22 11:34:56.023  INFO 13712 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-08-22 11:34:56.023  INFO 13712 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 419 ms
+2022-08-22 11:34:56.485  INFO 13712 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-08-22 11:34:56.490  INFO 13712 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2022-08-22 11:34:56.538  INFO 13712 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
+2022-08-22 11:34:56.552  INFO 13712 --- [http-nio-8887-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-08-22 11:34:56.554  INFO 13712 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-08-22 11:34:56.555  INFO 13712 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2022-08-22 11:34:56.594  WARN 13712 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
+2022-08-22 11:34:56.595  WARN 13712 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
+2022-08-22 11:34:56.595  WARN 13712 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
+2022-08-22 11:34:56.629  INFO 13712 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 1.049 seconds (JVM running for 2182.176)
+2022-08-22 11:34:56.633  INFO 13712 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-08-22 11:34:58.362  INFO 13712 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 13712 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
+2022-08-22 11:34:58.363  INFO 13712 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
+2022-08-22 11:34:58.581  INFO 13712 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
+2022-08-22 11:34:58.610  INFO 13712 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
+2022-08-22 11:34:58.610  INFO 13712 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-08-22 11:34:58.610  INFO 13712 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
+2022-08-22 11:34:58.627  INFO 13712 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-08-22 11:34:58.627  INFO 13712 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 263 ms
+2022-08-22 11:34:58.993  INFO 13712 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-08-22 11:34:58.997  INFO 13712 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2022-08-22 11:34:59.042  INFO 13712 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
+2022-08-22 11:34:59.078  WARN 13712 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
+2022-08-22 11:34:59.078  WARN 13712 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
+2022-08-22 11:34:59.078  WARN 13712 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
+2022-08-22 11:34:59.091  INFO 13712 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 0.746 seconds (JVM running for 2184.639)
+2022-08-22 11:34:59.092  INFO 13712 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-08-22 11:34:59.122  INFO 13712 --- [http-nio-8887-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-08-22 11:34:59.123  INFO 13712 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-08-22 11:34:59.124  INFO 13712 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2022-08-22 11:35:28.596  INFO 13712 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Starting BlogNpcApplication using Java 11.0.16 on DESKTOP-GH2OOK7 with PID 13712 (D:\IdeaProjects\npc-blog\target\classes started by NPC in D:\IdeaProjects\npc-blog)
+2022-08-22 11:35:28.597  INFO 13712 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : No active profile set, falling back to 1 default profile: "default"
+2022-08-22 11:35:28.861  INFO 13712 --- [restartedMain] o.s.c.a.ConfigurationClassEnhancer       : @Bean method SwaggerAutoConfiguration.docketBeanFactoryPostProcessor is non-static and returns an object assignable to Spring's BeanFactoryPostProcessor interface. This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct within the method's declaring @Configuration class. Add the 'static' modifier to this method to avoid these container lifecycle issues; see @Bean javadoc for complete details.
+2022-08-22 11:35:28.893  INFO 13712 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8887 (http)
+2022-08-22 11:35:28.894  INFO 13712 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-08-22 11:35:28.895  INFO 13712 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
+2022-08-22 11:35:28.910  INFO 13712 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-08-22 11:35:28.910  INFO 13712 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 311 ms
+2022-08-22 11:35:29.302  INFO 13712 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-08-22 11:35:29.306  INFO 13712 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2022-08-22 11:35:29.352  INFO 13712 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8887 (http) with context path ''
+2022-08-22 11:35:29.370  INFO 13712 --- [http-nio-8887-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-08-22 11:35:29.371  INFO 13712 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-08-22 11:35:29.372  INFO 13712 --- [http-nio-8887-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2022-08-22 11:35:29.392  WARN 13712 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
+2022-08-22 11:35:29.393  WARN 13712 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
+2022-08-22 11:35:29.393  WARN 13712 --- [restartedMain] s.d.s.w.r.parameter.ParameterTypeReader  : @ModelAttribute annotated parameters should have already been expanded via the ExpandedParameterBuilderPlugin
+2022-08-22 11:35:29.407  INFO 13712 --- [restartedMain] com.example.blognpc.BlogNpcApplication   : Started BlogNpcApplication in 0.831 seconds (JVM running for 2214.954)
+2022-08-22 11:35:29.410  INFO 13712 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged

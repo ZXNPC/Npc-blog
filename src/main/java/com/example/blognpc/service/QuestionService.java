@@ -1,6 +1,8 @@
 package com.example.blognpc.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.blognpc.dto.PaginationDTO;
 import com.example.blognpc.enums.CustomizeErrorCode;
 import com.example.blognpc.exception.CustomizeException;
 import com.example.blognpc.mapper.QuestionMapper;
@@ -30,7 +32,6 @@ public class QuestionService {
             Question questiondb = questionMapper.selectById(question.getId());
             if (questiondb == null) {
                 // 问题不存在
-                // TODO: selectById(null) test
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
             else {
@@ -44,5 +45,16 @@ public class QuestionService {
             }
         }
 
+    }
+
+    public PaginationDTO<Question> list(Long page, Long size) {
+        Long totalCount = questionMapper.selectCount(null);
+        PaginationDTO<Question> paginationDTO = new PaginationDTO<>();
+        paginationDTO.setPagination(totalCount, page, size);
+        page = paginationDTO.getPage();
+
+        Page<Question> questionPage = questionMapper.selectPage(new Page<Question>(page, size), null);
+
+        return null;
     }
 }
