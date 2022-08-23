@@ -1,7 +1,9 @@
 package com.example.blognpc.controller;
 
 import com.example.blognpc.cache.TagCache;
+import com.example.blognpc.dto.QuestionDTO;
 import com.example.blognpc.dto.ResultDTO;
+import com.example.blognpc.dto.TagDTO;
 import com.example.blognpc.enums.CustomizeErrorCode;
 import com.example.blognpc.exception.CustomizeException;
 import com.example.blognpc.model.Question;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,7 +27,18 @@ public class PublishController {
 
     @GetMapping("/publish")
     public String publish(Model model) {
-        model.addAttribute("tagDTOS", new TagCache().get());
+        model.addAttribute("tagDTOS", TagCache.get());
+        return "publish";
+    }
+
+    @GetMapping("/publish/{id}")
+    public String edit(@PathVariable("id") Long id,
+                       Model model) {
+        QuestionDTO questionDTO = questionService.selectById(id);
+        model.addAttribute("title", questionDTO.getTitle());
+        model.addAttribute("description", questionDTO.getDescription());
+        model.addAttribute("tag", questionDTO.getTag());
+        model.addAttribute("tagDTOS", TagCache.get());
         return "publish";
     }
 
@@ -67,6 +81,6 @@ public class PublishController {
         question.setCreator(user.getId());
 
         questionService.createOrUpdate(question);
-        return "redirect:/";
+        return "redirect:/community";
     }
 }

@@ -91,7 +91,6 @@ function collapseComments(e) {
                         })));
 
                     var mediaElement = $("<div/>", {
-                        "class": "media"
                     }).append(mediaLeftElement)
                         .append(mediaBodyElement);
 

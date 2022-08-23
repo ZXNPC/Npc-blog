@@ -5,6 +5,8 @@ import com.example.blognpc.exception.ICustomizeErrorCode;
 import com.example.blognpc.exception.LoginException;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class ResultDTO<T> {
     private Integer code;
@@ -22,8 +24,6 @@ public class ResultDTO<T> {
         return errorOf(errorCode.getCode(), errorCode.getMessage());
     }
 
-
-
     public static ResultDTO okOf() {
         ResultDTO resultDTO = new ResultDTO();
         resultDTO.setCode(200);
@@ -35,6 +35,14 @@ public class ResultDTO<T> {
         ResultDTO resultDTO = new ResultDTO();
         resultDTO.setCode(200);
         resultDTO.setMessage("验证邮件已发送至 " + email + " ，请注意查收");
+        return resultDTO;
+    }
+
+    public static <T> ResultDTO okOf(T data) {
+        ResultDTO resultDTO = new ResultDTO();
+        resultDTO.setCode(200);
+        resultDTO.setMessage("请求成功");
+        resultDTO.setData(data);
         return resultDTO;
     }
 

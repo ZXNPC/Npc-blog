@@ -1,5 +1,7 @@
 package com.example.blognpc;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.blognpc.mapper.QuestionExtMapper;
 import com.example.blognpc.mapper.QuestionMapper;
 import com.example.blognpc.model.Question;
 import com.example.blognpc.service.QuestionService;
@@ -25,7 +27,9 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @SpringBootTest
 class BlogNpcApplicationTests {
@@ -35,6 +39,9 @@ class BlogNpcApplicationTests {
     private QuestionService questionService;
     @Autowired
     private QuestionMapper questionMapper;
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
+
     @Test
     public void emailTest() {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -89,5 +96,45 @@ class BlogNpcApplicationTests {
     @Test
     public void selectByIdNullTest() {
         Question question = questionMapper.selectById(null);
+    }
+
+//    @Test
+//    public void selectAllTest() {
+//        List<Question> questions = questionMapper.selectAll();
+//        for (Question question : questions) {
+//            System.out.println(question.toString());
+//        }
+//    }
+//
+//    @Test
+//    public void selectSomeTest() {
+//        List<Question> questions = questionMapper.selectSome(2);
+//        for (Question question : questions) {
+//            System.out.println(question.toString());
+//        }
+//    }
+
+    @Test
+    public void likeTest() {
+        String regex = Arrays.stream("java, php".split(",")).map(tag -> {
+            tag = tag.trim();
+            return "(" + tag + ",)|(" + tag + "$)";
+        }).collect(Collectors.joining("|"));
+        System.out.println(regex);
+        List<Question> questions = questionExtMapper.selectRegexp("tag", regex, 5L);
+        for (Question question : questions) {
+            System.out.println(question.toString());
+        }
+    }
+
+    @Test
+    public void customizeQueryTest() {
+        String regex = "(java,)|(java$)|(php,)|(php$)";
+        QueryWrapper<Question> queryWrapper = new QueryWrapper<>();
+        queryWrapper.last("where tag regexp '" + regex + "' limit 0, 10");
+        List<Question> questions = questionMapper.selectList(queryWrapper);
+        for (Question question : questions) {
+            System.out.println(question.toString());
+        }
     }
 }

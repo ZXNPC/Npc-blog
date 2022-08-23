@@ -15,8 +15,8 @@ public class PaginationDTO<T> {
     private boolean showNext;
     private boolean showEndPage;
     private Long page;
-    private List<Long> pages = new ArrayList<>();
     private Long totalPage;
+    private List<Long> pages = new ArrayList<>();
 
     public void setPagination(Long totalCount, Long page, Long size) {
         assert totalCount >= 0 && size >= 0;

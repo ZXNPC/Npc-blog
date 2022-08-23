@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>NPC Blog</title>
+    <title>论坛</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" href="/css/blog.css"/>
+    <link rel="stylesheet" href="/css/community.css"/>
     <script src="/js/jquery-3.6.0.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <style>
@@ -18,6 +18,7 @@
 <div th:insert="~{navigation :: nav}"></div>
 <div class="container">
     <div class="main">
+        <!--导航栏-->
         <ul class="nav nav-tabs" role="tablist">
             <li>
                 <a href="/article">文章</a>
@@ -32,6 +33,30 @@
                 <a href="/community">论坛</a>
             </li>
         </ul>
+        <!--问题列表-->
+        <div class="community-question-list">
+            <div th:each="questionDTO:${paginationDTO?.getData()}" class="media">
+                <div class="media-left">
+                    <a th:href="@{'/question/' + ${questionDTO.getId()}}">
+                        <img class="media-object img-rounded" th:src="@{${questionDTO.getUser().getAvatarUrl()}}"
+                             alt="这里应该有一张用户头像">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <a th:href="@{'/question/' + ${questionDTO.getId()}}" th:text="${questionDTO.getTitle()}"></a>
+                    </h4>
+                    <br>
+                    <span class="text-desc">
+                    <span th:text="${questionDTO.getCommentCount()}"></span> 个回复 ·
+                    <span th:text="${questionDTO.getViewCount()}"></span> 次浏览 ·
+                    <span th:text="${#dates.format(questionDTO.getGmtCreate(), 'yyyy-MM-dd HH:mm')}"></span>
+                </span>
+                </div>
+            </div>
+        </div>
+        <!--翻页-->
+
     </div>
 
 </div>

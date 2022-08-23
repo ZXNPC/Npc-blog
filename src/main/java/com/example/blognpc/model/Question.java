@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author NPC
- * @since 2022-08-21
+ * @since 2022-08-23
  */
 @ApiModel(value = "Question对象", description = "")
 public class Question implements Serializable {
@@ -26,9 +26,7 @@ public class Question implements Serializable {
 
     private String description;
 
-    private Long gmtCreate;
-
-    private Long gmtModified;
+    private String tag;
 
     private Long creator;
 
@@ -38,7 +36,9 @@ public class Question implements Serializable {
 
     private Integer likeCount;
 
-    private String tag;
+    private Long gmtCreate;
+
+    private Long gmtModified;
 
     public Long getId() {
         return id;
@@ -61,19 +61,12 @@ public class Question implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    public Long getGmtCreate() {
-        return gmtCreate;
+    public String getTag() {
+        return tag;
     }
 
-    public void setGmtCreate(Long gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-    public Long getGmtModified() {
-        return gmtModified;
-    }
-
-    public void setGmtModified(Long gmtModified) {
-        this.gmtModified = gmtModified;
+    public void setTag(String tag) {
+        this.tag = tag;
     }
     public Long getCreator() {
         return creator;
@@ -103,12 +96,19 @@ public class Question implements Serializable {
     public void setLikeCount(Integer likeCount) {
         this.likeCount = likeCount;
     }
-    public String getTag() {
-        return tag;
+    public Long getGmtCreate() {
+        return gmtCreate;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setGmtCreate(Long gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+    public Long getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(Long gmtModified) {
+        this.gmtModified = gmtModified;
     }
 
     @Override
@@ -117,13 +117,13 @@ public class Question implements Serializable {
             "id=" + id +
             ", title=" + title +
             ", description=" + description +
-            ", gmtCreate=" + gmtCreate +
-            ", gmtModified=" + gmtModified +
+            ", tag=" + tag +
             ", creator=" + creator +
             ", commentCount=" + commentCount +
             ", viewCount=" + viewCount +
             ", likeCount=" + likeCount +
-            ", tag=" + tag +
+            ", gmtCreate=" + gmtCreate +
+            ", gmtModified=" + gmtModified +
         "}";
     }
 }

@@ -105,6 +105,7 @@ public class CustomizeExceptionResolver implements ErrorViewResolver {
     // 处理异常页面访问
     @Override
     public ModelAndView resolveErrorView(HttpServletRequest request, HttpStatus status, Map<String, Object> model) {
+
         ModelAndView modelAndView = new ModelAndView("error");
         modelAndView.addObject("message", "请求的页面出错了！");
         return modelAndView;

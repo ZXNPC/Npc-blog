@@ -61,20 +61,20 @@ public class UserService {
     public User passwordSignin(String email, String originalPassword) {
         String password = DigestUtils.md5DigestAsHex(DigestUtils.md5DigestAsHex(originalPassword.getBytes(StandardCharsets.UTF_8)).getBytes(StandardCharsets.UTF_8));
         List<User> users = userMapper.selectList(new QueryWrapper<User>().eq("email", email));
-        User userdb = users.size() == 0 ? null : users.get(0);
-        if (userdb == null) {
+        User dbUser = users.size() == 0 ? null : users.get(0);
+        if (dbUser == null) {
             // 用户不存在，抛出一些异常信息
             throw new LoginException(LoginErrorCode.EMAIL_NOT_FOUND);
         } else {
-            if (userdb.getComplete() == false) {
+            if (dbUser.getComplete() == false) {
                 // 用户信息不完整（未验证邮箱和设置密码），返回错误信息
                 throw new LoginException(LoginErrorCode.EMAIL_UNVERIFIED_SIGNIN);
             }
 
             // 用户存在，检验密码是否正确
-            if (password.equals(userdb.getPassword())) {
+            if (password.equals(dbUser.getPassword())) {
                 // 密码正确，返回
-                return userdb;
+                return dbUser;
             } else {
                 // 密码错误，返回出错
                 throw new LoginException(LoginErrorCode.PASSWORD_NOT_CORRECT);
@@ -84,8 +84,8 @@ public class UserService {
 
     public User saveByEmail(User user) {
         List<User> users = userMapper.selectList(new QueryWrapper<User>().eq("email", user.getEmail()));
-        User userdb = users.size() == 0 ? null : users.get(0);
-        if (userdb == null) {
+        User dbUser = users.size() == 0 ? null : users.get(0);
+        if (dbUser == null) {
             user.setAccountId(AccountIdEnum.DEFAULT_ACCOUNT_ID.getCode());
             user.setPassword(UUID.randomUUID().toString());
             user.setBio(null);
@@ -98,11 +98,11 @@ public class UserService {
         } else {
             if (user.getName() == null) {
                 // 用户名为空，说明直接来自于 js post
-                userdb.setGmtModified(System.currentTimeMillis());
-                userMapper.updateById(userdb);
-                return userdb;
+                dbUser.setGmtModified(System.currentTimeMillis());
+                userMapper.updateById(dbUser);
+                return dbUser;
             }
-            if (userdb.getComplete() == false) {
+            if (dbUser.getComplete() == false) {
                 // 邮箱未验证
                 throw new LoginException(LoginErrorCode.EMAIL_UNVERIFIED_SIGNUP);
             } else {

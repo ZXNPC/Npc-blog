@@ -1,3 +1,4 @@
+logs/
 src/main/resources/application.properties
 src/main/java/com/example/blognpc/MybatisPlusGenerator.java
 HELP.md

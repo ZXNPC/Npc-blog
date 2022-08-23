@@ -1,6 +1,6 @@
 package com.example.blognpc.mapper;
 
-import com.example.blognpc.model.User;
+import com.example.blognpc.model.Comment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2022-08-23
  */
 @Mapper
-public interface UserMapper extends BaseMapper<User> {
+public interface CommentMapper extends BaseMapper<Comment> {
 
 }

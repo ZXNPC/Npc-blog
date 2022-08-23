@@ -16,6 +16,15 @@
             var resultDTO = [[${resultDTO}]];
             if (resultDTO != null && resultDTO.code != null && sessionStorage.getItem("resultDTO") == null) {
                 sessionStorage.setItem("resultDTO", true);
+                if (resultDTO.code == 2003) {
+                    // 重载至登录界面
+                    var isAccepted = confirm(resultDTO.message);
+                    if (true == isAccepted) {
+                        window.location.href = "/login";
+                        return;
+                    }
+                    return;
+                }
                 alert(resultDTO.message);
             }
             return;
