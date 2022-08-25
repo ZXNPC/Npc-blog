@@ -36,6 +36,7 @@ public class VerifyController {
                              @RequestParam(value = "password_repeat") String passwordRepeat,
                              @RequestParam(value = "token") String token,
                              HttpServletResponse response) {
+        assert password.equals(passwordRepeat);
         User user = userService.UpdateByPassword(token, password);
         response.addCookie(new Cookie("token", user.getToken()){{setPath("/");}});
         return "redirect:/";

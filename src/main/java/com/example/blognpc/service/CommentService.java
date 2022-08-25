@@ -68,7 +68,7 @@ public class CommentService {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
 
-            Question dbQuestion = questionMapper.selectById(comment.getParentId());
+            Question dbQuestion = questionMapper.selectById(dbComment.getParentId());
             if (dbQuestion == null) {
                 // 回复的问题不存在
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);

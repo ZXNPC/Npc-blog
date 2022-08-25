@@ -32,6 +32,9 @@
             <li class="active">
                 <a href="/community">论坛</a>
             </li>
+            <li>
+                <a href="/manage">管理</a>
+            </li>
         </ul>
         <!--问题列表-->
         <div class="community-question-list">
@@ -56,10 +59,42 @@
             </div>
         </div>
         <!--翻页-->
+        <nav aria-label="Page navigation" th:if="${paginationDTO.totalPage > 1}">
+            <ul class="pagination">
+                <li th:if="${paginationDTO.showFirstPage} == true" class="page-li">
+                    <a th:href="@{/community/(page=1)}" aria-label="First" class="page-li">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li th:if="${paginationDTO.showPrevious} == true" class="page-li">
+                    <a th:href="@{/community/(page=${paginationDTO.getPage()-1})}" aria-label="Previous" class="page-li">
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                </li>
+
+                <li th:each="page : ${paginationDTO.getPages()}"
+                    th:class="${paginationDTO.page == page} ? 'active':''">
+                    <a th:href="@{/community/(page=${page})}" th:text="${page}" class="page-li"></a>
+                </li>
+
+                <li th:if="${paginationDTO.showNext} == true">
+                    <a th:href="@{/community/(page=${paginationDTO.getPage()+1})}" aria-label="Next" class="page-li">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                </li>
+                <li th:if="${paginationDTO.showEndPage} == true" class="page-li">
+                    <a th:href="@{/community/(page=${paginationDTO.getTotalPage()})}" aria-label="End" class="page-li">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
 
     </div>
 
 </div>
+
 
 <div th:insert="~{footer :: foot}"></div>
 </body>

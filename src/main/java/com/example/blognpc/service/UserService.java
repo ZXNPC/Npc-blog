@@ -16,6 +16,7 @@ import org.springframework.util.DigestUtils;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -156,6 +157,15 @@ public class UserService {
                     return user;
                 }
             }
+        }
+    }
+
+    public void removeExpired() {
+        Long currentTime = System.currentTimeMillis();
+        List<User> users = userMapper.selectList(null);
+        List<Long> userIds = users.stream().filter(user -> user.getComplete() == false).map(user -> user.getId()).collect(Collectors.toList());
+        if (!userIds.isEmpty()) {
+            userMapper.delete(new QueryWrapper<User>().in("id", userIds).gt("gmt_create", currentTime - expiration));
         }
     }
 }

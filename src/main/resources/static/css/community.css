@@ -139,3 +139,8 @@ body {
     height: 64px;
     border: 1px solid #eee;
 }
+
+.page-li {
+    width: 40px;
+    text-align: center;
+}

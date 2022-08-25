@@ -3,9 +3,18 @@ package com.example.blognpc;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.blognpc.mapper.QuestionExtMapper;
 import com.example.blognpc.mapper.QuestionMapper;
+import com.example.blognpc.mapper.UserMapper;
 import com.example.blognpc.model.Question;
+import com.example.blognpc.model.User;
 import com.example.blognpc.service.QuestionService;
+import com.qcloud.cos.COSClient;
+import com.qcloud.cos.ClientConfig;
+import com.qcloud.cos.auth.AnonymousCOSCredentials;
+import com.qcloud.cos.auth.COSCredentials;
+import com.qcloud.cos.http.HttpProtocol;
+import com.qcloud.cos.region.Region;
 import org.apache.tomcat.util.security.MD5Encoder;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,25 +50,45 @@ class BlogNpcApplicationTests {
     private QuestionMapper questionMapper;
     @Autowired
     private QuestionExtMapper questionExtMapper;
+    @Autowired
+    private UserMapper userMapper;
+
+    @Value("${cloud.tencent.cam.capi.app-id}")
+    private String appId;
+
+    @Value("${cloud.tencent.cam.capi.secret-id}")
+    private String secretId;
+
+    @Value("${cloud.tencent.cam.capi.secret-key}")
+    private String secretKey;
+
+    @Value("${cloud.tencent.cos.bucket.bucket-name}")
+    private String bucketName;
+
+    @Value("${cloud.tencent.cos.bucket.region}")
+    private String region;
+
+    @Value("${cloud.tencent.cos.bucket.expires}")
+    private Integer expires;
 
     @Test
     public void emailTest() {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("2946310156@qq.com");
-        message.setTo("993023569@qq.com");
+        message.setFrom("@qq.com");
+        message.setTo("@qq.com");
         message.setSubject("it is a test for spring boot");
         message.setText("你好，我是小黄，我正在测试发送邮件。");
 
         try {
             mailSender.send(message);
         } catch (MailException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
     @Test
     public void MD5Test() {
-        String password = DigestUtils.md5DigestAsHex("BFBD13568551878".getBytes(StandardCharsets.UTF_8));
+        String password = DigestUtils.md5DigestAsHex("".getBytes(StandardCharsets.UTF_8));
         System.out.println(password);
         password = DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8));
         System.out.println(password);
@@ -136,5 +165,23 @@ class BlogNpcApplicationTests {
         for (Question question : questions) {
             System.out.println(question.toString());
         }
+    }
+
+    @Test
+    public void removeExpiredTest() {
+        List<User> users = userMapper.selectList(null);
+        List<Long> userIds = users.stream().filter(user -> user.getComplete() == false).map(user -> user.getId()).collect(Collectors.toList());
+        System.out.println(userIds.toString());
+    }
+
+    @Test
+    public void tencentCloudTest() {
+        COSCredentials cred = new AnonymousCOSCredentials();
+        ClientConfig clientConfig = new ClientConfig();
+        clientConfig.setRegion(new Region(region));
+        clientConfig.setHttpProtocol(HttpProtocol.http);
+        COSClient cosClient = new COSClient(cred, clientConfig);
+        String key = "0c5f973a-a773-46fb-8617-426374a5c285.png";
+        System.out.println(cosClient.getObjectUrl(bucketName, key));
     }
 }
