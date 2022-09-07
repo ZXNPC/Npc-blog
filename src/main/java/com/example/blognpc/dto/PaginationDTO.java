@@ -22,7 +22,7 @@ public class PaginationDTO<T> {
         assert totalCount >= 0 && size >= 0;
         // 页面总数
         Long totalPage = 0L;
-        if(totalCount % size == 0) {
+        if (totalCount % size == 0) {
             totalPage = totalCount / size;
         } else {
             totalPage = totalCount / size + 1;
@@ -33,26 +33,24 @@ public class PaginationDTO<T> {
         if (page < 1L)
             page = 1L;
         if (page > totalPage)
-            page = totalPage;
+            page = totalPage == 0 ? 1 : totalPage;
         this.page = page;
 
 
         // 页面显示
-        if(totalPage <= 7) {
+        if (totalPage <= 7) {
             for (Long i = 1L; i <= totalPage; i++)
                 pages.add(i);
         } else {
             Long start;
-            if(page <= 4) {
+            if (page <= 4) {
                 start = 1L;
-            }
-            else if (totalPage - page <= 2) {
+            } else if (totalPage - page <= 2) {
                 start = totalPage - 6;
-            }
-            else {
+            } else {
                 start = page - 3;
             }
-            for (Long i = start; i<=start+6; i++)
+            for (Long i = start; i <= start + 6; i++)
                 pages.add(i);
         }
 
@@ -64,27 +62,27 @@ public class PaginationDTO<T> {
         }
 
         // 是否展示上一页
-        if(page == 1) {
+        if (page == 1) {
             showPrevious = false;
         } else {
             showPrevious = true;
         }
         // 是否展示下一页
-        if(page == totalPage) {
+        if (page == totalPage) {
             showNext = false;
         } else {
             showNext = true;
         }
 
         // 是否展示第一页
-        if(pages.contains(1)) {
+        if (pages.contains(1)) {
             showFirstPage = false;
         } else {
             showFirstPage = true;
         }
 
         // 是否展示最后一页
-        if(pages.contains(totalPage)) {
+        if (pages.contains(totalPage)) {
             showEndPage = false;
         } else {
             showEndPage = true;
