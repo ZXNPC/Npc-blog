@@ -50,6 +50,8 @@ public class UserService {
             // 用户存在，更新用户
             user.setId(dbUser.getId());
             user.setToken(dbUser.getToken());
+            user.setEmail(dbUser.getEmail());
+            user.setPassword(password);
             user.setGmtCreate(dbUser.getGmtCreate());
             user.setGmtModified(System.currentTimeMillis());
             user.setComplete(true);

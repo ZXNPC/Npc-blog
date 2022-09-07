@@ -135,12 +135,20 @@ body {
 }
 
 .media .media-object {
-    width: 64px;
-    height: 64px;
+    width: 75px;
+    height: 75px;
     border: 1px solid #eee;
 }
 
 .page-li {
     width: 40px;
     text-align: center;
+}
+
+.comment-container {
+    margin-bottom: 18px;
+}
+
+.comment-section {
+    margin-top: 18px;
 }

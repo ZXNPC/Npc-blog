@@ -22,14 +22,16 @@
 
         <!--左页面-->
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-<!--TODO: 加一个排序按钮-->
+            <!--TODO: 加一个排序按钮-->
             <!--问题主体-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 18px;">
                 <h4><span th:text="${questionDTO.getTitle()}"></span></h4>
                 <span class="text-desc">
                 作者：<span th:text="${questionDTO.getUser().getName()}"></span> |
-                发布时间：<span th:text="${#dates.format(questionDTO.getGmtCreate(), 'yyyy-MM-dd HH:mm')}"></span> |
-                上次修改于：<span th:text="${#dates.format(questionDTO.getGmtModified(), 'yyyy-MM-dd HH:mm')}"></span> |
+                发布时间：<span th:text="${#dates.format(questionDTO.getGmtCreate(), 'yyyy-MM-dd HH:mm')}"></span>
+                    <span th:if="${questionDTO.getGmtCreate() != questionDTO.getGmtModified()}"> |
+                        上次修改于：<span th:text="${#dates.format(questionDTO.getGmtModified(), 'yyyy-MM-dd HH:mm')}"></span>
+                    </span> |
                 阅读数：<span th:text="${questionDTO.getViewCount()}"></span>
                 </span>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -38,7 +40,7 @@
                     <textarea style="display:none;" th:text="${questionDTO.getDescription()}"></textarea>
                 </div>
                 <script type="text/javascript">
-                    $(function() {
+                    $(function () {
                         var testView = editormd.markdownToHTML("question-view", {});
                     });
                 </script>
@@ -58,7 +60,7 @@
                     <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 </a>
             </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-container">
 
                 <!--评论数量-->
                 <h4>
@@ -67,7 +69,12 @@
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-sp">
 
                 <!--评论主体-->
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:each="commentDTO: ${commentDTOS}">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-desc"
+                     th:if="${questionDTO.getCommentCount() == 0}">
+                    还没有评论捏
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:unless="${questionDTO.getCommentCount() == 0}"
+                     th:each="commentDTO: ${commentDTOS}">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comments">
                         <div class="media-left">
                             <a href="#">
@@ -82,7 +89,8 @@
                             <div class="comment-content" th:text="${commentDTO.getContent()}"></div>
                             <div class="menu">
                                 <span class="glyphicon glyphicon-thumbs-up icon"></span>
-                                <span class="comment-icon" th:data-id="${commentDTO.getId()}" onclick="collapseComments(this)">
+                                <span class="comment-icon" th:data-id="${commentDTO.getId()}"
+                                      onclick="collapseComments(this)">
                                 <span class="glyphicon glyphicon-comment"></span>
                                 <span th:text="${commentDTO.getCommentCount()}"></span>
                             </span>
@@ -128,23 +136,22 @@
                 </div>
 
                 <!--回复框-->
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${session.user != null}">
-                    <div class="media col-lg-12 col-md-12 col-sm-12 col-xs-12" id="comment_section">
-                        <div class="media-left">
-                            <a href="#">
-                                <img class="media-object img-rounded"
-                                     th:src="${session.user.avatarUrl}">
-                            </a>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading">
-                                <span th:if="${session.user != null}" th:text="${session.user.name}"></span>
-                            </h4>
-                        </div>
-                        <input type="hidden" id="question_id" th:value="${questionDTO.getId()}">
-                        <textarea class="form-control comment" rows="6" id="comment_content"></textarea>
-                        <button type="button" class="btn btn-success btn-comment" onclick="post()">回复</button>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-section" th:if="${session.user != null}"
+                     id="comment-section">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object img-rounded"
+                                 th:src="${session.user.avatarUrl}">
+                        </a>
                     </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <span th:if="${session.user != null}" th:text="${session.user.name}"></span>
+                        </h4>
+                    </div>
+                    <input type="hidden" id="question_id" th:value="${questionDTO.getId()}">
+                    <textarea class="form-control comment" rows="6" id="comment_content"></textarea>
+                    <button type="button" class="btn btn-success btn-comment" onclick="post()">回复</button>
                     <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 </div>
             </div>
@@ -177,7 +184,8 @@
                 <h3>相关问题</h3>
                 <ul class="question-related">
                     <li th:each="relatedQuestion:${relatedQuestions}">
-                        <a th:href="@{'/question/' + ${relatedQuestion.getId()}}" th:text="${relatedQuestion.getTitle()}">title</a>
+                        <a th:href="@{'/question/' + ${relatedQuestion.getId()}}"
+                           th:text="${relatedQuestion.getTitle()}">title</a>
                     </li>
                 </ul>
             </div>

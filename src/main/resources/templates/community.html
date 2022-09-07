@@ -38,7 +38,11 @@
         </ul>
         <!--问题列表-->
         <div class="community-question-list">
-            <div th:each="questionDTO:${paginationDTO?.getData()}" class="media">
+            <div th:if="${paginationDTO == null || paginationDTO?.getData().size() == 0}">
+                <span class="text-desc">还没有问题被提出来捏</span>
+            </div>
+            <div th:unless="${paginationDTO == null || paginationDTO?.getData().size() == 0}"
+                 th:each="questionDTO:${paginationDTO?.getData()}" class="media">
                 <div class="media-left">
                     <a th:href="@{'/question/' + ${questionDTO.getId()}}">
                         <img class="media-object img-rounded" th:src="@{${questionDTO.getUser().getAvatarUrl()}}"
@@ -67,7 +71,8 @@
                     </a>
                 </li>
                 <li th:if="${paginationDTO.showPrevious} == true" class="page-li">
-                    <a th:href="@{/community/(page=${paginationDTO.getPage()-1})}" aria-label="Previous" class="page-li">
+                    <a th:href="@{/community/(page=${paginationDTO.getPage()-1})}" aria-label="Previous"
+                       class="page-li">
                         <span aria-hidden="true">&lt;</span>
                     </a>
                 </li>
