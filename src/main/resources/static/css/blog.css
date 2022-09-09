@@ -16,3 +16,36 @@ body {
 .jumbotron {
     margin: 50px;
 }
+
+.media .media-object {
+    width: 75px;
+    height: 75px;
+    border: 1px solid #eee;
+}
+
+.media .media-body {
+    padding-top: 10px
+}
+
+.media .text-desc {
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}
+
+.sections-section-list {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+
+.profile .list-group {
+    margin-top: 12px;
+}
+
+.navbar .badge {
+    margin-right: 5px;
+    background-color: red;
+    height: 17px;
+}

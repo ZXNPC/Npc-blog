@@ -82,17 +82,17 @@ public class ArticleService {
         articleExtMapper.incView(id);
     }
 
-    public PaginationDTO<ArticleDTO> list(Long page, Long size) {
-        Long totalCount = articleMapper.selectCount(null);
+    public PaginationDTO<ArticleDTO> list(Long id, Long page, Long size) {
+        Long totalCount = articleMapper.selectCount(new QueryWrapper<Article>().eq(id != 0L, "creator", id));
         PaginationDTO<ArticleDTO> paginationDTO = new PaginationDTO<>();
         paginationDTO.setPagination(totalCount, page, size);
         page = paginationDTO.getPage();
 
         Long offset = (page - 1) * size;
-        QueryWrapper<Article> queryWrapper = new QueryWrapper<Article>()
+        List<Article> articles = articleMapper.selectList(new QueryWrapper<Article>()
+                .eq(id != 0L, "creator", id)
                 .orderByDesc("id")
-                .last(String.format("limit %d, %d", offset, size));
-        List<Article> articles = articleMapper.selectList(queryWrapper);
+                .last(String.format("limit %d, %d", offset, size)));
         List<ArticleDTO> ArticleDTOS = new ArrayList<ArticleDTO>();
         for (Article article : articles) {
             List<User> users = userMapper.selectList(new QueryWrapper<User>().eq("id", article.getCreator()));

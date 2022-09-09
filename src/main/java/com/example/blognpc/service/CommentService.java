@@ -6,10 +6,7 @@ import com.example.blognpc.enums.CommentTypeEnum;
 import com.example.blognpc.enums.CustomizeErrorCode;
 import com.example.blognpc.exception.CustomizeException;
 import com.example.blognpc.mapper.*;
-import com.example.blognpc.model.Article;
-import com.example.blognpc.model.Comment;
-import com.example.blognpc.model.Question;
-import com.example.blognpc.model.User;
+import com.example.blognpc.model.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +34,8 @@ public class CommentService {
     private ArticleExtMapper articleExtMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private NotificationService notificationService;
 
     @Transactional
     public void insert(Comment comment) {
@@ -63,7 +62,8 @@ public class CommentService {
 
             commentMapper.insert(comment);
             questionExtMapper.incComment(dbQuestion.getId());
-            // TODO: notification
+            notificationService.create(comment.getCommentator(), dbQuestion.getCreator(), comment.getParentId(),
+                    CommentTypeEnum.getByType(comment.getType()), dbQuestion.getTitle());
         } else if (comment.getType() == CommentTypeEnum.COMMUNITY_COMMENT.getType()) {
             // 回复社区评论
             Comment dbComment = commentMapper.selectById(comment.getParentId());
@@ -80,8 +80,13 @@ public class CommentService {
 
             commentMapper.insert(comment);
             commentExtMapper.incComment(dbComment.getId());
+            // 回复问题创建人和评论创建人
+            notificationService.create(comment.getCommentator(), dbComment.getCommentator(), comment.getParentId(),
+                    CommentTypeEnum.getByType(comment.getType()), dbQuestion.getTitle());
+            notificationService.create(comment.getCommentator(), dbQuestion.getCreator(), comment.getParentId(),
+                    CommentTypeEnum.getByType(comment.getType()), dbQuestion.getTitle());
         } else if (comment.getType() == CommentTypeEnum.MUMBLER_ARTICLE.getType()) {
-            // 回复碎碎念文章、
+            // 回复文章
             Article dbArticle = articleMapper.selectById(comment.getParentId());
             if (dbArticle == null) {
                 // 回复的文章不存在
@@ -90,6 +95,8 @@ public class CommentService {
 
             commentMapper.insert(comment);
             articleExtMapper.incComment(dbArticle.getId());
+            notificationService.create(comment.getCommentator(), dbArticle.getCreator(), comment.getParentId(),
+                    CommentTypeEnum.getByType(comment.getType()), dbArticle.getTitle());
         } else if (comment.getType() == CommentTypeEnum.MUMBLER_COMMENT.getType()) {
             // 回复文章评论
             Comment dbComment = commentMapper.selectById(comment.getParentId());
@@ -106,8 +113,16 @@ public class CommentService {
 
             commentMapper.insert(comment);
             commentExtMapper.incComment(dbComment.getId());
+
+            // 同时回复文章作者和评论创建人
+            notificationService.create(comment.getCommentator(), dbComment.getCommentator(), comment.getParentId(),
+                    CommentTypeEnum.getByType(comment.getType()), dbArticle.getTitle());
+            notificationService.create(comment.getCommentator(), dbArticle.getCreator(), comment.getParentId(),
+                    CommentTypeEnum.getByType(comment.getType()), dbArticle.getTitle());
         } else {
         }
+
+        return;
     }
 
     public List<CommentDTO> listByTargetId(Long id, CommentTypeEnum type) {

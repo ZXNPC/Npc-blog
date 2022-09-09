@@ -12,16 +12,21 @@ public enum CommentTypeEnum {
         this.type = type;
     }
 
-    public static boolean isExist(Integer type) {
-        for (CommentTypeEnum commentTypeEnum : CommentTypeEnum.values()) {
-            if (commentTypeEnum.getType() == type) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public Integer getType() {
         return type;
+    }
+
+    public static boolean isExist(Integer type) {
+        CommentTypeEnum commentTypeEnum = getByType(type);
+        if (commentTypeEnum == null) return false;
+        return true;
+    }
+
+    public static CommentTypeEnum getByType(Integer type) {
+        for (CommentTypeEnum commentTypeEnum : CommentTypeEnum.values()) {
+            if (commentTypeEnum.getType() == type)
+                return commentTypeEnum;
+        }
+        return null;
     }
 }

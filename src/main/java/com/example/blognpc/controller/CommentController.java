@@ -8,8 +8,10 @@ import com.example.blognpc.enums.CommentTypeEnum;
 import com.example.blognpc.enums.CustomizeErrorCode;
 import com.example.blognpc.exception.CustomizeException;
 import com.example.blognpc.model.Comment;
+import com.example.blognpc.model.Notification;
 import com.example.blognpc.model.User;
 import com.example.blognpc.service.CommentService;
+import com.example.blognpc.service.NotificationService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +51,7 @@ public class CommentController {
         comment.setContent(commentCreateDTO.getContent());
         comment.setCommentator(user.getId());
         commentService.insert(comment);
+
         return ResultDTO.okOf();
     }
 

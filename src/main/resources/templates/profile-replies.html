@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>我的问题</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/blog.css"/>
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:insert="~{navigation :: nav}"></div>
+<div class="container main profile">
+    <div class="row">
+<!--TODO: 美化一下-->
+        <!--左侧边栏-->
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2>我的问题</h2>
+            <hr>
+            <!--最新回复-->
+            <div class="sections-section-list">
+
+                <div class="media" th:each="notification : ${paginationDTO.getData()}">
+                    <div class="media-body">
+                        <p class="media-heading">
+                            <span th:text="${notification.getNotifierName() + ' ' + notification.getTypeName()}"></span>
+                            <a th:href="@{'/notification/' + ${notification.getId()}}"
+                               th:text="${notification.getOuterTitle()}">
+                            </a>
+                            <span class="label label-danger" th:if="${notification.getStatus() == 0}">未读</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!--翻页-->
+            <nav aria-label="Page navigation" th:if="${paginationDTO.getTotalPage > 1}">
+                <ul class="pagination">
+                    <li th:if="${paginationDTO.showFirstPage} == true" class="page-li">
+                        <a th:href="@{/community/(page=1)}" aria-label="First" class="page-li">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li th:if="${paginationDTO.showPrevious} == true" class="page-li">
+                        <a th:href="@{/community/(page=${paginationDTO.getPage()-1})}" aria-label="Previous"
+                           class="page-li">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+
+                    <li th:each="page : ${paginationDTO.getPages()}"
+                        th:class="${paginationDTO.page == page} ? 'active':''">
+                        <a th:href="@{/community/(page=${page})}" th:text="${page}" class="page-li"></a>
+                    </li>
+
+                    <li th:if="${paginationDTO.showNext} == true">
+                        <a th:href="@{/community/(page=${paginationDTO.getPage()+1})}" aria-label="Next" class="page-li">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${paginationDTO.showEndPage} == true" class="page-li">
+                        <a th:href="@{/community/(page=${paginationDTO.getTotalPage()})}" aria-label="End" class="page-li">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <!--右侧边栏-->
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <div class="list-group section">
+                <a href="/profile/questions"
+                   th:class="${#httpServletRequest.getRequestURI() == '/profile/questions'} ? 'active list-group-item':'list-group-item'">
+                    <span class="badge"></span>我的问题
+                </a>
+                <a th:if="${session.manager == true}" href="/profile/articles"
+                   th:class="${#httpServletRequest.getRequestURI() == '/profile/articles'} ? 'active list-group-item':'list-group-item'">
+                    <span class="badge"></span>我的文章
+                </a>
+                <a href="/profile/replies"
+                   th:class="${#httpServletRequest.getRequestURI() == '/profile/replies'} ? 'active list-group-item':'list-group-item'">
+                    <span class="badge" th:text="${session.unreadCount}"></span>最新回复
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:insert="~{footer :: foot}"></div>
+</body>
+</html>

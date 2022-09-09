@@ -20,18 +20,25 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                 <ul class="nav navbar-nav navbar-right">
-<!--                    <li th:if="${session.user != null}">-->
-<!--                        <a href="/publish">提问</a>-->
-<!--                    </li>-->
-<!--                    <li th:if="${session.user != null}">-->
-<!--                        <a href="/profile/replies">通知 <span class="badge"-->
-<!--                                                            th:text="${session.unreadCount == 0} ? '': ${session.unreadCount}"></span></a>-->
-<!--                    </li>-->
+                    <!--                    <li th:if="${session.user != null}">-->
+                    <!--                        <a href="/publish">提问</a>-->
+                    <!--                    </li>-->
+                    <!--                    <li th:if="${session.user != null}">-->
+                    <!--                        <a href="/profile/replies">通知 <span class="badge"-->
+                    <!--                                                            th:text="${session.unreadCount == 0} ? '': ${session.unreadCount}"></span></a>-->
+                    <!--                    </li>-->
                     <li th:if="${session.user != null}">
-                        <a href="/community/publish">提问</a>
+                        <a href="/profile/replies" title="查看通知">
+                            <span class="badge"
+                                  th:text="${session.unreadCount == 0} ? '': ${session.unreadCount}"></span>通知
+                        </a>
                     </li>
-                    <li th:if="${session.user != null && session.maneger == true}">
-                        <a href="/mumbler/publish">发布</a>
+
+                    <li th:if="${session.user != null}">
+                        <a href="/community/publish" title="在论坛中提出问题">提问</a>
+                    </li>
+                    <li th:if="${session.user != null && session.manager == true}">
+                        <a href="/mumbler/publish" title="发布文章">发布</a>
                     </li>
                     <li class="dropdown" th:if="${session.user != null}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -40,12 +47,13 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/profile"></a></li>
+                            <li><a href="/profile/questions">我的问题</a></li>
+                            <li th:if="${session.manager == true}"><a href="/profile/articles">我的文章</a></li>
                             <li><a href="/logout">退出登录</a></li>
                         </ul>
                     </li>
                     <li th:if="${session.user == null}">
-<!--                        <a th:href="@{http://github.com/login/oauth/authorize(client_id=${clientId}, redirect_url=${#httpServletRequest.getRequestURL()+'callback'},scope='user',state=1)}">登录</a>-->
+                        <!--                        <a th:href="@{http://github.com/login/oauth/authorize(client_id=${clientId}, redirect_url=${#httpServletRequest.getRequestURL()+'callback'},scope='user',state=1)}">登录</a>-->
                         <a href="/login">登录</a>
                     </li>
 

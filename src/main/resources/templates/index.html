@@ -19,19 +19,20 @@
 <div class="container">
     <div class="main">
         <ul class="nav nav-tabs" role="tablist">
-            <li class="active">
+            <li th:class="${#httpServletRequest.getRequestURI() == '/mumbler'
+             || #httpServletRequest.getRequestURI() == '/'} ? 'active':''">
                 <a href="/mumbler">文章</a>
             </li>
-            <li>
+            <li th:class="${#httpServletRequest.getRequestURI() == '/tool'} ? 'active':''">
                 <a href="/tool">工具</a>
             </li>
-            <li>
+            <li th:class="${#httpServletRequest.getRequestURI() == '/link'} ? 'active':''">
                 <a href="/link">常用网站</a>
             </li>
-            <li>
+            <li th:class="${#httpServletRequest.getRequestURI() == '/community'} ? 'active':''">
                 <a href="/community">论坛</a>
             </li>
-            <li>
+            <li th:class="${#httpServletRequest.getRequestURI() == '/manage'} ? 'active':''">
                 <a href="/manage">管理</a>
             </li>
         </ul>
@@ -50,7 +51,8 @@
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading">
-                        <a th:href="@{'/mumbler/article/' + ${articleDTO.getId()}}" th:text="${articleDTO.getTitle()}"></a>
+                        <a th:href="@{'/mumbler/article/' + ${articleDTO.getId()}}"
+                           th:text="${articleDTO.getTitle()}"></a>
                     </h4>
                     <br>
                     <span class="text-desc">

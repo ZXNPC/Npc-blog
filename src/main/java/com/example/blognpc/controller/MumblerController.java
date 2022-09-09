@@ -16,8 +16,8 @@ public class MumblerController {
     @GetMapping("/mumbler")
     public String mumbler(Model model,
                         @RequestParam(name = "page", defaultValue = "1") Long page,
-                        @RequestParam(name = "size", defaultValue = "5") Long size) {
-        PaginationDTO<ArticleDTO> paginationDTO = articleService.list(page, size);
+                        @RequestParam(name = "size", defaultValue = "10") Long size) {
+        PaginationDTO<ArticleDTO> paginationDTO = articleService.list(0L, page, size);
         model.addAttribute("paginationDTO", paginationDTO);
         return "index";
     }

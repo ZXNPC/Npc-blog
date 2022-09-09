@@ -24,7 +24,7 @@ public class IndexController {
     public String index(Model model,
                         @RequestParam(name = "page", defaultValue = "1") Long page,
                         @RequestParam(name = "size", defaultValue = "5") Long size) {
-        PaginationDTO<ArticleDTO> paginationDTO = articleService.list(page, size);
+        PaginationDTO<ArticleDTO> paginationDTO = articleService.list(0L, page, size);
         model.addAttribute("paginationDTO", paginationDTO);
         return "index";
     }

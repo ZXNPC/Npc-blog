@@ -1,7 +1,6 @@
 package com.example.blognpc.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.blognpc.dto.ArticleDTO;
 import com.example.blognpc.dto.PaginationDTO;
 import com.example.blognpc.dto.QuestionDTO;
@@ -59,17 +58,17 @@ public class QuestionService {
 
     }
 
-    public PaginationDTO<QuestionDTO> list(Long page, Long size) {
-        Long totalCount = questionMapper.selectCount(null);
+    public PaginationDTO<QuestionDTO> list(Long id, Long page, Long size) {
+        Long totalCount = questionMapper.selectCount(new QueryWrapper<Question>().eq(id != 0L, "creator", id));
         PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO<>();
         paginationDTO.setPagination(totalCount, page, size);
         page = paginationDTO.getPage();
 
         Long offset = (page - 1) * size;
-        QueryWrapper<Question> queryWrapper = new QueryWrapper<Question>()
+        List<Question> questions = questionMapper.selectList(new QueryWrapper<Question>()
+                        .eq(id != 0L, "creator", id)
                 .orderByDesc("id")
-                .last(String.format("limit %d, %d", offset, size));
-        List<Question> questions = questionMapper.selectList(queryWrapper);
+                .last(String.format("limit %d, %d", offset, size)));
         List<QuestionDTO> questionDTOS = new ArrayList<QuestionDTO>();
         for (Question question : questions) {
             List<User> users = userMapper.selectList(new QueryWrapper<User>().eq("id", question.getCreator()));

@@ -2,7 +2,6 @@ package com.example.blognpc.controller;
 
 import com.example.blognpc.dto.PaginationDTO;
 import com.example.blognpc.dto.QuestionDTO;
-import com.example.blognpc.model.Question;
 import com.example.blognpc.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,8 +17,8 @@ public class CommunityController {
     @GetMapping("/community")
     public String community(Model model,
                             @RequestParam(name = "page", defaultValue = "1") Long page,
-                            @RequestParam(name = "size", defaultValue = "5") Long size) {
-        PaginationDTO<QuestionDTO> paginationDTO = questionService.list(page, size);
+                            @RequestParam(name = "size", defaultValue = "10") Long size) {
+        PaginationDTO<QuestionDTO> paginationDTO = questionService.list(0L, page, size);
         model.addAttribute("paginationDTO", paginationDTO);
         return "community";
     }

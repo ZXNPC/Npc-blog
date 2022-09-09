@@ -2,16 +2,12 @@ package com.example.blognpc.controller;
 
 import com.example.blognpc.cache.TagCache;
 import com.example.blognpc.dto.ArticleDTO;
-import com.example.blognpc.dto.QuestionDTO;
 import com.example.blognpc.dto.ResultDTO;
 import com.example.blognpc.enums.CustomizeErrorCode;
 import com.example.blognpc.exception.CustomizeException;
-import com.example.blognpc.mapper.ArticleMapper;
 import com.example.blognpc.model.Article;
-import com.example.blognpc.model.Question;
 import com.example.blognpc.model.User;
 import com.example.blognpc.service.ArticleService;
-import com.example.blognpc.service.QuestionService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -64,7 +60,7 @@ public class MumblerPublishController {
         model.addAttribute("tagDTOS", TagCache.get());
 
         if (StringUtils.isBlank(title) || StringUtils.isBlank(description) || StringUtils.isBlank(tag)) {
-            throw new CustomizeException(CustomizeErrorCode.FRONT_ERROR);
+            throw new CustomizeException(CustomizeErrorCode.FRONT_END_ERROR);
         }
 
         String cs = TagCache.filterInvalid(tag);

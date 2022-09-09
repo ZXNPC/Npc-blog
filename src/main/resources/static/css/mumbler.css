@@ -152,3 +152,9 @@ body {
 .comment-section {
     margin-top: 18px;
 }
+
+.navbar .badge {
+    margin-right: 5px;
+    background-color: red;
+    height: 17px;
+}

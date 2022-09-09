@@ -1,7 +1,10 @@
 package com.example.blognpc.interceptor;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.blognpc.enums.NotificationStatusEnum;
+import com.example.blognpc.mapper.NotificationMapper;
 import com.example.blognpc.mapper.UserMapper;
+import com.example.blognpc.model.Notification;
 import com.example.blognpc.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +26,8 @@ public class SessionInterceptor implements HandlerInterceptor {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private NotificationMapper notificationMapper;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -35,11 +40,15 @@ public class SessionInterceptor implements HandlerInterceptor {
                     if (users.size() != 0) {
                         request.getSession().setAttribute("user", users.get(0));
                         if (token.equals(managerToken)) {
-                            request.getSession().setAttribute("maneger", true);
+                            request.getSession().setAttribute("manager", true);
                         }
                         else {
-                            request.getSession().setAttribute("maneger", false);
+                            request.getSession().setAttribute("manager", false);
                         }
+                        Long unreadCount = notificationMapper.selectCount(new QueryWrapper<Notification>()
+                                .eq("receiver", users.get(0).getId())
+                                .eq("status", NotificationStatusEnum.UNREAD));
+                        request.getSession().setAttribute("unreadCount", unreadCount);
                     }
                 }
             }

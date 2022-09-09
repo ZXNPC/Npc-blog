@@ -56,7 +56,7 @@ public class CommunityPublishController {
         model.addAttribute("tagDTOS", TagCache.get());
 
         if (StringUtils.isBlank(title) || StringUtils.isBlank(description) || StringUtils.isBlank(tag)) {
-            throw new CustomizeException(CustomizeErrorCode.FRONT_ERROR);
+            throw new CustomizeException(CustomizeErrorCode.FRONT_END_ERROR);
         }
 
         String cs = TagCache.filterInvalid(tag);

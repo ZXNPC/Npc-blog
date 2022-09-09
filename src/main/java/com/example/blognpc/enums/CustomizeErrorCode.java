@@ -12,12 +12,13 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     ACCOUNT_ERROR(2007, "当前登录用户错误"),
     CONTENT_IS_EMPTY(2008, "评论为空"),
     READ_NOTIFICATION_FAIL(2009, "提示出错"),
-    NOTIFICATION_NOT_FOUND(2010, "提示不存在"),
+    NOTIFICATION_NOT_FOUND(2010, "回复不存在"),
     FILE_UPLOAD_FAIL(2011, "文件上传错误"),
-    FRONT_ERROR(2012, "前端怎么做的？？？"),
+    FRONT_END_ERROR(2012, "前端怎么做的？？？"),
     TAG_ERROR(2013, "标签错误"),
     NOT_MANAGER(2014, "你没有管理员权限"),
-    ARTICLE_NOT_FOUND(2015, "文章不存在")
+    ARTICLE_NOT_FOUND(2015, "文章不存在"),
+    USER_NOT_FOUND(2016, "用户不存在")
     ;
 
     @Override
