@@ -1,8 +1,10 @@
 package com.example.blognpc.enums;
 
 public enum CommentTypeEnum {
-    QUESTION(1),
-    COMMENT(2);
+    COMMUNITY_QUESTION(1),
+    COMMUNITY_COMMENT(2),
+    MUMBLER_ARTICLE(3),
+    MUMBLER_COMMENT(4);
 
     private Integer type;
 

@@ -109,7 +109,7 @@
                     if (true == sendEmail) {
                         const form = document.createElement("form");
                         form.method = "post";
-                        form.action = "/login/signup?email=" + email;
+                        form.action = "/login?signup_email=" + email;
                         document.body.appendChild(form);
                         form.submit();
                     }
@@ -126,7 +126,7 @@
 
 <div style="width: -webkit-fill-available;">
     <div class="container">
-        <form th:action="@{/verify(token=${token})}" method="post" class="form">
+        <form th:action="@{/login/verify(token=${token})}" method="post" class="form">
             <div>
                 <span th:text="${userName} + '，'"></span>
                 <span id="datetime">

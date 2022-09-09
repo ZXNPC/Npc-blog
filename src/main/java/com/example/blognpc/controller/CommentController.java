@@ -55,7 +55,8 @@ public class CommentController {
     @ResponseBody
     @GetMapping("/comment/{id}")
     public ResultDTO<List<CommentDTO>> comments(@PathVariable(name = "id") Long id) {
-        List<CommentDTO> commentDTOS = commentService.listByTargetId(id, CommentTypeEnum.COMMENT);
+        List<CommentDTO> commentDTOS = commentService.listByTargetId(id, CommentTypeEnum.COMMUNITY_COMMENT);
+        commentDTOS.addAll(commentService.listByTargetId(id, CommentTypeEnum.MUMBLER_COMMENT));
         return ResultDTO.okOf(commentDTOS);
     }
 }

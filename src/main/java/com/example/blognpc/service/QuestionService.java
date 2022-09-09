@@ -2,6 +2,7 @@ package com.example.blognpc.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.blognpc.dto.ArticleDTO;
 import com.example.blognpc.dto.PaginationDTO;
 import com.example.blognpc.dto.QuestionDTO;
 import com.example.blognpc.enums.CustomizeErrorCode;
@@ -116,13 +117,25 @@ public class QuestionService {
             // 正常前端和数据库都会限制该情况的出现，所以我直接抛异常了
             throw new CustomizeException(CustomizeErrorCode.SYSTEM_ERROR);
         }
+        return selectRelated(queryDTO.getId(), queryDTO.getTag(), size);
+    }
 
-        String regexp = Arrays.stream(queryDTO.getTag().split(",")).map(tag -> {
+    public List<QuestionDTO> selectRelated(ArticleDTO queryDTO, Long size) {
+        if (StringUtils.isBlank(queryDTO.getTag())) {
+            // 正常前端和数据库都会限制该情况的出现，所以我直接抛异常了
+            throw new CustomizeException(CustomizeErrorCode.SYSTEM_ERROR);
+        }
+        return selectRelated(0L, queryDTO.getTag(), size);
+    }
+
+    public List<QuestionDTO> selectRelated(Long id, String tags, Long size) {
+        // id 是用来过滤问题的，防止相关问题搜寻到自己，而文章的相关问题则不需考虑重复，故设置为0
+        String regexp = Arrays.stream(tags.split(",")).map(tag -> {
             tag = tag.trim();
             return "(" + tag + ",)|(" + tag + "$)";
         }).collect(Collectors.joining("|"));
         List<Question> questions = questionExtMapper.selectRegexp("tag", regexp, size);
-        List<QuestionDTO> questionDTOS = questions.stream().filter(question -> !(question.getId() == queryDTO.getId())).map(question -> {
+        List<QuestionDTO> questionDTOS = questions.stream().filter(question -> !(question.getId() == id)).map(question -> {
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
             // 这里并没有把 user信息 放到questionDTO之中，注意一下

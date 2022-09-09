@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>发布</title>
+    <title>提问</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
@@ -39,7 +39,7 @@
             <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 发起</h2>
             <hr>
 
-            <form action="/publish" method="post">
+            <form action="/community/publish" method="post">
                 <input type="hidden" name="id" th:value="${id}">
                 <div class="form-group">
                     <label for="title">问题标题（简单扼要）：</label>
@@ -117,7 +117,10 @@
             <h3>问题发起指南</h3>
             · 问题标题：请用简洁的语言描述你发布的问题，不超过25字<br>
             · 问题补充：详细补充你的问题内容，并确保问题描述清晰直观，并提供一些相关的资料<br>
-            · 选择标签：选择一个或者多个合适的标签，用逗号隔开，每个标签不超过10个字
+            · 选择标签：选择一个或者多个合适的标签，用逗号隔开，每个标签不超过10个字<br>
+            <hr>
+            <h3>你的问题将展示在论坛的最新问题中</h3>
+            <s>所以不要在主页文章里面找自己的问题了</s>
         </div>
     </div>
 </div>

@@ -1,15 +1,15 @@
 // 提交回复
 function post() {
-    var questionId = $("#question_id").val();
+    var articleId = $("#article_id").val();
     var content = $("#comment_content").val();
-    comment2target(questionId, 1, content);
+    comment2target(articleId, 3, content);
 }
 
 // 提交二级回复
 function comment(e) {
     var commentId = e.getAttribute("data-id");
     var content = $("#input-" + commentId).val();
-    comment2target(commentId, 2, content);
+    comment2target(commentId, 4, content);
 }
 
 function comment2target(targetId, type, content) {

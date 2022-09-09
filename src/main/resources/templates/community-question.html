@@ -181,14 +181,26 @@
 
             <!--相关问题-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <h3>相关问题</h3>
-                <ul class="question-related">
-                    <li th:each="relatedQuestion:${relatedQuestions}">
-                        <a th:href="@{'/question/' + ${relatedQuestion.getId()}}"
-                           th:text="${relatedQuestion.getTitle()}">title</a>
-                    </li>
-                </ul>
+                <div th:if="${relatedArticles.size() != 0}">
+                    <h3>相关文章</h3>
+                    <ul class="article-related">
+                        <li th:each="relatedArticle:${relatedArticles}">
+                            <a th:href="@{'/mumbler/article/' + ${relatedArticle.getId()}}"
+                               th:text="${relatedArticle.getTitle()}">title</a>
+                        </li>
+                    </ul>
+                </div>
+                <div th:if="${relatedQuestions.size() != 0}">
+                    <h3>相关问题</h3>
+                    <ul class="article-related">
+                        <li th:each="relatedQuestion:${relatedQuestions}">
+                            <a th:href="@{'/community/question/' + ${relatedQuestion.getId()}}"
+                               th:text="${relatedQuestion.getTitle()}">title</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
+
         </div>
     </div>
 </div>

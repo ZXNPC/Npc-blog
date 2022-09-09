@@ -28,7 +28,10 @@
 <!--                                                            th:text="${session.unreadCount == 0} ? '': ${session.unreadCount}"></span></a>-->
 <!--                    </li>-->
                     <li th:if="${session.user != null}">
-                        <a href="/publish">提问</a>
+                        <a href="/community/publish">提问</a>
+                    </li>
+                    <li th:if="${session.user != null && session.maneger == true}">
+                        <a href="/mumbler/publish">发布</a>
                     </li>
                     <li class="dropdown" th:if="${session.user != null}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -37,7 +40,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="http://community.zx2624.co">论坛入口</a></li>
+                            <li><a href="/profile"></a></li>
                             <li><a href="/logout">退出登录</a></li>
                         </ul>
                     </li>

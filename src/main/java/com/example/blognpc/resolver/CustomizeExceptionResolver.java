@@ -36,7 +36,7 @@ public class CustomizeExceptionResolver implements ErrorViewResolver {
     @ExceptionHandler(value = {VerifyException.class})
     public String verifyExceptionHandler(Exception e, Model model) {
         model.addAttribute("resultDTO", ResultDTO.errorOf((LoginException) e));
-        return "verify";
+        return "login-verify";
     }
 
     // 处理通用错误

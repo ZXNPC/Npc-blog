@@ -18,6 +18,8 @@ import java.util.List;
 public class SessionInterceptor implements HandlerInterceptor {
     @Value("${github.client.id}")
     private String clientId;
+    @Value("${blog.manager.token}")
+    private String managerToken;
 
     @Autowired
     private UserMapper userMapper;
@@ -32,6 +34,12 @@ public class SessionInterceptor implements HandlerInterceptor {
                     List<User> users = userMapper.selectList(new QueryWrapper<User>().eq("token", token));
                     if (users.size() != 0) {
                         request.getSession().setAttribute("user", users.get(0));
+                        if (token.equals(managerToken)) {
+                            request.getSession().setAttribute("maneger", true);
+                        }
+                        else {
+                            request.getSession().setAttribute("maneger", false);
+                        }
                     }
                 }
             }

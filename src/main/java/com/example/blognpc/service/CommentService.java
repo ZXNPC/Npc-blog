@@ -6,6 +6,7 @@ import com.example.blognpc.enums.CommentTypeEnum;
 import com.example.blognpc.enums.CustomizeErrorCode;
 import com.example.blognpc.exception.CustomizeException;
 import com.example.blognpc.mapper.*;
+import com.example.blognpc.model.Article;
 import com.example.blognpc.model.Comment;
 import com.example.blognpc.model.Question;
 import com.example.blognpc.model.User;
@@ -31,6 +32,10 @@ public class CommentService {
     @Autowired
     private QuestionExtMapper questionExtMapper;
     @Autowired
+    private ArticleMapper articleMapper;
+    @Autowired
+    private ArticleExtMapper articleExtMapper;
+    @Autowired
     private UserMapper userMapper;
 
     @Transactional
@@ -48,8 +53,8 @@ public class CommentService {
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setGmtModified(comment.getGmtCreate());
 
-        if (comment.getType() == CommentTypeEnum.QUESTION.getType()) {
-            // 回复问题
+        if (comment.getType() == CommentTypeEnum.COMMUNITY_QUESTION.getType()) {
+            // 回复社区问题
             Question dbQuestion = questionMapper.selectById(comment.getParentId());
             if (dbQuestion == null) {
                 // 回复的问题不存在
@@ -59,9 +64,8 @@ public class CommentService {
             commentMapper.insert(comment);
             questionExtMapper.incComment(dbQuestion.getId());
             // TODO: notification
-        }
-        else {
-            // 回复评论
+        } else if (comment.getType() == CommentTypeEnum.COMMUNITY_COMMENT.getType()) {
+            // 回复社区评论
             Comment dbComment = commentMapper.selectById(comment.getParentId());
             if (dbComment == null) {
                 // 回复的评论不存在
@@ -76,6 +80,33 @@ public class CommentService {
 
             commentMapper.insert(comment);
             commentExtMapper.incComment(dbComment.getId());
+        } else if (comment.getType() == CommentTypeEnum.MUMBLER_ARTICLE.getType()) {
+            // 回复碎碎念文章、
+            Article dbArticle = articleMapper.selectById(comment.getParentId());
+            if (dbArticle == null) {
+                // 回复的文章不存在
+                throw new CustomizeException(CustomizeErrorCode.ARTICLE_NOT_FOUND);
+            }
+
+            commentMapper.insert(comment);
+            articleExtMapper.incComment(dbArticle.getId());
+        } else if (comment.getType() == CommentTypeEnum.MUMBLER_COMMENT.getType()) {
+            // 回复文章评论
+            Comment dbComment = commentMapper.selectById(comment.getParentId());
+            if (dbComment == null) {
+                // 回复的评论不存在
+                throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
+            }
+
+            Article dbArticle = articleMapper.selectById(dbComment.getParentId());
+            if (dbArticle == null) {
+                // 回复的文章不存在
+                throw new CustomizeException(CustomizeErrorCode.ARTICLE_NOT_FOUND);
+            }
+
+            commentMapper.insert(comment);
+            commentExtMapper.incComment(dbComment.getId());
+        } else {
         }
     }
 

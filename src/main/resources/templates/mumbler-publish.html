@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>发布</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/mumbler.css"/>
+    <link rel="stylesheet" href="/css/editormd.min.css"/>
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/mumbler.js" type="application/javascript"></script>
+    <script src="/js/editormd.min.js" type="application/javascript"></script>
+    <script th:inline="javascript">
+        window.onload = function () {
+            var resultDTO = [[${resultDTO}]];
+            if (resultDTO != null && resultDTO.code != null && sessionStorage.getItem("resultDTO") == null) {
+                sessionStorage.setItem("resultDTO", true);
+                if (resultDTO.code == 2003) {
+                    // 重载至登录界面
+                    var isAccepted = confirm(resultDTO.message);
+                    if (true == isAccepted) {
+                        window.location.href = "/login";
+                        return;
+                    }
+                    return;
+                }
+                alert(resultDTO.message);
+            }
+            return;
+        }
+    </script>
+</head>
+<body>
+<div th:insert="~{navigation :: nav}"></div>
+<div class="container main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 发起</h2>
+            <hr>
+
+            <form action="/mumbler/publish" method="post">
+                <input type="hidden" name="id" th:value="${id}">
+                <div class="form-group">
+                    <label for="title">文章标题：</label>
+                    <input type="text" th:value="${title}" class="form-control" id="title" name="title"
+                           placeholder="文章标题...">
+                </div>
+
+                <div class="form-group" id="article-editor">
+                    <label for="title">文章内容：</label>
+                    <textarea name="description" th:text="${description}" id="description" style="display: none;"
+                              class="form-control"
+                              cols="30" rows="10"></textarea>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        var editor = editormd("article-editor", {
+                            width: "100%",
+                            height: 350,
+                            path: "/js/lib/",
+                            delay: 0,
+                            watch: false,
+                            placeholder: "请输入文章",
+                            saveHTMLToTextarea: true,
+                            imageUpload: true,
+                            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                            imageUploadURL: "/file/upload"
+                        });
+                    });
+                </script>
+
+                <div class="form-group">
+                    <label for="title">添加标签：</label>
+                    <input type="text" class="form-control" th:value="${tag}" id="tag" name="tag"
+                           placeholder="输入标签，以”,“分割">
+                    <div id="select-tag" class="nav-tag" style="display: block">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" th:each="tagDTO, tagDTOStat: ${tagDTOS}"
+                                th:class="${tagDTOStat.first ? 'active':''}">
+                                <a th:href="'#' + ${tagDTO.categoryName}" aria-controls="home" role="tab"
+                                   data-toggle="tab" th:text="${tagDTO.categoryName}"></a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" th:class="${tagDTOStat.first ? 'tab-pane active':'tab-pane'}"
+                                 th:each="tagDTO, tagDTOStat: ${tagDTOS}"
+                                 th:id="${tagDTO.categoryName}">
+                                <div class="tag-list">
+                                    <span class="label label-info article-tag" th:each="tag: ${tagDTO.tags}">
+                                        <span class="glyphicon glyphicon-tags article-tag" th:text="' ' + ${tag}"
+                                              onclick="selectTag(this)" th:data-tag="${tag}"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid main">
+                    <div class="row">
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                            <div class="alert alert-danger col-lg-9 col-md-12 col-sm-12 col-xs-12"
+                                 th:if="${error} != null"
+                                 th:text="${error}">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                            <button type="submit" onclick="return publishCheck()" class="btn btn-success btn-publish">
+                                发布
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <h3>文章发起指南</h3>
+            · 文章标题：请用简洁的语言描述文章的主要内容<br>
+            · 文章内容：详细描述文章内容，并提供一些相关的资料<br>
+            · 选择标签：选择一个或者多个合适的标签，用逗号隔开
+        </div>
+    </div>
+</div>
+<div th:insert="~{footer :: foot}"></div>
+</body>
+</html>

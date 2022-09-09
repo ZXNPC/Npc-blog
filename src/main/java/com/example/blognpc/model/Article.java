@@ -14,8 +14,8 @@ import io.swagger.annotations.ApiModelProperty;
  * @author NPC
  * @since 2022-09-09
  */
-@ApiModel(value = "Question对象", description = "")
-public class Question implements Serializable {
+@ApiModel(value = "Article对象", description = "")
+public class Article implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -113,7 +113,7 @@ public class Question implements Serializable {
 
     @Override
     public String toString() {
-        return "Question{" +
+        return "Article{" +
             "id=" + id +
             ", title=" + title +
             ", description=" + description +
