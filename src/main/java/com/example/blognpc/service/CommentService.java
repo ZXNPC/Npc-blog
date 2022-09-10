@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.blognpc.dto.CommentDTO;
 import com.example.blognpc.enums.CommentTypeEnum;
 import com.example.blognpc.enums.CustomizeErrorCode;
+import com.example.blognpc.enums.NotificationTypeEnum;
 import com.example.blognpc.exception.CustomizeException;
 import com.example.blognpc.mapper.*;
 import com.example.blognpc.model.*;
@@ -53,7 +54,7 @@ public class CommentService {
         comment.setGmtModified(comment.getGmtCreate());
 
         if (comment.getType() == CommentTypeEnum.COMMUNITY_QUESTION.getType()) {
-            // 回复社区问题
+            // 回复问题
             Question dbQuestion = questionMapper.selectById(comment.getParentId());
             if (dbQuestion == null) {
                 // 回复的问题不存在
@@ -62,10 +63,12 @@ public class CommentService {
 
             commentMapper.insert(comment);
             questionExtMapper.incComment(dbQuestion.getId());
-            notificationService.create(comment.getCommentator(), dbQuestion.getCreator(), comment.getParentId(),
-                    CommentTypeEnum.getByType(comment.getType()), dbQuestion.getTitle());
+
+            // 回复问题创建人
+            notificationService.create(comment.getCommentator(), dbQuestion.getCreator(), comment.getId(), dbQuestion.getId(),
+                    NotificationTypeEnum.REPLY_COMMUNITY_QUESTION.getType());
         } else if (comment.getType() == CommentTypeEnum.COMMUNITY_COMMENT.getType()) {
-            // 回复社区评论
+            // 回复问题评论
             Comment dbComment = commentMapper.selectById(comment.getParentId());
             if (dbComment == null) {
                 // 回复的评论不存在
@@ -80,11 +83,17 @@ public class CommentService {
 
             commentMapper.insert(comment);
             commentExtMapper.incComment(dbComment.getId());
-            // 回复问题创建人和评论创建人
-            notificationService.create(comment.getCommentator(), dbComment.getCommentator(), comment.getParentId(),
-                    CommentTypeEnum.getByType(comment.getType()), dbQuestion.getTitle());
-            notificationService.create(comment.getCommentator(), dbQuestion.getCreator(), comment.getParentId(),
-                    CommentTypeEnum.getByType(comment.getType()), dbQuestion.getTitle());
+
+            // 回复评论创建人
+            notificationService.create(comment.getCommentator(), dbComment.getCommentator(), comment.getId(), dbComment.getId(),
+                    NotificationTypeEnum.REPLY_COMMUNITY_COMMENT.getType());
+            // 回复问题创建人
+            if (dbQuestion.getCreator() != dbComment.getCommentator()) {
+                notificationService.create(comment.getCommentator(), dbQuestion.getCreator(), comment.getId(), dbQuestion.getId(),
+                        NotificationTypeEnum.REPLY_COMMUNITY_QUESTION.getType());
+            } else {
+                // 评论和问题都是同一个人写的，此时只需要提醒一次
+            }
         } else if (comment.getType() == CommentTypeEnum.MUMBLER_ARTICLE.getType()) {
             // 回复文章
             Article dbArticle = articleMapper.selectById(comment.getParentId());
@@ -95,8 +104,10 @@ public class CommentService {
 
             commentMapper.insert(comment);
             articleExtMapper.incComment(dbArticle.getId());
-            notificationService.create(comment.getCommentator(), dbArticle.getCreator(), comment.getParentId(),
-                    CommentTypeEnum.getByType(comment.getType()), dbArticle.getTitle());
+
+            // 回复文章创建人
+            notificationService.create(comment.getCommentator(), dbArticle.getCreator(), comment.getId(), dbArticle.getId(),
+                    NotificationTypeEnum.REPLY_MUMBLER_ARTICLE.getType());
         } else if (comment.getType() == CommentTypeEnum.MUMBLER_COMMENT.getType()) {
             // 回复文章评论
             Comment dbComment = commentMapper.selectById(comment.getParentId());
@@ -114,12 +125,18 @@ public class CommentService {
             commentMapper.insert(comment);
             commentExtMapper.incComment(dbComment.getId());
 
-            // 同时回复文章作者和评论创建人
-            notificationService.create(comment.getCommentator(), dbComment.getCommentator(), comment.getParentId(),
-                    CommentTypeEnum.getByType(comment.getType()), dbArticle.getTitle());
-            notificationService.create(comment.getCommentator(), dbArticle.getCreator(), comment.getParentId(),
-                    CommentTypeEnum.getByType(comment.getType()), dbArticle.getTitle());
+            // 回复评论创建人
+            notificationService.create(comment.getCommentator(), dbComment.getCommentator(), comment.getId(), dbComment.getId(),
+                    NotificationTypeEnum.REPLY_MUMBLER_COMMENT.getType());
+            // 回复文章创建人
+            if (dbArticle.getCreator() != dbComment.getCommentator()) {
+                notificationService.create(comment.getCommentator(), dbArticle.getCreator(), comment.getId(), dbArticle.getId(),
+                        NotificationTypeEnum.REPLY_MUMBLER_ARTICLE.getType());
+            } else {
+                // 评论和文章都是同一个人写的，此时只需要提醒一次
+            }
         } else {
+            // 暂时不会有其它情况
         }
 
         return;

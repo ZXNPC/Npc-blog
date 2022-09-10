@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author NPC
- * @since 2022-09-09
+ * @since 2022-09-10
  */
 @ApiModel(value = "Notification对象", description = "")
 public class Notification implements Serializable {
@@ -25,19 +25,15 @@ public class Notification implements Serializable {
     @ApiModelProperty("发起通知的人")
     private Long notifier;
 
-    @ApiModelProperty("通知发起者的姓名")
-    private String notifierName;
-
     @ApiModelProperty("接收通知的人")
     private Long receiver;
+
+    private Long commentId;
 
     @ApiModelProperty("通知的文章或问题或评论等的id")
     private Long outerId;
 
     private Integer type;
-
-    @ApiModelProperty("通知的名称")
-    private String outerTitle;
 
     @ApiModelProperty("通知是否已读，0表示未读")
     private Integer status;
@@ -60,19 +56,19 @@ public class Notification implements Serializable {
     public void setNotifier(Long notifier) {
         this.notifier = notifier;
     }
-    public String getNotifierName() {
-        return notifierName;
-    }
-
-    public void setNotifierName(String notifierName) {
-        this.notifierName = notifierName;
-    }
     public Long getReceiver() {
         return receiver;
     }
 
     public void setReceiver(Long receiver) {
         this.receiver = receiver;
+    }
+    public Long getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(Long commentId) {
+        this.commentId = commentId;
     }
     public Long getOuterId() {
         return outerId;
@@ -87,13 +83,6 @@ public class Notification implements Serializable {
 
     public void setType(Integer type) {
         this.type = type;
-    }
-    public String getOuterTitle() {
-        return outerTitle;
-    }
-
-    public void setOuterTitle(String outerTitle) {
-        this.outerTitle = outerTitle;
     }
     public Integer getStatus() {
         return status;
@@ -122,11 +111,10 @@ public class Notification implements Serializable {
         return "Notification{" +
             "id=" + id +
             ", notifier=" + notifier +
-            ", notifierName=" + notifierName +
             ", receiver=" + receiver +
+            ", commentId=" + commentId +
             ", outerId=" + outerId +
             ", type=" + type +
-            ", outerTitle=" + outerTitle +
             ", status=" + status +
             ", gmtCreate=" + gmtCreate +
             ", gmtModified=" + gmtModified +

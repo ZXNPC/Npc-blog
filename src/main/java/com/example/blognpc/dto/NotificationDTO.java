@@ -1,20 +1,20 @@
 package com.example.blognpc.dto;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import io.swagger.annotations.ApiModelProperty;
+import com.example.blognpc.model.Comment;
+import com.example.blognpc.model.User;
 import lombok.Data;
 
 @Data
-public class NotificationDTO {
+public class NotificationDTO<T> {
     private Long id;
-    private Long notifier;
-    private String notifierName;
+    private User notifierUser;
     private Long receiver;
     private Long outerId;
+    private Long outMostId;
     private Integer type;
-    private String typeName;
-    private String outerTitle;
+    private Comment comment;
+    private Comment outerComment;
+    private T outer;
     private Integer status;
     private Long gmtCreate;
     private Long gmtModified;

@@ -49,3 +49,34 @@ body {
     background-color: red;
     height: 17px;
 }
+
+.media .media-description {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 400px;
+}
+
+.media .original-reply {
+    color: #999;
+    border-left: 2px solid #e7e7e7;
+    margin: 8px 0 10px;
+    padding-left: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    /*display: -webkit-box;*/
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-size: 12px;
+    line-height: 16px;
+    max-height: 2.666666666666667em;
+}
+
+.media .notifier-name {
+    font-weight: bold;
+}
+
+.media .unread {
+    float: right;
+}

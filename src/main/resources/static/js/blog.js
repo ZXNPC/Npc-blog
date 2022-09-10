@@ -62,3 +62,34 @@ function checkPassword() {
         return false;
     }
 }
+
+// 暂时没用
+function deleteNotification(e) {
+    if (confirm("确认删除该提醒？")) {
+        var id = e.getAttribute("data").split("-")[1];
+        $.ajax({
+            type: "POST",
+            url: "/notification",
+            contentType: 'application/json',
+            data: id,
+            success: function (response) {
+                if (response.code == 200) {
+                    document.getElementById("notification-" + id).remove();
+                } else {
+                    if (response.code == 2003) {
+                        var isAccepted = confirm(response.message);
+                        if (isAccepted) {
+                            window.open("/login");
+                        }
+                    } else {
+                        alert(response.message);
+                    }
+                }
+            },
+            dataType: "json"
+        });
+    }
+    else {}
+
+
+}
