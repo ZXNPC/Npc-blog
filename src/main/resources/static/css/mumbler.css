@@ -158,3 +158,8 @@ body {
     background-color: red;
     height: 17px;
 }
+
+.container {
+    max-width: 1800px;
+    width: auto;
+}

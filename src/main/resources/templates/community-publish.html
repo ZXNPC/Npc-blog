@@ -32,16 +32,16 @@
     </script>
 </head>
 <body>
-<div th:insert="~{navigation :: nav}"></div>
+<div class="should-hide" th:insert="~{navigation :: nav}"></div>
 <div class="container main">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 发起</h2>
+            <h2 class="should-hide"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 发起</h2>
             <hr>
 
             <form action="/community/publish" method="post">
                 <input type="hidden" name="id" th:value="${id}">
-                <div class="form-group">
+                <div class="form-group should-hide">
                     <label for="title">问题标题（简单扼要）：</label>
                     <input type="text" th:value="${title}" class="form-control" id="title" name="title"
                            placeholder="问题标题...">
@@ -50,14 +50,25 @@
                 <div class="form-group" id="question-editor">
                     <label for="title">问题补充：</label>
                     <textarea name="description" th:text="${description}" id="description" style="display: none;"
-                              class="form-control"
-                              cols="30" rows="10"></textarea>
+                              class="form-control"></textarea>
                 </div>
                 <script type="text/javascript">
                     $(function () {
                         var editor = editormd("question-editor", {
                             width: "100%",
-                            height: 350,
+                            height: "640px",
+                            onfullscreen: function () {
+                                var elements= document.getElementsByClassName("should-hide");
+                                for (let i = 0; i < elements.length; i++) {
+                                    elements[i].setAttribute("hidden", true);
+                                }
+                            },
+                            onfullscreenExit: function () {
+                                var elements= document.getElementsByClassName("should-hide");
+                                for (let i = 0; i < elements.length; i++) {
+                                    elements[i].removeAttribute("hidden");
+                                }
+                            },
                             path: "/js/lib/",
                             delay: 0,
                             watch: false,
@@ -70,7 +81,7 @@
                     });
                 </script>
 
-                <div class="form-group">
+                <div class="form-group should-hide">
                     <label for="title">添加标签：</label>
                     <input type="text" class="form-control" th:value="${tag}" id="tag" name="tag"
                            placeholder="输入标签，以”,“分割">
@@ -96,14 +107,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="container-fluid main">
+                <div class="container-fluid main should-hide">
                     <div class="row">
-                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                            <div class="alert alert-danger col-lg-9 col-md-12 col-sm-12 col-xs-12"
-                                 th:if="${error} != null"
-                                 th:text="${error}">
-                            </div>
-                        </div>
                         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                             <button type="submit" onclick="return publishCheck()" class="btn btn-success btn-publish">
                                 发布
@@ -113,7 +118,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 should-hide">
             <h3>问题发起指南</h3>
             · 问题标题：请用简洁的语言描述你发布的问题，不超过25字<br>
             · 问题补充：详细补充你的问题内容，并确保问题描述清晰直观，并提供一些相关的资料<br>
@@ -124,6 +129,6 @@
         </div>
     </div>
 </div>
-<div th:insert="~{footer :: foot}"></div>
+<div class="should-hide" th:insert="~{footer :: foot}"></div>
 </body>
 </html>

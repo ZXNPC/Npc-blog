@@ -108,6 +108,38 @@ function collapseComments(e) {
     }
 }
 
+// TODO: 点赞功能需要 redis 辅助，还在学
+function like(e) {
+    // var id = e.getAttribute("data-id");
+    // var like = document.getElementById("comment-" + id).getElementsByClassName("like-count")[0];
+    // if (like) {
+    //     like.innerHTML = parseInt(like.innerHTML) + 1;
+    // }
+    // console.log(comment);
+    // $.ajax({
+    //     type: "POST",
+    //     url: "/comment/like",
+    //     contentType: 'application/json',
+    //     data: id,
+    //     success: function (response) {
+    //         if (response.code == 200) {
+    //             document.getElementById("comment-" + id);
+    //         } else {
+    //             if (response.code == 2003) {
+    //                 var isAccepted = confirm(response.message);
+    //                 if (isAccepted) {
+    //                     window.open("/login");
+    //                 }
+    //             } else {
+    //                 alert(response.message);
+    //             }
+    //         }
+    //     },
+    //     dataType: "json"
+    // });
+
+}
+
 // 展示selectTag
 function showSelectTag() {
     $("#select-tag").show();

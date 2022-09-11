@@ -80,3 +80,8 @@ body {
 .media .unread {
     float: right;
 }
+
+.container {
+    max-width: 1800px;
+    width: auto;
+}

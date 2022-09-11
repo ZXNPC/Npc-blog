@@ -97,6 +97,7 @@ body {
     margin-top: 5px;
     font-size: 15px;
     cursor: pointer;
+    margin-right: 5px;
 }
 
 .menu .comment-icon:hover {
@@ -157,4 +158,9 @@ body {
     margin-right: 5px;
     background-color: red;
     height: 17px;
+}
+
+.container {
+    max-width: 1800px;
+    width: auto;
 }

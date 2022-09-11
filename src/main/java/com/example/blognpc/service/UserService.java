@@ -142,7 +142,6 @@ public class UserService {
         } else {
             if (user.getComplete() == true) {
                 // 用户信息已完整，说明已验证用户重新点击链接进行验证
-                // TODO:也许我可以在用户多次点击链接的情况下做一个小彩蛋
                 throw new LoginException(LoginErrorCode.EMAIL_ALREADY_VERIFIED);
             }
             // 用户找到了，注意已验证的用户再次点击链接验证
