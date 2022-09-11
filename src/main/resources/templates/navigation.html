@@ -13,20 +13,15 @@
             </div>
             <form class="navbar-form navbar-left" action="/" method="get">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="search" placeholder="搜索文章">
+                    <input type="text" class="form-control" name="search" placeholder="搜索相关内容">
                 </div>
-                <button type="submit" class="btn btn-default">搜索</button>
+                </script>
+                <button onclick="alert('啊哈，我还没做完！\n在做了在做了');" type="submit" class="btn btn-default">搜索</button>
             </form>
+
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                 <ul class="nav navbar-nav navbar-right">
-                    <!--                    <li th:if="${session.user != null}">-->
-                    <!--                        <a href="/publish">提问</a>-->
-                    <!--                    </li>-->
-                    <!--                    <li th:if="${session.user != null}">-->
-                    <!--                        <a href="/profile/replies">通知 <span class="badge"-->
-                    <!--                                                            th:text="${session.unreadCount == 0} ? '': ${session.unreadCount}"></span></a>-->
-                    <!--                    </li>-->
                     <li th:if="${session.user != null}">
                         <a href="/profile/replies" title="查看通知">
                             <span class="badge"
@@ -54,7 +49,6 @@
                         </ul>
                     </li>
                     <li th:if="${session.user == null}">
-                        <!--                        <a th:href="@{http://github.com/login/oauth/authorize(client_id=${clientId}, redirect_url=${#httpServletRequest.getRequestURL()+'callback'},scope='user',state=1)}">登录</a>-->
                         <a href="/login">登录</a>
                     </li>
 

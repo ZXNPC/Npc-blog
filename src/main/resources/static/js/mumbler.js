@@ -65,32 +65,45 @@ function collapseComments(e) {
 
                     var mediaLeftElement = $("<div/>", {
                         "class": "media-left"
-                    }).append($("<img/>", {
-                        "class": "media-object img-rounded",
-                        "src": comment.user.avatarUrl
-                    }));
+                    })
+                        .append($("<img/>", {
+                            "class": "media-object img-rounded",
+                            "src": comment.user.avatarUrl
+                        }));
 
                     var mediaBodyElement = $("<div/>", {
                         "class": "media-body"
-                    }).append($("<h5/>", {
-                        "class": "media-heading",
-                        "html": comment.user.name
-                    }))
+                    })
+                        .append($("<h5/>", {
+                            "class": "media-heading",
+                            "html": comment.user.name
+                        }))
                         .append($("<div/>", {
                             "class": "comment-content",
                             "html": comment.content
                         }))
                         .append($("<div/>", {
                             "class": "menu"
-                        }).append($("<span/>", {
-                            "class": "glyphicon glyphicon-thumbs-up icon"
-                        })).append($("<span/>", {
-                            "class": "pull-right",
-                            "html": moment(comment.gmtCreate).format('YYYY-MM-DD')
-                        })));
+                        })
+                            .append($("<span/>", {
+                                "class": "comment-icon",
+                                "data-id": comment.id,
+                                "onclick": "like(this)"
+                            })
+                                .append($("<span/>", {
+                                    "class": "glyphicon glyphicon-thumbs-up icon"
+                                }))
+                                .append(comment.likeCount != 0 ? $("<span/>", {
+                                    "class": "like-count",
+                                    "html": comment.likeCount
+                                }) : '')
+                            )
+                            .append($("<span/>", {
+                                "class": "pull-right",
+                                "html": moment(comment.gmtCreate).format('YYYY-MM-DD')
+                            })));
 
-                    var mediaElement = $("<div/>", {
-                    }).append(mediaLeftElement)
+                    var mediaElement = $("<div/>", {}).append(mediaLeftElement)
                         .append(mediaBodyElement);
 
                     var commentElement = $("<div/>", {
@@ -106,6 +119,39 @@ function collapseComments(e) {
             e.classList.add("active");
         }
     }
+}
+
+// TODO: 点赞功能需要 redis 辅助，还在学
+function like(e) {
+    alert("点赞功能还在学捏 QAQ");
+    // var id = e.getAttribute("data-id");
+    // var like = document.getElementById("comment-" + id).getElementsByClassName("like-count")[0];
+    // if (like) {
+    //     like.innerHTML = parseInt(like.innerHTML) + 1;
+    // }
+    // console.log(comment);
+    // $.ajax({
+    //     type: "POST",
+    //     url: "/comment/like",
+    //     contentType: 'application/json',
+    //     data: id,
+    //     success: function (response) {
+    //         if (response.code == 200) {
+    //             document.getElementById("comment-" + id);
+    //         } else {
+    //             if (response.code == 2003) {
+    //                 var isAccepted = confirm(response.message);
+    //                 if (isAccepted) {
+    //                     window.open("/login");
+    //                 }
+    //             } else {
+    //                 alert(response.message);
+    //             }
+    //         }
+    //     },
+    //     dataType: "json"
+    // });
+
 }
 
 // 展示selectTag

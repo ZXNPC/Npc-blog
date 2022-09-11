@@ -88,12 +88,14 @@
                             </h4>
                             <div class="comment-content" th:text="${commentDTO.getContent()}"></div>
                             <div class="menu">
-                                <span class="glyphicon glyphicon-thumbs-up icon"></span>
-                                <span class="comment-icon" th:data-id="${commentDTO.getId()}"
-                                      onclick="collapseComments(this)">
-                                <span class="glyphicon glyphicon-comment"></span>
-                                <span th:text="${commentDTO.getCommentCount()}"></span>
-                            </span>
+                                <span class="comment-icon" th:data-id="${commentDTO.getId()}" onclick="like(this)">
+                                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                                    <span class="like-count" th:if="${commentDTO.getLikeCount() != 0}" th:text="${commentDTO.getLikeCount()}"></span>
+                                </span>
+                                <span class="comment-icon" th:data-id="${commentDTO.getId()}" onclick="collapseComments(this)">
+                                    <span class="glyphicon glyphicon-comment"></span>
+                                    <span class="comment-count" th:if="${commentDTO.getCommentCount() != 0}" th:text="${commentDTO.getCommentCount()}"></span>
+                                </span>
                                 <span class="pull-right"
                                       th:text="${#dates.format(commentDTO.getGmtCreate(), 'yyyy-MM-dd HH:mm')}"></span>
                             </div>

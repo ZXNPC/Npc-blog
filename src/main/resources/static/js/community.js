@@ -110,6 +110,7 @@ function collapseComments(e) {
 
 // TODO: 点赞功能需要 redis 辅助，还在学
 function like(e) {
+    alert("点赞功能还在学捏 QAQ");
     // var id = e.getAttribute("data-id");
     // var like = document.getElementById("comment-" + id).getElementsByClassName("like-count")[0];
     // if (like) {

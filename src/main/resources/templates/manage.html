@@ -36,7 +36,13 @@
                 <a href="/manage">管理</a>
             </li>
         </ul>
-
+        <div class="item-list">
+            <div th:if="${paginationDTO == null || paginationDTO?.getData().size() == 0}">
+                <span class="text-desc">还没做！</span>
+            </div>
+        </div>
+        <!--翻页-->
+        <nav th:insert="~{pagination :: pagi}"></nav>
     </div>
 
 </div>

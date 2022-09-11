@@ -85,3 +85,13 @@ body {
     max-width: 1800px;
     width: auto;
 }
+
+.text-desc {
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}
+
+.item-list {
+    padding: 10px 20px;
+}
