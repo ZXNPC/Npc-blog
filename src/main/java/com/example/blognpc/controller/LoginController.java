@@ -71,7 +71,7 @@ public class LoginController {
         user = userService.saveByEmail(user);
         Long expirationTime = user.getGmtModified() + expiration;
         String url = String.join("/", Arrays.copyOfRange(request.getRequestURL().toString().split("/"), 0, 3))
-                + "/verify?token=" + user.getToken() + "&email=" + email + "&expirationTime=" + expirationTime;
+                + "/login/verify?token=" + user.getToken() + "&email=" + email + "&expirationTime=" + expirationTime;
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("2946310156@qq.com");
         message.setTo(email);
