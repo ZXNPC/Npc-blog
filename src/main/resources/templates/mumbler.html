@@ -21,25 +21,28 @@
         <ul class="nav nav-tabs" role="tablist">
             <li th:class="${#httpServletRequest.getRequestURI() == '/mumbler'
              || #httpServletRequest.getRequestURI() == '/'} ? 'active':''">
-                <a href="/mumbler">文章</a>
+                <a th:href="@{'/mumbler' + ${search != null ? '?search=' + search : ''}}">文章</a>
             </li>
             <li th:class="${#httpServletRequest.getRequestURI() == '/tool'} ? 'active':''">
-                <a href="/tool">工具</a>
+                <a th:href="@{'/tool' + ${search != null ? '?search=' + search : ''}}">工具</a>
             </li>
             <li th:class="${#httpServletRequest.getRequestURI() == '/link'} ? 'active':''">
-                <a href="/link">常用网站</a>
+                <a th:href="@{'/link' + ${search != null ? '?search=' + search : ''}}">常用网站</a>
             </li>
             <li th:class="${#httpServletRequest.getRequestURI() == '/community'} ? 'active':''">
-                <a href="/community">论坛</a>
+                <a th:href="@{'/community' + ${search != null ? '?search=' + search : ''}}">论坛</a>
             </li>
             <li th:class="${#httpServletRequest.getRequestURI() == '/manage'} ? 'active':''">
-                <a href="/manage">管理</a>
+                <a th:href="@{'/manage' + ${search != null ? '?search=' + search : ''}}">管理</a>
             </li>
         </ul>
         <!--文章列表-->
         <div class="mumbler-article-list">
+            <h5 th:if="${param.search != '' and param.search != null}">
+                关于 <span th:text="${param.search}"></span> 的搜索结果如下：
+            </h5>
             <div th:if="${paginationDTO == null || paginationDTO?.getData().size() == 0}">
-                <span class="text-desc">还没有文章发布捏</span>
+                <span class="text-desc">还没有（相关）文章发布捏</span>
             </div>
             <div th:unless="${paginationDTO == null || paginationDTO?.getData().size() == 0}"
                  th:each="articleDTO:${paginationDTO?.getData()}" class="media">

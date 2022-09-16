@@ -38,8 +38,8 @@ public class CommunityQuestionController {
                            @RequestParam(name = "size", defaultValue = "20") Long size,
                            Model model) {
         QuestionDTO questionDTO = questionService.selectById(id);
-        List<QuestionDTO> relatedQuestions = questionService.selectRelated(questionDTO, size);    // 这里并没有把 user信息 放到questionDTO之中，注意一下
         List<CommentDTO> commentDTOS = commentService.listByTargetId(id, CommentTypeEnum.COMMUNITY_QUESTION);
+        List<QuestionDTO> relatedQuestions = questionService.selectRelated(questionDTO, size);
         List<ArticleDTO> relatedArticles = articleService.selectRelated(questionDTO, size);
 
         questionService.incView(id);

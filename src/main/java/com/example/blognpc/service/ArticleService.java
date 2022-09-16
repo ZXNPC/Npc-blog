@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -82,34 +83,64 @@ public class ArticleService {
         articleExtMapper.incView(id);
     }
 
-    public PaginationDTO<ArticleDTO> list(Long id, Long page, Long size) {
-        Long totalCount = articleMapper.selectCount(new QueryWrapper<Article>().eq(id != 0L, "creator", id));
+    public PaginationDTO<ArticleDTO> list(Long page, Long size) {
+        return list(null, page, size, null);
+    }
+
+    public PaginationDTO<ArticleDTO> list(Long creator, Long page, Long size) {
+        return list(creator, page, size, null);
+    }
+
+    public PaginationDTO<ArticleDTO> list(Long page, Long size, String content) {
+        return null;
+    }
+
+    public PaginationDTO<ArticleDTO> list(Long creator, Long page, Long size, String search) {
+        Long totalCount;
+        String titleRegexp;
+        if (StringUtils.isBlank(search)) {
+            titleRegexp = "";
+            totalCount = articleMapper.selectCount(new QueryWrapper<Article>().eq(creator != 0L || creator != null, "creator", creator));
+        } else {
+            titleRegexp = "\'" + Arrays.stream(search.split(" ")).filter(s -> StringUtils.isNotBlank(s)).collect(Collectors.joining("|")) + "\'";
+            totalCount = articleExtMapper.selectCountRegexp(null, "title", titleRegexp);
+        }
         PaginationDTO<ArticleDTO> paginationDTO = new PaginationDTO<>();
         paginationDTO.setPagination(totalCount, page, size);
         page = paginationDTO.getPage();
 
         Long offset = (page - 1) * size;
-        List<Article> articles = articleMapper.selectList(new QueryWrapper<Article>()
-                .eq(id != 0L, "creator", id)
-                .orderByDesc("id")
-                .last(String.format("limit %d, %d", offset, size)));
-        List<ArticleDTO> ArticleDTOS = new ArrayList<ArticleDTO>();
-        for (Article article : articles) {
-            List<User> users = userMapper.selectList(new QueryWrapper<User>().eq("id", article.getCreator()));
-            User user = users.size() == 0 ? null : users.get(0);
-            if (user == null) {
-                // 数据库会用外键联系用户和文章创建人，所有是不会存在找不到用户的情况的，但以防万一先抛个异常
-                throw new CustomizeException(CustomizeErrorCode.SYSTEM_ERROR);
-            } else {
-                ArticleDTO ArticleDTO = new ArticleDTO();
-                BeanUtils.copyProperties(article, ArticleDTO);
-                ArticleDTO.setUser(user);
-                ArticleDTOS.add(ArticleDTO);
-            }
+        List<Article> articles;
+        if (StringUtils.isBlank(titleRegexp)) {
+            articles = articleMapper.selectList(new QueryWrapper<Article>()
+                    .eq(creator != 0L, "creator", creator)
+                    .orderByDesc("id")
+                    .last(String.format("limit %d, %d", offset, size)));
+        } else {
+            articles = articleExtMapper.selectRegexp(null, "title", titleRegexp, offset, size);
         }
-        paginationDTO.setData(ArticleDTOS);
-        return paginationDTO;
 
+        // 生成 key = creator, value = User 的 Map
+        List<Long> creatorList = articles.stream().map(article -> article.getCreator()).collect(Collectors.toList());
+        // 如果用户数量为空，则添加一个 0 ，防止 sql 语句错误
+        if (creatorList.size() == 0) creatorList.add(0L);
+        List<User> userList = userMapper.selectList(new QueryWrapper<User>().in(!creatorList.isEmpty(), "id", creatorList));
+        Map<Long, User> userMap = userList.stream().collect(Collectors.toMap(user -> user.getId(), user -> user));
+
+        List<ArticleDTO> articleDTOS = new ArrayList<ArticleDTO>();
+        for (Article article : articles) {
+            User user = userMap.get(article.getCreator());
+            if (user == null) {
+                // 数据库会用外键联系用户和问题创建人，所有是不会存在找不到用户的情况的，但以防万一先抛个异常
+                throw new CustomizeException(CustomizeErrorCode.SYSTEM_ERROR);
+            }
+            ArticleDTO articleDTO = new ArticleDTO();
+            BeanUtils.copyProperties(article, articleDTO);
+            articleDTO.setUser(user);
+            articleDTOS.add(articleDTO);
+        }
+        paginationDTO.setData(articleDTOS);
+        return paginationDTO;
     }
 
     public List<ArticleDTO> selectRelated(ArticleDTO queryDTO, Long size) {
@@ -132,11 +163,11 @@ public class ArticleService {
 
     public List<ArticleDTO> selectRelated(Long id, String tags, Long size) {
         // id 是用来过滤问题的，防止相关问题搜寻到自己，而文章的相关问题则不需考虑重复，故设置为0
-        String regexp = Arrays.stream(tags.split(",")).map(tag -> {
+        String regexp = "\'" + Arrays.stream(tags.split(",")).map(tag -> {
             tag = tag.trim();
             return "(" + tag + ",)|(" + tag + "$)";
-        }).collect(Collectors.joining("|"));
-        List<Article> articles = articleExtMapper.selectRegexp("tag", regexp, size);
+        }).collect(Collectors.joining("|")) + "\'";
+        List<Article> articles = articleExtMapper.selectRegexp(null, "tag", regexp, 0L, size);
         List<ArticleDTO> articleDTOS = articles.stream().filter(article -> !(article.getId() == id)).map(article -> {
             ArticleDTO articleDTO = new ArticleDTO();
             BeanUtils.copyProperties(article, articleDTO);

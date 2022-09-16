@@ -11,13 +11,12 @@ import java.util.List;
 
 @Mapper
 public interface ArticleExtMapper {
-    @Update("update article set comment_count = comment_count + 1 where id = ${id}")
     void incComment(Serializable id);
 
-    @Update("update article set view_count = view_count + 1 where id = ${id}")
     void incView(Serializable id);
 
-    @Select("select * from article where ${column} regexp '${val}' limit ${size}")
-    List<Article> selectRegexp(String column, Object val, Long size);
+    List<Article> selectRegexp(Long creator, String column, Object val,Long offset, Long size);
+
+    Long selectCountRegexp(Long creator, String column, Object val);
 
 }

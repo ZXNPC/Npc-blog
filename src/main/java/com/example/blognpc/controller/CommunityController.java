@@ -17,9 +17,11 @@ public class CommunityController {
     @GetMapping("/community")
     public String community(Model model,
                             @RequestParam(name = "page", defaultValue = "1") Long page,
-                            @RequestParam(name = "size", defaultValue = "10") Long size) {
-        PaginationDTO<QuestionDTO> paginationDTO = questionService.list(0L, page, size);
+                            @RequestParam(name = "size", defaultValue = "10") Long size,
+                            @RequestParam(name = "search", required = false) String search) {
+        PaginationDTO<QuestionDTO> paginationDTO = questionService.list(0L, page, size, search);
         model.addAttribute("paginationDTO", paginationDTO);
+        model.addAttribute("search", search);
         return "community";
     }
 }

@@ -90,6 +90,9 @@ function deleteNotification(e) {
         });
     }
     else {}
+}
 
-
+// GitHub 登录
+function checkGitHub() {
+    sessionStorage.removeItem("resultDTO");
 }

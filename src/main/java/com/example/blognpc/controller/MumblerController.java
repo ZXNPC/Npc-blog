@@ -13,12 +13,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MumblerController {
     @Autowired
     private ArticleService articleService;
+
     @GetMapping("/mumbler")
     public String mumbler(Model model,
-                        @RequestParam(name = "page", defaultValue = "1") Long page,
-                        @RequestParam(name = "size", defaultValue = "10") Long size) {
-        PaginationDTO<ArticleDTO> paginationDTO = articleService.list(0L, page, size);
+                          @RequestParam(name = "page", defaultValue = "1") Long page,
+                          @RequestParam(name = "size", defaultValue = "10") Long size,
+                          @RequestParam(name = "search", required = false) String search) {
+        PaginationDTO<ArticleDTO> paginationDTO = articleService.list(0L, page, size, search);
         model.addAttribute("paginationDTO", paginationDTO);
-        return "index";
+        model.addAttribute("search", search);
+        return "mumbler";
+    }
+
+    @GetMapping("/")
+    public String index(Model model,
+                        @RequestParam(name = "page", defaultValue = "1") Long page,
+                        @RequestParam(name = "size", defaultValue = "10") Long size,
+                        @RequestParam(name = "search", required = false) String search) {
+        PaginationDTO<ArticleDTO> paginationDTO = articleService.list(0L, page, size, search);
+        model.addAttribute("paginationDTO", paginationDTO);
+        model.addAttribute("search", search);
+        return "mumbler";
     }
 }
