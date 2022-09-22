@@ -1,8 +1,10 @@
 package com.example.blognpc.dto;
 
 import lombok.Data;
+import org.springframework.core.GenericTypeResolver;
 import org.testng.Assert;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +77,7 @@ public class PaginationDTO<T> {
         }
 
         // 是否展示第一页
-        if (pages.contains(1)) {
+        if (pages.contains(1L)) {
             showFirstPage = false;
         } else {
             showFirstPage = true;
@@ -87,7 +89,5 @@ public class PaginationDTO<T> {
         } else {
             showEndPage = true;
         }
-
-
     }
 }

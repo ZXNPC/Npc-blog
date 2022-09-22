@@ -9,6 +9,15 @@ body {
 
 .btn-publish {
     float: right;
+    margin-left: 10px;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.btn-save {
+    color: #999;
+    float: right;
+    margin-left: 10px;
     margin-bottom: 15px;
     font-size: 20px;
 }
@@ -164,4 +173,12 @@ body {
 .container {
     max-width: 1800px;
     width: auto;
+}
+
+.related-title {
+    margin-bottom: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 400px;
 }

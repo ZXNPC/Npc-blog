@@ -45,7 +45,7 @@ public class CommentService {
         }
 
         if (comment.getType() == null || !CommentTypeEnum.isExist(comment.getType())) {
-            throw new CustomizeException(CustomizeErrorCode.TYPE_PARAM_WRONG);
+            throw new CustomizeException(CustomizeErrorCode.COMMENT_TYPE_WRONG);
         }
 
         comment.setLikeCount(0L);

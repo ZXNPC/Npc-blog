@@ -7,8 +7,7 @@ function checkSignin() {
         alert("邮箱为空");
         email.focus();
         return false;
-    }
-    else if (email_test.test(email.value) == false) {
+    } else if (email_test.test(email.value) == false) {
         alert("邮箱格式错误")
         email.focus();
         return false;
@@ -36,8 +35,7 @@ function checkSignup() {
         alert("邮箱为空");
         email.focus();
         return false;
-    }
-    else if (email_test.test(email.value) == false) {
+    } else if (email_test.test(email.value) == false) {
         alert("邮箱格式错误");
         email.focus();
         return false;
@@ -56,7 +54,7 @@ function checkPassword() {
         password.focus();
         return false;
     }
-    if(password.value != password_repeat.value) {
+    if (password.value != password_repeat.value) {
         alert("两次输入的密码不匹配，请重新输入！")
         password_repeat.focus();
         return false;
@@ -88,11 +86,39 @@ function deleteNotification(e) {
             },
             dataType: "json"
         });
+    } else {
     }
-    else {}
 }
 
 // GitHub 登录
 function checkGitHub() {
     sessionStorage.removeItem("resultDTO");
+}
+
+function deleteDraft(e) {
+    const id = e.getAttribute("data");
+    if (confirm("确认删除此草稿？")) {
+        $.ajax({
+            type: "POST",
+            url: "/draft/delete",
+            contentType: 'application/json',
+            data: id,
+            success: function (response) {
+                if (response.code == 200) {
+                    location.reload();
+                } else {
+                    if (response.code == 2003) {
+                        var isAccepted = confirm(response.message);
+                        if (isAccepted) {
+                            window.open("/login");
+                        }
+                    } else {
+                        alert(response.message);
+                    }
+                }
+            },
+            dataType: "json"
+        });
+    } else {
+    }
 }

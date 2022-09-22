@@ -32,15 +32,15 @@ public class NotificationService {
     private ArticleMapper articleMapper;
 
     public PaginationDTO<NotificationDTO> list(Long receiverId, Long page, Long size) {
-        Long totalCount = notificationMapper.selectCount(new QueryWrapper<Notification>().eq(receiverId != 0L, "receiver", receiverId));
+        Long totalCount = notificationMapper.selectCount(new QueryWrapper<Notification>().eq(receiverId != null && receiverId != 0L, "receiver", receiverId));
         PaginationDTO<NotificationDTO> paginationDTO = new PaginationDTO<>();
         paginationDTO.setPagination(totalCount, page, size);
         page = paginationDTO.getPage();
 
         Long offset = (page - 1) * size;
         List<Notification> notifications = notificationMapper.selectList(new QueryWrapper<Notification>()
-                .eq(receiverId != 0L, "receiver", receiverId)
-                        .orderByAsc("status")
+                .eq(receiverId != null && receiverId != 0L, "receiver", receiverId)
+                .orderByAsc("status")
                 .orderByDesc("gmt_modified")
                 .last(String.format("limit %d, %d", offset, size)));
         List<NotificationDTO> notificationDTOS = new ArrayList<NotificationDTO>();

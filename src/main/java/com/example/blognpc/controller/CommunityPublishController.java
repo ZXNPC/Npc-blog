@@ -25,7 +25,16 @@ public class CommunityPublishController {
     private QuestionService questionService;
 
     @GetMapping("/community/publish")
-    public String publish(Model model) {
+    public String publish(Model model,
+                          @RequestParam(value = "id", required = false) Long id,
+                          @RequestParam(value = "title", required = false) String title,
+                          @RequestParam(value = "description", required = false) String description,
+                          @RequestParam(value = "tag", required = false) String tag,
+                          @RequestParam(value = "draftId", required = false) Long draftId) {
+        model.addAttribute("title", title);
+        model.addAttribute("description", description);
+        model.addAttribute("tag", tag);
+        model.addAttribute("draftId", draftId);
         model.addAttribute("tagDTOS", TagCache.get());
         return "community-publish";
     }
@@ -47,12 +56,14 @@ public class CommunityPublishController {
             @RequestParam(value = "title") String title,
             @RequestParam(value = "description") String description,
             @RequestParam(value = "tag") String tag,
+            @RequestParam(value = "draftId", required = false) Long draftId,
             HttpServletRequest request,
             Model model
     ) {
         model.addAttribute("title", title);
         model.addAttribute("description", description);
         model.addAttribute("tag", tag);
+        model.addAttribute("draftId", draftId);
         model.addAttribute("tagDTOS", TagCache.get());
 
         if (StringUtils.isBlank(title) || StringUtils.isBlank(description) || StringUtils.isBlank(tag)) {
@@ -79,7 +90,8 @@ public class CommunityPublishController {
         question.setTag(tag);
         question.setCreator(user.getId());
 
-        questionService.createOrUpdate(question);
+        // 创建问题的同时如果存在草稿（从草稿页面跳转过来的情况），则删除草稿
+        questionService.createOrUpdate(question, draftId);
         return "redirect:/community";
     }
 }

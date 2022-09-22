@@ -1,9 +1,13 @@
 package com.example.blognpc;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.blognpc.dto.PaginationDTO;
+import com.example.blognpc.dto.QuestionDTO;
+import com.example.blognpc.mapper.ArticleMapper;
 import com.example.blognpc.mapper.QuestionExtMapper;
 import com.example.blognpc.mapper.QuestionMapper;
 import com.example.blognpc.mapper.UserMapper;
+import com.example.blognpc.model.Article;
 import com.example.blognpc.model.Question;
 import com.example.blognpc.model.User;
 import com.example.blognpc.service.QuestionService;
@@ -22,18 +26,19 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.util.DigestUtils;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @SpringBootTest
 class BlogNpcApplicationTestsCopy {
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private ArticleMapper articleMapper;
     @Autowired
     private QuestionService questionService;
     @Autowired
@@ -180,10 +185,32 @@ class BlogNpcApplicationTestsCopy {
 
     @Test
     public void questionExtMapperTest() {
-        List<Question> questions = questionExtMapper.selectRegexp(null, "title", "(w)", 0L, 20L);
+        List<Question> questions = questionExtMapper.selectRegexp(null, "title", "(w)", "gmt_create", 1,  0L, 20L);
         for (Question question : questions) {
             System.out.println(question);
         }
+    }
+
+    @Test
+    public void getTClassTest() {
+        PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO<QuestionDTO>() {};
+        ParameterizedType type = (ParameterizedType) paginationDTO.getClass().getGenericSuperclass();
+        Class tClass = (Class) type.getActualTypeArguments()[0];
+        System.out.println(tClass);
+    }
+
+    @Test
+    public void selectCountTest() {
+        System.out.println(articleMapper.selectCount(null).toString());
+        System.out.println(articleMapper.selectCount(new QueryWrapper<>()).toString());
+        System.out.println(articleMapper.selectCount(new QueryWrapper<Article>().eq(true, "creator", 52)).toString());
+    }
+
+    @Test
+    public void nullEqualTest() {
+        Long id = null;
+        if (id == 0L)
+            System.out.println("yes");
     }
 
 }

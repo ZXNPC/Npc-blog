@@ -14,7 +14,7 @@ public interface QuestionExtMapper {
 
     void incView(Serializable id);
 
-    List<Question> selectRegexp(Long creator, String column, Object val,Long offset, Long size);
+    List<Question> selectRegexp(Long creator, String column, Object val, String orderColumn, Integer desc, Long offset, Long size);
     Long selectCountRegexp(Long creator, String column, Object val);
 
 }

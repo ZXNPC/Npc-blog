@@ -41,6 +41,7 @@
 
             <form action="/mumbler/publish" method="post">
                 <input type="hidden" name="id" th:value="${id}">
+                <input type="hidden" id="draftId" name="draftId" th:value="${draftId}">
                 <div class="form-group should-hide">
                     <label for="title">文章标题：</label>
                     <input type="text" th:value="${title}" class="form-control" id="title" name="title"
@@ -108,9 +109,16 @@
                     </div>
                 </div>
                 <div class="form-group should-hide">
-                    <button type="submit" onclick="return publishCheck()" class="btn btn-success btn-publish">
-                        发布
-                    </button>
+                    <span>
+                        <button type="submit" onclick="return publishCheck()" class="btn btn-success btn-publish">
+                            发布
+                        </button>
+                    </span>
+                    <span>
+                        <button type="button" onclick="articleSave()" class="btn btn-default btn-save">
+                            保存为草稿
+                        </button>
+                    </span>
                 </div>
             </form>
         </div>

@@ -193,3 +193,52 @@ function publishCheck() {
     sessionStorage.removeItem("resultDTO");
     return true;
 }
+
+function articleSave() {
+    var id = document.getElementById("draftId").value;
+    var title = document.getElementById("title").value;
+    var description = document.getElementById("description").value;
+    var tag = document.getElementById("tag").value;
+    var type = 1;
+
+    if ("" == title && "" == description && "" == tag) {
+        alert("标题 内容 标签 不能都为空");
+        return false;
+    }
+    sessionStorage.removeItem("resultDTO");
+
+    saveAsDraft(id, title, description, tag, type);
+}
+
+// mumbler-publish.html 保存草稿处理
+function saveAsDraft(id, title, description, tag, type) {
+    $.ajax({
+        type: "POST",
+        url: "/draft",
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "id": id,
+            "title": title,
+            "description": description,
+            "tag": tag,
+            "type": type
+        }),
+        success: function (response) {
+            if (response.code == 200) {
+                // response.data 保存的是草稿的 id，通过 js 访问
+                alert("已保存为草稿，可在 '我的草稿' 中查看并编辑！")
+                location.href="/draft/" + response.data;
+            } else {
+                if (response.code == 2003) {
+                    var isAccepted = confirm(response.message);
+                    if (isAccepted) {
+                        window.open("/login");
+                    }
+                } else {
+                    alert(response.message);
+                }
+            }
+        },
+        dataType: "json"
+    });
+}

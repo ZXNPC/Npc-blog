@@ -52,7 +52,7 @@
                     </span>
                 </div>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <a th:href="@{'/publish/'+${questionDTO.getId()}}"
+                <a th:href="@{'/community/publish/'+${questionDTO.getId()}}"
                    class="col-lg-12 col-md-12 col-sm-12 col-xs-12 community-menu"
                    th:if="${session.user != null && session.user.id == questionDTO.getCreator()}">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true">编辑</span>
@@ -185,13 +185,13 @@
                 <div th:if="${relatedArticles.size() != 0}">
                     <h3>相关文章</h3>
                     <ul class="article-related">
-                        <li th:each="relatedArticle:${relatedArticles}">
+                        <li th:each="relatedArticle:${relatedArticles}" class="related-title">
                             <a th:href="@{'/mumbler/article/' + ${relatedArticle.getId()}}"
                                th:text="${relatedArticle.getTitle()}">title</a>
                         </li>
                     </ul>
                 </div>
-                <div th:if="${relatedQuestions.size() != 0}">
+                <div th:if="${relatedQuestions.size() != 0}" class="related-title">
                     <h3>相关问题</h3>
                     <ul class="article-related">
                         <li th:each="relatedQuestion:${relatedQuestions}">

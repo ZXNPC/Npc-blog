@@ -1,13 +1,11 @@
 package com.example.blognpc.controller;
 
-import com.example.blognpc.dto.ArticleDTO;
-import com.example.blognpc.dto.NotificationDTO;
-import com.example.blognpc.dto.PaginationDTO;
-import com.example.blognpc.dto.QuestionDTO;
+import com.example.blognpc.dto.*;
 import com.example.blognpc.enums.CustomizeErrorCode;
 import com.example.blognpc.exception.CustomizeException;
 import com.example.blognpc.model.User;
 import com.example.blognpc.service.ArticleService;
+import com.example.blognpc.service.DraftService;
 import com.example.blognpc.service.NotificationService;
 import com.example.blognpc.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +26,8 @@ public class ProfileController {
     private ArticleService articleService;
     @Autowired
     private NotificationService notificationService;
+    @Autowired
+    private DraftService draftService;
 
     @Value("${blog.manager.token}")
     private String managerToken;
@@ -42,6 +42,9 @@ public class ProfileController {
         if (user == null) {
             throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
         }
+
+        Long draftCount = draftService.countById(user.getId());
+        model.addAttribute("draftCount", draftCount);
 
         if ("questions".equals(section)) {
             // 我的问题
@@ -58,7 +61,13 @@ public class ProfileController {
             // 最新回复
             PaginationDTO<NotificationDTO> paginationDTO = notificationService.list(user.getId(), page, size);
             model.addAttribute("paginationDTO", paginationDTO);
-        } else {
+        }
+        else if ("drafts".equals(section)) {
+            // 我的草稿
+            PaginationDTO<DraftDTO> paginationDTO = draftService.list(user.getId(), page, size);
+            model.addAttribute("paginationDTO", paginationDTO);
+        }
+        else {
         }
         return "profile-" + section;
     }

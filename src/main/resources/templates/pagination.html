@@ -4,12 +4,12 @@
 <nav th:fragment="pagi" aria-label="Page navigation" th:if="${paginationDTO?.getTotalPage > 1}">
     <ul class="pagination">
         <li th:if="${paginationDTO?.showFirstPage} == true" class="page-li">
-            <a th:href="@{/community/(page=1)}" aria-label="First" class="page-li">
+            <a th:href="@{${#httpServletRequest.getRequestURI()}(page=1)}" aria-label="First" class="page-li">
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
         <li th:if="${paginationDTO?.showPrevious} == true" class="page-li">
-            <a th:href="@{/community/(page=${paginationDTO?.getPage()-1})}" aria-label="Previous"
+            <a th:href="@{${#httpServletRequest.getRequestURI()}(page=${paginationDTO?.getPage()-1})}" aria-label="Previous"
                class="page-li">
                 <span aria-hidden="true">&lt;</span>
             </a>
@@ -17,17 +17,17 @@
 
         <li th:each="page : ${paginationDTO?.getPages()}"
             th:class="${paginationDTO?.page == page} ? 'active':''">
-            <a th:href="@{/community/(page=${page})}" th:text="${page}" class="page-li"></a>
+            <a th:href="@{${#httpServletRequest.getRequestURI()}(page=${page})}" th:text="${page}" class="page-li"></a>
         </li>
 
         <li th:if="${paginationDTO?.showNext} == true">
-            <a th:href="@{/community/(page=${paginationDTO?.getPage()+1})}" aria-label="Next"
+            <a th:href="@{${#httpServletRequest.getRequestURI()}(page=${paginationDTO?.getPage()+1})}" aria-label="Next"
                class="page-li">
                 <span aria-hidden="true">&gt;</span>
             </a>
         </li>
         <li th:if="${paginationDTO?.showEndPage} == true" class="page-li">
-            <a th:href="@{/community/(page=${paginationDTO?.getTotalPage()})}" aria-label="End"
+            <a th:href="@{${#httpServletRequest.getRequestURI()}(page=${paginationDTO?.getTotalPage()})}" aria-label="End"
                class="page-li">
                 <span aria-hidden="true">&raquo;</span>
             </a>

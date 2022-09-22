@@ -15,7 +15,7 @@ public interface ArticleExtMapper {
 
     void incView(Serializable id);
 
-    List<Article> selectRegexp(Long creator, String column, Object val,Long offset, Long size);
+    List<Article> selectRegexp(Long creator, String column, Object val, String orderColumn, Integer desc, Long offset, Long size);
 
     Long selectCountRegexp(Long creator, String column, Object val);
 

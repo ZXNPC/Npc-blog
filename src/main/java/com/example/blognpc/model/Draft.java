@@ -14,28 +14,23 @@ import io.swagger.annotations.ApiModelProperty;
  * @author NPC
  * @since 2022-09-22
  */
-@ApiModel(value = "Comment对象", description = "")
-public class Comment implements Serializable {
+@ApiModel(value = "Draft对象", description = "")
+public class Draft implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty("父类id")
-    private Long parentId;
-
-    @ApiModelProperty("父类类型")
     private Integer type;
 
-    private String content;
+    private String title;
 
-    @ApiModelProperty("评论人id")
-    private Long commentator;
+    private String description;
 
-    private Long likeCount;
+    private String tag;
 
-    private Long commentCount;
+    private Long creator;
 
     private Long gmtCreate;
 
@@ -48,13 +43,6 @@ public class Comment implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
     public Integer getType() {
         return type;
     }
@@ -62,33 +50,33 @@ public class Comment implements Serializable {
     public void setType(Integer type) {
         this.type = type;
     }
-    public String getContent() {
-        return content;
+    public String getTitle() {
+        return title;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setTitle(String title) {
+        this.title = title;
     }
-    public Long getCommentator() {
-        return commentator;
-    }
-
-    public void setCommentator(Long commentator) {
-        this.commentator = commentator;
-    }
-    public Long getLikeCount() {
-        return likeCount;
+    public String getDescription() {
+        return description;
     }
 
-    public void setLikeCount(Long likeCount) {
-        this.likeCount = likeCount;
+    public void setDescription(String description) {
+        this.description = description;
     }
-    public Long getCommentCount() {
-        return commentCount;
+    public String getTag() {
+        return tag;
     }
 
-    public void setCommentCount(Long commentCount) {
-        this.commentCount = commentCount;
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+    public Long getCreator() {
+        return creator;
+    }
+
+    public void setCreator(Long creator) {
+        this.creator = creator;
     }
     public Long getGmtCreate() {
         return gmtCreate;
@@ -107,14 +95,13 @@ public class Comment implements Serializable {
 
     @Override
     public String toString() {
-        return "Comment{" +
+        return "Draft{" +
             "id=" + id +
-            ", parentId=" + parentId +
             ", type=" + type +
-            ", content=" + content +
-            ", commentator=" + commentator +
-            ", likeCount=" + likeCount +
-            ", commentCount=" + commentCount +
+            ", title=" + title +
+            ", description=" + description +
+            ", tag=" + tag +
+            ", creator=" + creator +
             ", gmtCreate=" + gmtCreate +
             ", gmtModified=" + gmtModified +
         "}";

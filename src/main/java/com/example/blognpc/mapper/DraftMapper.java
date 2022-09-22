@@ -1,6 +1,6 @@
 package com.example.blognpc.mapper;
 
-import com.example.blognpc.model.Notification;
+import com.example.blognpc.model.Draft;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2022-09-22
  */
 @Mapper
-public interface NotificationMapper extends BaseMapper<Notification> {
+public interface DraftMapper extends BaseMapper<Draft> {
 
 }

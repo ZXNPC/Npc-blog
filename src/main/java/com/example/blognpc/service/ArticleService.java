@@ -3,15 +3,14 @@ package com.example.blognpc.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.blognpc.dto.ArticleDTO;
 import com.example.blognpc.dto.PaginationDTO;
-import com.example.blognpc.dto.ArticleDTO;
 import com.example.blognpc.dto.QuestionDTO;
 import com.example.blognpc.enums.CustomizeErrorCode;
 import com.example.blognpc.exception.CustomizeException;
 import com.example.blognpc.mapper.ArticleExtMapper;
 import com.example.blognpc.mapper.ArticleMapper;
+import com.example.blognpc.mapper.DraftMapper;
 import com.example.blognpc.mapper.UserMapper;
 import com.example.blognpc.model.Article;
-import com.example.blognpc.model.Question;
 import com.example.blognpc.model.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -32,8 +31,10 @@ public class ArticleService {
     private ArticleExtMapper articleExtMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private DraftMapper draftMapper;
 
-    public void createOrUpdate(Article article) {
+    public void createOrUpdate(Article article, Long draftId) {
         if (article.getId() == null) {
             // 创建文章
             article.setGmtCreate(System.currentTimeMillis());
@@ -42,6 +43,8 @@ public class ArticleService {
             article.setViewCount(0);
             article.setLikeCount(0);
             articleMapper.insert(article);
+            if (draftId != null)
+                draftMapper.deleteById(draftId);
         } else {
             // 更新文章
             Article dbArticle = articleMapper.selectById(article.getId());
@@ -91,18 +94,14 @@ public class ArticleService {
         return list(creator, page, size, null);
     }
 
-    public PaginationDTO<ArticleDTO> list(Long page, Long size, String content) {
-        return null;
-    }
-
     public PaginationDTO<ArticleDTO> list(Long creator, Long page, Long size, String search) {
         Long totalCount;
         String titleRegexp;
         if (StringUtils.isBlank(search)) {
             titleRegexp = "";
-            totalCount = articleMapper.selectCount(new QueryWrapper<Article>().eq(creator != 0L || creator != null, "creator", creator));
+            totalCount = articleMapper.selectCount(new QueryWrapper<Article>().eq(creator != null && creator != 0L, "creator", creator));
         } else {
-            titleRegexp = "\'" + Arrays.stream(search.split(" ")).filter(s -> StringUtils.isNotBlank(s)).collect(Collectors.joining("|")) + "\'";
+            titleRegexp = Arrays.stream(search.split(" ")).filter(s -> StringUtils.isNotBlank(s)).collect(Collectors.joining("|"));
             totalCount = articleExtMapper.selectCountRegexp(null, "title", titleRegexp);
         }
         PaginationDTO<ArticleDTO> paginationDTO = new PaginationDTO<>();
@@ -117,7 +116,7 @@ public class ArticleService {
                     .orderByDesc("id")
                     .last(String.format("limit %d, %d", offset, size)));
         } else {
-            articles = articleExtMapper.selectRegexp(null, "title", titleRegexp, offset, size);
+            articles = articleExtMapper.selectRegexp(null, "title", titleRegexp, "gmt_create", 1, offset, size);
         }
 
         // 生成 key = creator, value = User 的 Map
@@ -163,11 +162,11 @@ public class ArticleService {
 
     public List<ArticleDTO> selectRelated(Long id, String tags, Long size) {
         // id 是用来过滤问题的，防止相关问题搜寻到自己，而文章的相关问题则不需考虑重复，故设置为0
-        String regexp = "\'" + Arrays.stream(tags.split(",")).map(tag -> {
+        String regexp = Arrays.stream(tags.split(",")).map(tag -> {
             tag = tag.trim();
             return "(" + tag + ",)|(" + tag + "$)";
-        }).collect(Collectors.joining("|")) + "\'";
-        List<Article> articles = articleExtMapper.selectRegexp(null, "tag", regexp, 0L, size);
+        }).collect(Collectors.joining("|"));
+        List<Article> articles = articleExtMapper.selectRegexp(null, "tag", regexp, "gmt_create", 1, 0L, size);
         List<ArticleDTO> articleDTOS = articles.stream().filter(article -> !(article.getId() == id)).map(article -> {
             ArticleDTO articleDTO = new ArticleDTO();
             BeanUtils.copyProperties(article, articleDTO);

@@ -1,37 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.blognpc.mapper.QuestionExtMapper">
-    <select id="incComment">
-        update question
-        set comment_count = comment_count + 1
-        where id = ${id}
-    </select>
-
-    <select id="incView">
-        update question
-        set view_count = view_count + 1
-        where id = ${id}
-    </select>
-
+<mapper namespace="com.example.blognpc.mapper.DraftExtMapper">
     <select id="selectRegexp" resultType="com.example.blognpc.model.Question">
-        select * from question where
+        select * from draft where
         <if test="creator != null and creator != 0L">
             creator = ${creator} and
         </if>
-        ${column} regexp '${val}'
+        ${column} regexp "'"${val}"'"
         <if test="desc == 1">
-           order by '${orderColumn}'
+            order by "'"${orderColumn}"'"
         </if>
         limit ${offset}, ${size}
     </select>
-
     <select id="selectCountRegexp" resultType="java.lang.Long">
         select count(*)
-        from question
+        from draft
         where
         <if test="creator != null and creator != 0L">
             creator = ${creator} and
         </if>
-        ${column} regexp '${val}'
+        ${column} regexp "'"${val}"'"
     </select>
 </mapper>

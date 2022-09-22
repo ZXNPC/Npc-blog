@@ -13,12 +13,16 @@
 <div th:insert="~{navigation :: nav}"></div>
 <div class="container main profile">
     <div class="row">
+    <!--TODO: 添加一个小小的搜索框-->
         <!--左侧边栏-->
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h2>我的问题</h2>
             <hr>
             <!--问题列表-->
             <div class="sections-section-list">
+                <div th:if="${paginationDTO == null || paginationDTO?.getData().size() == 0}">
+                    <span class="text-desc">你还没有（相关）文章被提出来捏</span>
+                </div>
                 <div class="media" th:each="article : ${paginationDTO.getData()}">
                     <div class="media-left">
                         <a th:href="@{'/mumbler/article/'+${article.getId()}}">
@@ -53,7 +57,11 @@
                 </a>
                 <a href="/profile/replies"
                    th:class="${#httpServletRequest.getRequestURI() == '/profile/replies'} ? 'active list-group-item':'list-group-item'">
-                    <span class="badge" th:text="${unreadCount}"></span>最新回复
+                    <span class="badge" th:text="${session.unreadCount == 0} ? '': ${session.unreadCount}"></span>最新回复
+                </a>
+                <a href="/profile/drafts"
+                   th:class="${#httpServletRequest.getRequestURI() == '/profile/drafts'} ? 'active list-group-item':'list-group-item'">
+                    <span class="badge" th:text="${draftCount == 0} ? '' : ${draft}"></span>草稿箱
                 </a>
             </div>
         </div>

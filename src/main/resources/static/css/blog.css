@@ -95,3 +95,8 @@ body {
 .item-list {
     padding: 10px 20px;
 }
+
+.draft-delete-icon {
+    margin-left: 5px;
+    cursor: pointer;
+}

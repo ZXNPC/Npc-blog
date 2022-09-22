@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>我的问题</title>
+    <title>草稿箱</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" href="/css/blog.css"/>
     <script src="/js/jquery-3.6.0.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/blog.js" type="application/javascript"></script>
 </head>
 <body>
 <div th:insert="~{navigation :: nav}"></div>
@@ -15,28 +16,32 @@
     <div class="row">
         <!--左侧边栏-->
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <h2>我的问题</h2>
+            <h2>草稿箱</h2>
             <hr>
             <!--问题列表-->
             <div class="sections-section-list">
                 <div th:if="${paginationDTO == null || paginationDTO?.getData().size() == 0}">
-                    <span class="text-desc">你还没有（相关）问题被提出来捏</span>
+                    <span class="text-desc">你还没有（相关）草稿被提出来捏</span>
                 </div>
-                <div class="media" th:each="question : ${paginationDTO.getData()}">
+                <div class="media" th:each="draft : ${paginationDTO.getData()}" th:id="'draft-' + ${draft.getId()}">
                     <div class="media-left">
-                        <a th:href="@{'/community/question/'+${question.getId()}}">
+                        <a th:href="@{'/draft/'+${draft.getId()}}">
                             <img class="media-object img-rounded"
-                                 th:src="${question.getUser().getAvatarUrl()}">
+                                 th:src="${draft.getUser().getAvatarUrl()}">
                         </a>
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">
-                            <a th:href="@{'/community/question/'+${question.getId()}}" th:text="${question.getTitle()}"></a>
+                            <a th:href="@{'/draft/'+${draft.getId()}}" th:text="${draft.getTitle()}"></a>
+                            <a th:if="${draft.getTitle() == ''}"
+                               th:href="@{'/draft/'+${draft.getId()}}">&lt;还没有标题捏&gt;</a>
                         </h4>
                         <span></span><br>
-                        <span class="text-desc"><span th:text="${question.getCommentCount()}"></span> 个回复 · <span
-                                th:text="${question.getViewCount()}"></span>次浏览 · <span
-                                th:text="${#dates.format(question.getGmtCreate(), 'yyyy-MM-dd HH:mm')}"></span></span>
+                        <span class="text-desc">
+                            <span th:text="${#dates.format(draft.getGmtCreate(), 'yyyy-MM-dd HH:mm')}"></span>
+                            <span class="glyphicon glyphicon-trash draft-delete-icon" th:data="${draft.getId()}"
+                                  onclick="deleteDraft(this)"></span>
+                        </span>
                     </div>
                 </div>
             </div>
