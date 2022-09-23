@@ -47,6 +47,7 @@ public class MumblerPublishController {
     public String edit(@PathVariable("id") Long id,
                        Model model) {
         ArticleDTO articleDTO = articleService.selectById(id);
+        model.addAttribute("id", articleDTO.getId());
         model.addAttribute("title", articleDTO.getTitle());
         model.addAttribute("description", articleDTO.getDescription());
         model.addAttribute("tag", articleDTO.getTag());
@@ -60,7 +61,7 @@ public class MumblerPublishController {
             @RequestParam(value = "title") String title,
             @RequestParam(value = "description") String description,
             @RequestParam(value = "tag") String tag,
-            @RequestParam(value = "draftId") Long draftId,
+            @RequestParam(value = "draftId", required = false) Long draftId,
             HttpServletRequest request,
             Model model
     ) {
