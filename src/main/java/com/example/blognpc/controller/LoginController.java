@@ -101,8 +101,8 @@ public class LoginController {
         String url = String.join("/", Arrays.copyOfRange(request.getRequestURL().toString().split("/"), 0, 3))
                 + "/login/verify?token=" + user.getToken() + "&email=" + toEmail + "&expirationTime=" + expirationTime;
         String welcome = CalendarUtils.welcome();
-        String articleUrl = "http:blog.zx2624.co/?search=发送邮件";
-        String articleHtml = "<a href=\"" + articleUrl + "\">点击跳转</a>";
+        String articleUrl = "http://blog.zx2624.co/?search=发送邮件";
+        String articleHtml = "<a style=\"color: #999;\" href=\"" + articleUrl + "\">点击跳转</a>";
 
         String subject = "NPC-BLOG 邮箱验证";
         MimeMultipart multipart = new MimeMultipart();
@@ -113,25 +113,18 @@ public class LoginController {
                     "<html lang=\"en\">\n" +
                     "<head>\n" +
                     "    <meta charset=\"UTF-8\">\n" +
-                    "    <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css\"\n" +
-                    "          integrity=\"sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu\" crossorigin=\"anonymous\">\n" +
-                    "    <style>\n" +
-                    "        .text-desc {\n" +
-                    "            font-size: 12px;\n" +
-                    "            font-weight: normal;\n" +
-                    "            color: #999;\n" +
-                    "        }\n" +
-                    "    </style>\n" +
                     "</head>\n" +
                     "<body>\n" +
-                    "<div class=\"container\">\n" +
-                    "    <div class=\"jumbotron\">\n" +
-                    "        <h1>NPC-BLOG</h1>\n" +
-                    "        <p>Hi, " + ", " + welcome + "</p>\n" +
-                    "        <p>点击下面的按钮来验证你的邮箱</p>\n" +
-                    "        <p><a class=\"btn btn-primary btn-lg\" href=\"" + url + "\" role=\"button\">验证电子邮箱</a></p>\n" +
-                    "        <div class=\"text-desc\">这是一封系统自动生成的邮件，请勿直接回复。</div>\n" +
-                    "        <div class=\"text-desc\">想知道如何发这种炫酷的邮件吗？看看这篇文章 &rightarrow; " + articleHtml + "</div>\n" +
+                    "<div style=\"padding-right: 15px; padding-left: 15px; margin-right: auto; margin-left: auto; max-width: 1170px;\">\n" +
+                    "    <div style=\"padding: 48px 60px; border-radius: 6px; margin-bottom: 30px; color: inherit; background-color: #eee;\">\n" +
+                    "        <h1 style=\"margin-top: 10px; font-size: 63px; font-family: inherit; font-weight: 500; line-height: 1.1;\">NPC-BLOG</h1>\n" +
+                    "        <p style=\"margin-bottom: 15px; font-size: 21px; font-weight: 200; margin: 0 0 10px;\">Hi, " + welcome + "</p>\n" +
+                    "        <p style=\"margin-bottom: 15px; font-size: 21px; font-weight: 200; margin: 0 0 10px;\">点击下面的按钮来验证你的邮箱</p>\n" +
+                    "        <p style=\"margin-bottom: 15px; font-size: 21px; font-weight: 200; margin: 0 0 10px;\">\n" +
+                    "            <a style=\"color: white; background-color: #337ab7; border-color: #2e6da4; text-decoration: none; display: inline-block; margin-bottom: 0; font-weight: 400; text-align: center; white-space: nowrap; vertical-align: middle; -ms-touch-action: manipulation; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid transparent; padding: 6px 12px; font-size: 18px; line-height: 1.3333333; border-radius: 6px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; padding: 10px 16px;\" href=\"" + url + "\" role=\"button\">验证电子邮箱</a>\n" +
+                    "        </p>\n" +
+                    "        <div style=\"font-size: 12px; font-weight: normal; color: #999;\">这是一封系统自动生成的邮件，请勿直接回复。</div>\n" +
+                    "        <div style=\"font-size: 12px; font-weight: normal; color: #999;\">想知道如何发这种炫酷的邮件吗？看看这些文章 &rightarrow; " + articleHtml + "</div>\n" +
                     "    </div>\n" +
                     "</div>\n" +
                     "</body>\n" +
@@ -168,7 +161,6 @@ public class LoginController {
 //        redirectAttributes.addFlashAttribute("fromSignin", false);
 
         model.addAttribute("resultDTO", ResultDTO.okOf(toEmail));
-        model.addAttribute("fromSignin", false);
 
         return "login";
     }

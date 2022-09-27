@@ -243,8 +243,8 @@
         window.onload = function () {
             var resultDTO = [[${resultDTO}]];
             var email = [[${email}]];
-            var fromSignup = [[${from_signup}]];
-            if ("false" == fromSignup) {
+            var signup = window.location.href.split("/")[4];
+            if ("signup" == signup && resultDTO  && !resultDTO.code == 203) {
                 const container = document.querySelector(".container");
                 container.classList.add("right-panel-active");
             }

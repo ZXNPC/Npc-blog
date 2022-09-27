@@ -129,7 +129,6 @@
     <div class="container">
         <form action="/login/verify" method="post" class="form">
             <div>
-                <span th:text="${userName} + '，'"></span>
                 <span id="datetime">
                 <script type="application/javascript">
                     now = new Date(), hour = now.getHours();
@@ -153,7 +152,7 @@
                 </script>
             </span>
                 <br>
-                <h4>你的邮箱已确认，请再次输入登录密码。</h4>
+                <h4>你的邮箱已确认，请设置用户名并请再次输入登录密码。</h4>
             </div>
             <input type="hidden" name="email" th:value="${email}">
             <input type="hidden" name="token" th:value="${token}">

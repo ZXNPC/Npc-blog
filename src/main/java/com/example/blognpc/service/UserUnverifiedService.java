@@ -38,13 +38,13 @@ public class UserUnverifiedService {
         user.setPassword(DigestUtils.md5DigestAsHex(DigestUtils.md5DigestAsHex(user.getPassword().getBytes(StandardCharsets.UTF_8)).getBytes(StandardCharsets.UTF_8)));
         List<UserUnverified> users = userUnverifiedMapper.selectList(new QueryWrapper<UserUnverified>().eq("email", user.getEmail()));
         UserUnverified dbUser = users.size() == 0 ? null : users.get(0);
-        if (dbUser == null) {
-            // 用户不存在，可以创建新用户
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
-            userUnverifiedMapper.insert(user);
-        } else {
-            if (userMapper.selectList(new QueryWrapper<User>().eq("email", user.getEmail())).size() == 0) {
+        if (userMapper.selectList(new QueryWrapper<User>().eq("email", user.getEmail())).size() == 0) {
+            if (dbUser == null) {
+                // 用户不存在，可以创建新用户
+                user.setGmtCreate(System.currentTimeMillis());
+                user.setGmtModified(user.getGmtCreate());
+                userUnverifiedMapper.insert(user);
+            } else {
                 // 邮箱未被注册
                 if (user.getPassword() == null) {
                     // 没有密码且没有被前端拦截，说明是来自于 js 的跳转，重新发送邮件
@@ -63,12 +63,10 @@ public class UserUnverifiedService {
                         throw new LoginException(LoginErrorCode.EMAIL_UNVERIFIED_SIGNUP);
                     }
                 }
-            } else {
-                // 邮箱已注册
-                throw new LoginException(LoginErrorCode.EMAIL_FOUND);
-                // TODO: 忘记密码功能
             }
-
+        }
+        else {
+            throw new LoginException(LoginErrorCode.EMAIL_FOUND);
         }
     }
 
