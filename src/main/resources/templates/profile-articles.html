@@ -10,13 +10,13 @@
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
 </head>
 <body>
-<div th:insert="~{navigation :: nav}"></div>
+<div th:insert="~{fragment :: navigation}"></div>
 <div class="container main profile">
     <div class="row">
     <!--TODO: 添加一个小小的搜索框-->
         <!--左侧边栏-->
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <h2>我的问题</h2>
+            <h2>我的文章</h2>
             <hr>
             <!--问题列表-->
             <div class="sections-section-list">
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <!--翻页-->
-            <nav th:insert="~{pagination :: pagi}"></nav>
+            <div th:insert="~{fragment :: pagination-buttons}"></div>
         </div>
         <!--右侧边栏-->
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
@@ -67,6 +67,6 @@
         </div>
     </div>
 </div>
-<div th:insert="~{footer :: foot}"></div>
+<div th:insert="~{fragment :: footer}"></div>
 </body>
 </html>

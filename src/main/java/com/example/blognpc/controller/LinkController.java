@@ -14,6 +14,6 @@ public class LinkController {
                        @RequestParam(name = "search", required = false) String search)
     {
         model.addAttribute("search", search);
-        return "tool";
+        return "link";
     }
 }

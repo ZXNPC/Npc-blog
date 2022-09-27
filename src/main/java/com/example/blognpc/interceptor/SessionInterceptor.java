@@ -2,8 +2,10 @@ package com.example.blognpc.interceptor;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.blognpc.enums.NotificationStatusEnum;
+import com.example.blognpc.mapper.ManagerMapper;
 import com.example.blognpc.mapper.NotificationMapper;
 import com.example.blognpc.mapper.UserMapper;
+import com.example.blognpc.model.Manager;
 import com.example.blognpc.model.Notification;
 import com.example.blognpc.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ public class SessionInterceptor implements HandlerInterceptor {
     private UserMapper userMapper;
     @Autowired
     private NotificationMapper notificationMapper;
+    @Autowired
+    private ManagerMapper managerMapper;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -38,15 +42,12 @@ public class SessionInterceptor implements HandlerInterceptor {
                     String token = cookie.getValue();
                     List<User> users = userMapper.selectList(new QueryWrapper<User>().eq("token", token));
                     if (users.size() != 0) {
-                        request.getSession().setAttribute("user", users.get(0));
-                        if (token.equals(managerToken)) {
-                            request.getSession().setAttribute("manager", true);
-                        }
-                        else {
-                            request.getSession().setAttribute("manager", false);
-                        }
+                        User user = users.get(0);
+                        request.getSession().setAttribute("user", user);
+                        List<Manager> managers = managerMapper.selectList(new QueryWrapper<Manager>().eq("user_id", user.getId()));
+                        request.getSession().setAttribute("manager", managers.size() != 0);
                         Long unreadCount = notificationMapper.selectCount(new QueryWrapper<Notification>()
-                                .eq("receiver", users.get(0).getId())
+                                .eq("receiver", user.getId())
                                 .eq("status", NotificationStatusEnum.UNREAD));
                         request.getSession().setAttribute("unreadCount", unreadCount);
                     }

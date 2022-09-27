@@ -14,23 +14,17 @@ import io.swagger.annotations.ApiModelProperty;
  * @author NPC
  * @since 2022-09-27
  */
-@ApiModel(value = "Draft对象", description = "")
-public class Draft implements Serializable {
+@ApiModel(value = "Manager对象", description = "")
+public class Manager implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private Integer type;
+    private Long userId;
 
-    private String title;
-
-    private String description;
-
-    private String tag;
-
-    private Long creator;
+    private String token;
 
     private Long gmtCreate;
 
@@ -43,40 +37,19 @@ public class Draft implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public Integer getType() {
-        return type;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    public String getDescription() {
-        return description;
+    public String getToken() {
+        return token;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-    public Long getCreator() {
-        return creator;
-    }
-
-    public void setCreator(Long creator) {
-        this.creator = creator;
+    public void setToken(String token) {
+        this.token = token;
     }
     public Long getGmtCreate() {
         return gmtCreate;
@@ -95,13 +68,10 @@ public class Draft implements Serializable {
 
     @Override
     public String toString() {
-        return "Draft{" +
+        return "Manager{" +
             "id=" + id +
-            ", type=" + type +
-            ", title=" + title +
-            ", description=" + description +
-            ", tag=" + tag +
-            ", creator=" + creator +
+            ", userId=" + userId +
+            ", token=" + token +
             ", gmtCreate=" + gmtCreate +
             ", gmtModified=" + gmtModified +
         "}";

@@ -5,18 +5,18 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" href="/css/mumbler.css"/>
+    <link rel="stylesheet" href="/css/blog.css"/>
     <link rel="stylesheet" href="/css/editormd.preview.min.css"/>
     <script src="/js/jquery-3.6.0.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/moment.js" type="application/javascript"></script>
-    <script src="/js/mumbler.js" type="application/javascript"></script>
+    <script src="/js/blog.js" type="application/javascript"></script>
     <script src="/js/editormd.min.js" type="application/javascript"></script>
     <script src="/js/lib/marked.min.js" type="application/javascript"></script>
     <script src="/js/lib/prettify.min.js" type="application/javascript"></script>
 </head>
 <body>
-<div th:insert="~{navigation :: nav}"></div>
+<div th:insert="~{fragment :: navigation}"></div>
 <div class="container main article">
     <div class="row">
 
@@ -128,7 +128,7 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <input type="text" class="form-control" placeholder="评论一下......"
                                            th:id="${'input-'+commentDTO.getId()}">
-                                    <button type="button" class="btn btn-success" onclick="comment(this)"
+                                    <button type="button" class="btn btn-success" onclick="commentArticleComment(this)"
                                             th:data-id="${commentDTO.getId()}">评论
                                     </button>
                                 </div>
@@ -151,9 +151,9 @@
                             <span th:if="${session.user != null}" th:text="${session.user.name}"></span>
                         </h4>
                     </div>
-                    <input type="hidden" id="article_id" th:value="${articleDTO.getId()}">
-                    <textarea class="form-control comment" rows="6" id="comment_content"></textarea>
-                    <button type="button" class="btn btn-success btn-comment" onclick="post()">回复</button>
+                    <input type="hidden" id="article-id" th:value="${articleDTO.getId()}">
+                    <textarea class="form-control comment-textarea" rows="6" id="comment-content"></textarea>
+                    <button type="button" class="btn btn-success btn-comment" onclick="postArticleComment()">回复</button>
                     <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 </div>
             </div>
@@ -194,7 +194,7 @@
                 </div>
                 <div th:if="${relatedQuestions.size() != 0}">
                     <h3>相关问题</h3>
-                    <ul class="article-related">
+                    <ul class="question-related">
                         <li th:each="relatedQuestion:${relatedQuestions}" class="related-title">
                             <a th:href="@{'/community/question/' + ${relatedQuestion.getId()}}"
                                th:text="${relatedQuestion.getTitle()}">title</a>
@@ -205,6 +205,6 @@
         </div>
     </div>
 </div>
-<div th:insert="~{footer :: foot}"></div>
+<div th:insert="~{fragment :: footer}"></div>
 </body>
 </html>

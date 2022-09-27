@@ -21,7 +21,7 @@ public class TagCache {
 
         TagDTO framework = new TagDTO();
         framework.setCategoryName("平台框架");
-        framework.setTags(Arrays.asList("laravel", "spring", "express", "django", "flask", "yii",
+        framework.setTags(Arrays.asList("laravel", "spring", "spring-boot", "express", "django", "flask", "yii",
                 "ruby-on-rails_tornado", "koa", "struts"));
         tagDTOS.add(framework);
 

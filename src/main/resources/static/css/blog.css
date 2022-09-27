@@ -2,15 +2,32 @@ body {
     background-color: #efefef;
 }
 
-.footer {
-    padding: 10px 25%;
-    color: #666;
-    text-align: center;
+.nav-tabs {
+    padding-left: 20px;
+}
+
+.nav-tabs a {
+    color: black;
 }
 
 .main {
     background-color: white;
     margin: auto;
+}
+
+.btn-publish {
+    float: right;
+    margin-left: 10px;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.btn-save {
+    color: #999;
+    float: right;
+    margin-left: 10px;
+    margin-bottom: 15px;
+    font-size: 20px;
 }
 
 .jumbotron {
@@ -25,6 +42,15 @@ body {
 
 .media .media-body {
     padding-top: 10px
+}
+
+.media-object {
+    width: 45px;
+    height: 45px;
+}
+
+.media-body {
+    padding-top: 10px;
 }
 
 .media .text-desc {
@@ -99,4 +125,126 @@ body {
 .draft-delete-icon {
     margin-left: 5px;
     cursor: pointer;
+}
+
+.page-li {
+    width: 40px;
+    text-align: center;
+}
+
+.footer {
+    padding: 10px 25%;
+    color: #666;
+    text-align: center;
+}
+
+.pagination {
+    margin-left: 20px;
+}
+
+.profile .section {
+    margin-top: 15px;
+}
+
+.comment-section {
+    margin-top: 18px;
+}
+
+.btn-comment {
+    float: right;
+    margin-bottom: 10px;
+}
+
+.comment-textarea {
+    margin: 10px 0;
+}
+
+.related-title {
+    margin-bottom: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: auto;
+}
+
+.article-related {
+    line-height: 20px;
+    font-size: 16px;
+    list-style: none;
+    padding-left: 0;
+}
+
+.question-related {
+    line-height: 20px;
+    font-size: 16px;
+    list-style: none;
+    padding-left: 0;
+}
+
+.article-tag {
+    margin-top: 8px;
+    margin-right: 8px;
+    cursor: pointer;
+    white-space: inherit;
+}
+
+.question-tag {
+    margin-top: 8px;
+    margin-right: 8px;
+    cursor: pointer;
+    white-space: inherit;
+}
+
+.comments {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #EEEEEE;
+    padding: 5px;
+}
+
+.menu {
+    color: #999;
+}
+
+.menu .icon {
+    margin-top: 5px;
+    margin-right: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.menu .comment-icon {
+    margin-top: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.menu .comment-icon:hover {
+    color: #499ef3;
+}
+
+.menu .active {
+    color: #499ef3;
+}
+
+.menu .icon:hover {
+    color: #499ef3;
+}
+
+.sub-comments {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #eee;
+    padding-top: 15px;
+    border-radius: 5px;
+}
+
+.sub-comments .btn {
+    float: right;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.nav-tag {
+    margin-top: 7px;
 }

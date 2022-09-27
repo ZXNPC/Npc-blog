@@ -113,7 +113,7 @@ public class ArticleService {
         if (StringUtils.isBlank(titleRegexp)) {
             articles = articleMapper.selectList(new QueryWrapper<Article>()
                     .eq(creator != 0L, "creator", creator)
-                    .orderByDesc("id")
+                    .orderByDesc("gmt_create")
                     .last(String.format("limit %d, %d", offset, size)));
         } else {
             articles = articleExtMapper.selectRegexp(null, "title", titleRegexp, "gmt_create", 1, offset, size);

@@ -21,13 +21,21 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.env.Environment;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.util.DigestUtils;
 
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -110,8 +118,28 @@ class BlogNpcApplicationTestsCopy {
 
     @Test
     public void dateTest() {
-        long currentTimeMillis = System.currentTimeMillis();
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(currentTimeMillis));
+        Calendar today = Calendar.getInstance();
+        today.setTimeInMillis(System.currentTimeMillis());
+        System.out.print("今天是:"+today.get(Calendar.YEAR)+"年");
+        System.out.print(today.get(Calendar.MONTH)+1+"月");//注意月的值从0开始，这里取出的值是7，实际上是8月，所以要加上1
+        System.out.println(today.get(Calendar.DATE)+"日");
+        System.out.print(today.get(Calendar.HOUR_OF_DAY)+"时");
+        System.out.print(today.get(Calendar.MINUTE)+"分");
+        System.out.print(today.get(Calendar.SECOND)+"秒");
+        System.out.println("\t"+"（即下午"+today.get(Calendar.HOUR)+"时）");
+        System.out.println("这个星期的第"+today.get(Calendar.DAY_OF_WEEK)+"天"+"（即星期三）");
+        System.out.println("这个月的第"+today.get(Calendar.DAY_OF_MONTH)+"天");
+        System.out.println("这一年的第"+today.get(Calendar.DAY_OF_YEAR)+"天");
+
+        int a = 12;
+        today.add(Calendar.DATE, a);
+        System.out.print("再过"+a+"天是："+today.get(Calendar.YEAR)+"年");
+        System.out.print(today.get(Calendar.MONTH)+1+"月");
+        System.out.println(today.get(Calendar.DATE)+"日");
+
+        today.set(2018,8,17);
+        System.out.print(today.get(Calendar.YEAR)+"年的七夕节是：");
+        System.out.println(today.get(Calendar.MONTH)+"月"+today.get(Calendar.DATE)+"日");
     }
 
     @Test
@@ -165,12 +193,12 @@ class BlogNpcApplicationTestsCopy {
         }
     }
 
-    @Test
-    public void removeExpiredTest() {
-        List<User> users = userMapper.selectList(null);
-        List<Long> userIds = users.stream().filter(user -> user.getComplete() == false).map(user -> user.getId()).collect(Collectors.toList());
-        System.out.println(userIds.toString());
-    }
+//    @Test
+//    public void removeExpiredTest() {
+//        List<User> users = userMapper.selectList(null);
+//        List<Long> userIds = users.stream().filter(user -> user.getComplete() == false).map(user -> user.getId()).collect(Collectors.toList());
+//        System.out.println(userIds.toString());
+//    }
 
     @Test
     public void tencentCloudTest() {
@@ -212,5 +240,87 @@ class BlogNpcApplicationTestsCopy {
         if (id == 0L)
             System.out.println("yes");
     }
+
+    @Autowired
+    private Environment env;
+    @Test
+    public void emailHtmlTest() {
+        Properties props = new Properties();
+        props.setProperty("mail.transport.protocol", "smtp");
+        props.setProperty("mail.smtp.host", env.getProperty("spring.mail.host"));
+        props.setProperty("mail.smtp.auth", "true");
+
+        Session session = Session.getInstance(props);
+
+        MimeMessage message = new MimeMessage(session);
+
+        try {
+            message.setFrom(new InternetAddress("2946310156@qq.com", "发件人", "UTF-8"));
+            message.setRecipient(MimeMessage.RecipientType.TO, new InternetAddress("993023569@qq.com", "收件人", "UTF-8"));
+
+            message.setSubject("test for spring boot");
+
+            MimeBodyPart mimeBodyPart = new MimeBodyPart();
+            mimeBodyPart.setContent("<div style='color: red'>red test</div>", "text/html;charset=UTF-8");
+
+            MimeMultipart mimeMultipart = new MimeMultipart();
+            mimeMultipart.addBodyPart(mimeBodyPart);
+
+            message.setContent(mimeMultipart);
+
+            message.setSentDate(new Date());
+
+            message.saveChanges();
+
+            Transport transport = session.getTransport();
+
+            transport.connect("2946310156@qq.com", "rakbfhvsosjvddha");
+
+            transport.sendMessage(message, message.getAllRecipients());
+
+            transport.close();
+
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+
+//        message.setFrom("2946310156@qq.com");
+//        message.setTo("993023569@qq.com");
+//        message.setSubject("it is a test for spring boot");
+//        message.setText("<div style='color: red'>red test</div>");
+
+    }
+
+    @Test
+    public void envTest() {
+        System.out.println(env.getProperty("github.client.id"));
+    }
+
+//    @Autowired
+//    private TestService testService;
+//
+//    @Test
+//    public void serviceConstructorTest() {
+//        testService.print();
+//    }
+
+    @Test
+    public void tryTest() {
+        Integer i = 10;
+        try {
+            i = 100;
+            throw new RuntimeException();
+        } catch (RuntimeException e) {
+            System.out.println(i);
+        }
+        System.out.println(i);
+    }
+
 
 }

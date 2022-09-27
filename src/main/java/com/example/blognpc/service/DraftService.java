@@ -99,7 +99,7 @@ public class DraftService {
         if (StringUtils.isBlank(titleRegexp)) {
             drafts = draftMapper.selectList(new QueryWrapper<Draft>()
                     .eq(creator != null && creator != 0L, "creator", creator)
-                    .orderByDesc("id")
+                    .orderByDesc("gmt_create")
                     .last(String.format("limit %d, %d", offset, size)));
         } else {
             drafts = draftExtMapper.selectRegexp(null, "title", titleRegexp, "gmt_create", 1, offset, size);

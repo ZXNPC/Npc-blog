@@ -244,12 +244,11 @@
             var resultDTO = [[${resultDTO}]];
             var email = [[${email}]];
             var fromSignup = [[${from_signup}]];
-            console.log(fromSignup);
             if ("false" == fromSignup) {
                 const container = document.querySelector(".container");
                 container.classList.add("right-panel-active");
             }
-            if (resultDTO != null && resultDTO.code != null && sessionStorage.getItem("resultDTO") == null) {
+            if (resultDTO && resultDTO.code != null && sessionStorage.getItem("resultDTO") == null) {
                 sessionStorage.setItem("resultDTO", true);
                 if (resultDTO.code == 104 || resultDTO.code == 205) {
                     var sendEmail = confirm("邮箱未验证，注意查看你的邮件。\n或者你想要再来一封验证邮件？");
@@ -276,10 +275,10 @@
         <div class="container__form container--signup">
             <form action="/login/signup" method="post" class="form" id="form1">
                 <h2 class="form__title">Sign Up</h2>
-                <input type="text" placeholder="User" class="input" id="signup_user" name="signup_user"/>
                 <input type="email" placeholder="Email" class="input" name="email" id="signup_email"
                        th:value="${email}"/>
-                <!--            <input type="password" placeholder="Password" class="input" name="signup_password" th:value="${signup_password}"/>-->
+                <input type="password" placeholder="Password" class="input" name="signup_password" id="signup_password"
+                       th:value="${signup_password}"/>
                 <a th:href="@{http://github.com/login/oauth/authorize(client_id=${clientId}, redirect_url=${#httpServletRequest.getRequestURL()+'callback'},scope='user',state=1)}"
                    style="text-decoration: none;color: black" onclick="checkGitHub()">
                     <div class="github-login">
@@ -325,9 +324,11 @@
         </div>
     </div>
 
-    <div style="text-align: center; margin-top: 13px">
-        <a href="/" style="color: black; text-decoration: none">
-            <button>&lt; 返回主页 &gt;</button>
+    <div style="text-align: center; margin-top: 13px;">
+        <a href="/" style="color: black; text-decoration: none;">
+            <button style="opacity: 0.7;font-size: 20px;cursor: pointer;box-shadow: 0 0.9rem 1.7rem rgb(0 0 0 / 25%), 0 0.7rem 0.7rem rgb(0 0 0 / 22%);">
+                &lt; 返回主页 &gt;
+            </button>
         </a>
     </div>
 </div>

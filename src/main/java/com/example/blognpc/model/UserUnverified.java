@@ -2,6 +2,7 @@ package com.example.blognpc.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,23 +15,20 @@ import io.swagger.annotations.ApiModelProperty;
  * @author NPC
  * @since 2022-09-27
  */
-@ApiModel(value = "Draft对象", description = "")
-public class Draft implements Serializable {
+@TableName("user_unverified")
+@ApiModel(value = "UserUnverified对象", description = "")
+public class UserUnverified implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private Integer type;
+    private String email;
 
-    private String title;
+    private String password;
 
-    private String description;
-
-    private String tag;
-
-    private Long creator;
+    private String token;
 
     private Long gmtCreate;
 
@@ -43,40 +41,26 @@ public class Draft implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public Integer getType() {
-        return type;
+    public String getEmail() {
+        return email;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setEmail(String email) {
+        this.email = email;
     }
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    public String getDescription() {
-        return description;
+    public String getPassword() {
+        return password;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPassword(String password) {
+        this.password = password;
     }
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-    public Long getCreator() {
-        return creator;
+    public String getToken() {
+        return token;
     }
 
-    public void setCreator(Long creator) {
-        this.creator = creator;
+    public void setToken(String token) {
+        this.token = token;
     }
     public Long getGmtCreate() {
         return gmtCreate;
@@ -95,13 +79,11 @@ public class Draft implements Serializable {
 
     @Override
     public String toString() {
-        return "Draft{" +
+        return "UserUnverified{" +
             "id=" + id +
-            ", type=" + type +
-            ", title=" + title +
-            ", description=" + description +
-            ", tag=" + tag +
-            ", creator=" + creator +
+            ", email=" + email +
+            ", password=" + password +
+            ", token=" + token +
             ", gmtCreate=" + gmtCreate +
             ", gmtModified=" + gmtModified +
         "}";

@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!--最顶上的导航栏-->
+<nav th:fragment="navigation" class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">NPC博客</span>
+            </button>
+            <a class="navbar-brand" href="/">NPC博客</a>
+        </div>
+        <form class="navbar-form navbar-left" th:action="${#httpServletRequest.getRequestURI()}" method="get">
+            <div class="form-group">
+                <input type="text" class="form-control" name="search" placeholder="搜索相关内容" th:value="${search}">
+            </div>
+            <button type="submit" class="btn btn-default">搜索</button>
+        </form>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+            <ul class="nav navbar-nav navbar-right">
+                <li th:if="${session.user != null}">
+                    <a href="/profile/replies" title="查看通知">
+                            <span class="badge"
+                                  th:text="${session.unreadCount == 0} ? '': ${session.unreadCount}"></span>通知
+                    </a>
+                </li>
+
+                <li th:if="${session.user != null}">
+                    <a href="/community/publish" title="在论坛中提出问题">提问</a>
+                </li>
+                <li th:if="${session.user != null && session.manager == true}">
+                    <a href="/mumbler/publish" title="发布文章">发布</a>
+                </li>
+                <li class="dropdown" th:if="${session.user != null}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">
+                        <span th:text="${session.user.getName()}"></span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/profile/questions">我的问题</a></li>
+                        <li th:if="${session.manager == true}"><a href="/profile/articles">我的文章</a></li>
+                        <li><a href="/profile/drafts">草稿箱</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="/logout">退出登录</a></li>
+                    </ul>
+                </li>
+                <li th:if="${session.user == null}">
+                    <a href="/login">登录</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!--主页的导航栏（文章|论坛|...）-->
+<ul th:fragment="navigation-tabs" class="nav nav-tabs" role="tablist">
+    <li th:class="${#httpServletRequest.getRequestURI() == '/mumbler'
+             || #httpServletRequest.getRequestURI() == '/'} ? 'active':''">
+        <a th:href="@{'/mumbler' + ${search != null ? '?search=' + search : ''}}">文章</a>
+    </li>
+<!--    <li th:class="${#httpServletRequest.getRequestURI() == '/tool'} ? 'active':''">-->
+<!--        <a th:href="@{'/tool' + ${search != null ? '?search=' + search : ''}}">工具</a>-->
+<!--    </li>-->
+<!--    <li th:class="${#httpServletRequest.getRequestURI() == '/link'} ? 'active':''">-->
+<!--        <a th:href="@{'/link' + ${search != null ? '?search=' + search : ''}}">常用网站</a>-->
+<!--    </li>-->
+    <li th:class="${#httpServletRequest.getRequestURI() == '/community'} ? 'active':''">
+        <a th:href="@{'/community' + ${search != null ? '?search=' + search : ''}}">论坛</a>
+    </li>
+    <li th:if="${session.manager == true}" th:class="${#httpServletRequest.getRequestURI() == '/manage'} ? 'active':''">
+        <a th:href="@{'/manage' + ${search != null ? '?search=' + search : ''}}">管理</a>
+    </li>
+</ul>
+
+<!--翻页按钮-->
+<nav th:fragment="pagination-buttons" aria-label="Page navigation" th:if="${paginationDTO?.getTotalPage > 1}">
+    <ul class="pagination">
+        <li th:if="${paginationDTO?.showFirstPage} == true" class="page-li">
+            <a th:href="@{${#httpServletRequest.getRequestURI()}(page=1)}" aria-label="First" class="page-li">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li th:if="${paginationDTO?.showPrevious} == true" class="page-li">
+            <a th:href="@{${#httpServletRequest.getRequestURI()}(page=${paginationDTO?.getPage()-1})}"
+               aria-label="Previous"
+               class="page-li">
+                <span aria-hidden="true">&lt;</span>
+            </a>
+        </li>
+
+        <li th:each="page : ${paginationDTO?.getPages()}"
+            th:class="${paginationDTO?.page == page} ? 'active':''">
+            <a th:href="@{${#httpServletRequest.getRequestURI()}(page=${page})}" th:text="${page}" class="page-li"></a>
+        </li>
+
+        <li th:if="${paginationDTO?.showNext} == true">
+            <a th:href="@{${#httpServletRequest.getRequestURI()}(page=${paginationDTO?.getPage()+1})}" aria-label="Next"
+               class="page-li">
+                <span aria-hidden="true">&gt;</span>
+            </a>
+        </li>
+        <li th:if="${paginationDTO?.showEndPage} == true" class="page-li">
+            <a th:href="@{${#httpServletRequest.getRequestURI()}(page=${paginationDTO?.getTotalPage()})}"
+               aria-label="End"
+               class="page-li">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<!--最底下的备案号-->
+<div th:fragment="footer" class="footer">
+    <div>
+        Copyright © 2022 · 服务器赞助: Tencent Cloud · 网站程序： Spring Boot · 备案号： 蜀ICP备2022019744号
+    </div>
+</div>
+</body>
+</html>

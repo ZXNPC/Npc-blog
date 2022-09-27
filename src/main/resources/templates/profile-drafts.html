@@ -11,7 +11,7 @@
     <script src="/js/blog.js" type="application/javascript"></script>
 </head>
 <body>
-<div th:insert="~{navigation :: nav}"></div>
+<div th:insert="~{fragment :: navigation}"></div>
 <div class="container main profile">
     <div class="row">
         <!--左侧边栏-->
@@ -46,7 +46,7 @@
                 </div>
             </div>
             <!--翻页-->
-            <nav th:insert="~{pagination :: pagi}"></nav>
+            <div th:insert="~{fragment :: pagination-buttons}"></div>
         </div>
         <!--右侧边栏-->
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
@@ -71,6 +71,6 @@
         </div>
     </div>
 </div>
-<div th:insert="~{footer :: foot}"></div>
+<div th:insert="~{fragment :: footer}"></div>
 </body>
 </html>

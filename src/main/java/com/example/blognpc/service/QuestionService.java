@@ -95,7 +95,7 @@ public class QuestionService {
         if (StringUtils.isBlank(titleRegexp)) {
             questions = questionMapper.selectList(new QueryWrapper<Question>()
                     .eq(creator != null && creator != 0L, "creator", creator)
-                    .orderByDesc("id")
+                    .orderByDesc("gmt_create")
                     .last(String.format("limit %d, %d", offset, size)));
         } else {
             questions = questionExtMapper.selectRegexp(null, "title", titleRegexp, "gmt_create", 1, offset, size);

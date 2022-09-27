@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author NPC
- * @since 2022-09-22
+ * @since 2022-09-27
  */
 @Mapper
 public interface CommentMapper extends BaseMapper<Comment> {

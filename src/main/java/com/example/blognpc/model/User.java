@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author NPC
- * @since 2022-09-22
+ * @since 2022-09-27
  */
 @ApiModel(value = "User对象", description = "")
 public class User implements Serializable {
@@ -39,8 +39,6 @@ public class User implements Serializable {
     private Long gmtCreate;
 
     private Long gmtModified;
-
-    private Boolean complete;
 
     public Long getId() {
         return id;
@@ -112,13 +110,6 @@ public class User implements Serializable {
     public void setGmtModified(Long gmtModified) {
         this.gmtModified = gmtModified;
     }
-    public Boolean getComplete() {
-        return complete;
-    }
-
-    public void setComplete(Boolean complete) {
-        this.complete = complete;
-    }
 
     @Override
     public String toString() {
@@ -133,7 +124,6 @@ public class User implements Serializable {
             ", token=" + token +
             ", gmtCreate=" + gmtCreate +
             ", gmtModified=" + gmtModified +
-            ", complete=" + complete +
         "}";
     }
 }
