@@ -4,7 +4,6 @@ import com.example.blognpc.model.User;
 import com.example.blognpc.model.UserUnverified;
 import com.example.blognpc.service.UserService;
 import com.example.blognpc.service.UserUnverifiedService;
-import jdk.internal.org.jline.reader.UserInterruptException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
