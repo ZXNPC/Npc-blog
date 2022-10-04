@@ -23,8 +23,6 @@ import java.util.List;
 public class SessionInterceptor implements HandlerInterceptor {
     @Value("${github.client.id}")
     private String clientId;
-    @Value("${blog.manager.token}")
-    private String managerToken;
 
     @Autowired
     private UserMapper userMapper;
@@ -34,7 +32,7 @@ public class SessionInterceptor implements HandlerInterceptor {
     private ManagerMapper managerMapper;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {

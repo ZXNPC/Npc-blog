@@ -10,7 +10,7 @@ import okhttp3.*;
 import java.io.IOException;
 
 public class GithubProvider {
-    public static String getAccessToken(AccessTokenDTO accessTokenDTO) {
+    public static String getAccessToken(AccessTokenDTO accessTokenDTO, Integer retryCount) {
         final MediaType mediaType = MediaType.get("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
 
@@ -22,12 +22,15 @@ public class GithubProvider {
                 .url("https://github.com/login/oauth/access_token")
                 .post(body)
                 .build();
-        try (Response response = client.newCall(request).execute()) {
-            String string = response.body().string();
-            String token = string.split("&")[0].split("=")[1];
-            return token;
-        } catch (IOException e) {
-            e.printStackTrace();
+        while (retryCount > 0) {
+            try (Response response = client.newCall(request).execute()) {
+                String string = response.body().string();
+                String token = string.split("&")[0].split("=")[1];
+                return token;
+            } catch (IOException e) {
+                retryCount--;
+                e.printStackTrace();
+            }
         }
         return null;
     }

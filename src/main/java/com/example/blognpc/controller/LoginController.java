@@ -60,6 +60,7 @@ public class LoginController {
 //        model.addAttribute("email", email);
 //        model.addAttribute("signin_password", password);
 //        model.addAttribute("fromSignin", fromSignin);
+
         return "login";
     }
 

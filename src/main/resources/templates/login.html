@@ -279,8 +279,10 @@
                        th:value="${email}"/>
                 <input type="password" placeholder="Password" class="input" name="signup_password" id="signup_password"
                        th:value="${signup_password}"/>
-                <a th:href="@{http://github.com/login/oauth/authorize(client_id=${clientId}, redirect_url=${#httpServletRequest.getRequestURL()+'callback'},scope='user',state=1)}"
+                <a th:href="@{http://github.com/login/oauth/authorize(client_id=${session.clientId}, redirect_url=${#httpServletRequest.getRequestURL()+'/callback'},scope='user',state=1)}"
                    style="text-decoration: none;color: black" onclick="checkGitHub()">
+<!--                <a th:href="@{http://github.com/login/oauth/authorize(client_id=${clientId}, redirect_url=${#httpServletRequest.getRequestURL().replace(#httpServletRequest.getRequestURI(), '')+'/callback'},scope='user',state=1)}"-->
+<!--                   style="text-decoration: none;color: black" onclick="checkGitHub()">-->
                     <div class="github-login">
 
                         <img src="/images/github-fill.png" alt="" class="github-login-icon">
@@ -299,7 +301,7 @@
                        th:value="${email}"/>
                 <input type="password" placeholder="Password" class="input" id="signin_password" name="signin_password"
                        th:value="${signin_password}"/>
-                <a th:href="@{http://github.com/login/oauth/authorize(client_id=${clientId}, redirect_url=${#httpServletRequest.getRequestURL()+'callback'},scope='user',state=1)}"
+                <a th:href="@{http://github.com/login/oauth/authorize(client_id=${session.clientId}, redirect_url=${#httpServletRequest.getRequestURL()+'/callback'},scope='user',state=1)}"
                    style="text-decoration: none;color: black" onclick="checkGitHub()">
                     <div class="github-login">
                         <img src="/images/github-fill.png" alt="" class="github-login-icon">

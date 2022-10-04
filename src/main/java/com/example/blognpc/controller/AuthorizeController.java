@@ -34,9 +34,10 @@ public class AuthorizeController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/callback")
+    @GetMapping("/login/callback")
     public String callback(@RequestParam("code") String code,
                            @RequestParam("state") String state,
+                           @RequestParam(value = "retry", defaultValue = "3") Integer retryCount,
                            HttpServletResponse response,
                            RedirectAttributes redirectAttributes
     ) {
@@ -46,7 +47,7 @@ public class AuthorizeController {
         accessTokenDTO.setClientSecret(clientSecret);
         accessTokenDTO.setRedirectUri(redirectUri);
         accessTokenDTO.setState(state);
-        String accessToken = GithubProvider.getAccessToken(accessTokenDTO);
+        String accessToken = GithubProvider.getAccessToken(accessTokenDTO, retryCount);
         if (accessToken == null) {
             log.error("Getting accesstoken failed.");
             redirectAttributes.addFlashAttribute("resultDTO", ResultDTO.errorOf(LoginErrorCode.GITHUB_OAUTH_ERROR));
