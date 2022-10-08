@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author NPC
- * @since 2022-09-27
+ * @since 2022-10-08
  */
 @TableName("user_unverified")
 @ApiModel(value = "UserUnverified对象", description = "")

@@ -120,6 +120,19 @@
 			<artifactId>cos_api</artifactId>
 			<version>5.6.75</version>
 		</dependency>
+		<dependency>
+			<!-- jsoup HTML parser library @ http://jsoup.org/ -->
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.10.2</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.github.krraghavan/xeger -->
+		<dependency>
+			<groupId>com.github.krraghavan</groupId>
+			<artifactId>xeger</artifactId>
+			<version>1.0.0-RELEASE</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

@@ -33,13 +33,16 @@
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading">
-                        <a th:href="@{'/community/question/' + ${questionDTO.getId()}}" th:text="${questionDTO.getTitle()}"></a>
+                        <a th:href="@{'/community/question/' + ${questionDTO.getId()}}"
+                           th:text="${questionDTO.getTitle()}"></a>
                     </h4>
                     <br>
                     <span class="text-desc">
                     <span th:text="${questionDTO.getCommentCount()}"></span> 个回复 ·
                     <span th:text="${questionDTO.getViewCount()}"></span> 次浏览 ·
                     <span th:text="${#dates.format(questionDTO.getGmtCreate(), 'yyyy-MM-dd HH:mm')}"></span>
+                        <span th:if="${session.manager == true}"> · ID:<span
+                                th:text="${questionDTO.getId()}"></span></span>
                 </span>
                 </div>
             </div>

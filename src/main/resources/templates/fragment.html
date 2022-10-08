@@ -64,18 +64,19 @@
              || #httpServletRequest.getRequestURI() == '/'} ? 'active':''">
         <a th:href="@{'/mumbler' + ${search != null ? '?search=' + search : ''}}">文章</a>
     </li>
-<!--    <li th:class="${#httpServletRequest.getRequestURI() == '/tool'} ? 'active':''">-->
-<!--        <a th:href="@{'/tool' + ${search != null ? '?search=' + search : ''}}">工具</a>-->
-<!--    </li>-->
-<!--    <li th:class="${#httpServletRequest.getRequestURI() == '/link'} ? 'active':''">-->
-<!--        <a th:href="@{'/link' + ${search != null ? '?search=' + search : ''}}">常用网站</a>-->
-<!--    </li>-->
     <li th:class="${#httpServletRequest.getRequestURI() == '/community'} ? 'active':''">
         <a th:href="@{'/community' + ${search != null ? '?search=' + search : ''}}">论坛</a>
+    </li>
+    <li th:class="${#httpServletRequest.getRequestURI() == '/depot'} ? 'active':''">
+        <a th:href="@{'/depot' + ${search != null ? '?search=' + search : ''}}">工具</a>
     </li>
     <li th:if="${session.manager == true}" th:class="${#httpServletRequest.getRequestURI() == '/manage'} ? 'active':''">
         <a th:href="@{'/manage' + ${search != null ? '?search=' + search : ''}}">管理</a>
     </li>
+<!--TODO: 资源-->
+<!--    <li th:class="${#httpServletRequest.getRequestURI() == '/resources'} ? 'active':''">-->
+<!--        <a th:href="@{'/resources' + ${search != null ? '?search=' + search : ''}}">资源</a>-->
+<!--    </li>-->
 </ul>
 
 <!--翻页按钮-->

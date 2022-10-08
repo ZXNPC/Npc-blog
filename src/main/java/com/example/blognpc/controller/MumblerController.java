@@ -19,7 +19,7 @@ public class MumblerController {
                           @RequestParam(name = "page", defaultValue = "1") Long page,
                           @RequestParam(name = "size", defaultValue = "10") Long size,
                           @RequestParam(name = "search", required = false) String search) {
-        PaginationDTO<ArticleDTO> paginationDTO = articleService.list(0L, page, size, search);
+        PaginationDTO<ArticleDTO> paginationDTO = articleService.list(0L, page, size, search, "gmt_create");
         model.addAttribute("paginationDTO", paginationDTO);
         model.addAttribute("search", search);
         return "mumbler";
@@ -30,7 +30,7 @@ public class MumblerController {
                         @RequestParam(name = "page", defaultValue = "1") Long page,
                         @RequestParam(name = "size", defaultValue = "10") Long size,
                         @RequestParam(name = "search", required = false) String search) {
-        PaginationDTO<ArticleDTO> paginationDTO = articleService.list(0L, page, size, search);
+        PaginationDTO<ArticleDTO> paginationDTO = articleService.list(0L, page, size, search, "gmt_create");
         model.addAttribute("paginationDTO", paginationDTO);
         model.addAttribute("search", search);
         return "mumbler";

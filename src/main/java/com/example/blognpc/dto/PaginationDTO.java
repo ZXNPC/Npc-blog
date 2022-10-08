@@ -90,4 +90,11 @@ public class PaginationDTO<T> {
             showEndPage = true;
         }
     }
+
+    public static PaginationDTO empty() {
+        PaginationDTO paginationDTO = new PaginationDTO();
+        paginationDTO.setPagination(0L, 0L, 1L);
+        paginationDTO.setData(null);
+        return paginationDTO;
+    }
 }

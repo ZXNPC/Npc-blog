@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author NPC
- * @since 2022-09-27
+ * @since 2022-10-08
  */
 @ApiModel(value = "Manager对象", description = "")
 public class Manager implements Serializable {

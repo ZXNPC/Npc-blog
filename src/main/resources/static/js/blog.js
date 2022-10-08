@@ -217,8 +217,7 @@ function collapseComments(e) {
                             "html": moment(comment.gmtCreate).format('YYYY-MM-DD')
                         })));
 
-                    var mediaElement = $("<div/>", {
-                    }).append(mediaLeftElement)
+                    var mediaElement = $("<div/>", {}).append(mediaLeftElement)
                         .append(mediaBodyElement);
 
                     var commentElement = $("<div/>", {
@@ -358,7 +357,7 @@ function saveAsDraft(id, title, description, tag, type) {
             if (response.code == 200) {
                 // response.data 保存的是草稿的 id，通过 js 访问
                 alert("已保存为草稿，可在 '我的草稿' 中查看并编辑！")
-                location.href="/draft/" + response.data;
+                location.href = "/draft/" + response.data;
             } else {
                 if (response.code == 2003) {
                     var isAccepted = confirm(response.message);
@@ -372,4 +371,95 @@ function saveAsDraft(id, title, description, tag, type) {
         },
         dataType: "json"
     });
+}
+
+// 修改工具
+function modifyTool(e) {
+    var id = e.getAttribute("data-id");
+    var item =
+        location.href = "/manage/" + id;
+}
+
+// 删除工具
+function deleteTool(e) {
+    var id = e.getAttribute("data-id");
+    if (confirm("确认删除？"))
+        $.ajax({
+            type: "POST",
+            url: "/depot/delete",
+            contentType: 'application/json',
+            data: id,
+            success: function (response) {
+                if (response.code == 200) {
+                    document.getElementById('tool-' + id).remove();
+                } else {
+                    if (response.code == 2003) {
+                        var isAccepted = confirm(response.message);
+                        if (isAccepted) {
+                            window.open("/login");
+                        }
+                    } else {
+                        alert(response.message);
+                    }
+                }
+            }
+        })
+    else
+        return;
+}
+
+// 添加工具
+function addTool() {
+    location.href = "/depot/publish";
+}
+
+// TODO: tag 选中为 active
+
+// 选择管理的对象
+function manageItem(type, e) {
+    var item;
+    switch (type) {
+        case 0: {
+            item = "article";
+            break;
+        }
+        case 1: {
+            item = "question";
+            break;
+        }
+        case 2: {
+            item = "tool";
+            break;
+        }
+        default: {
+            item = null;
+        }
+    }
+    document.getElementById("table").setAttribute("data", item);
+    document.getElementsByName("item-btn").forEach(b => b.classList.remove('active'));
+    e.className += ' active';
+
+    $.ajax({
+        type: "GET",
+        url: "/manage/" + item,
+        success: function (response) {
+            if (response.code == 200) {
+                document.getElementById('tool-' + id).remove();
+                console.log(response.data);
+            } else {
+                if (response.code == 2003) {
+                    if (confirm(response.message)) {
+                        window.open("/login");
+                    }
+                } else if (response.code == 2014) {
+                    alert(response.message);
+                    location.href = "/";
+                }
+                else {
+                    alert(response.message);
+                }
+            }
+        }
+    })
+
 }

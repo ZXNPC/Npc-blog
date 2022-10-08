@@ -28,8 +28,6 @@ public class CustomizeExceptionResolver implements ErrorViewResolver {
     // 处理登录错误
     @ExceptionHandler(value = {LoginException.class})
     public String loginExceptionHandler(Exception e, Model model) {
-//        redirectAttributes.addFlashAttribute("resultDTO", ResultDTO.errorOf((LoginException) e));
-//        redirectAttributes.addFlashAttribute("fromSignin", ((LoginException) e).is1xxSigninError() ? true : false);
         model.addAttribute("resultDTO", ResultDTO.errorOf((LoginException) e));
         model.addAttribute("fromSignin", ((LoginException) e).is1xxSigninError() ? true : false);
         return "login";
@@ -73,6 +71,7 @@ public class CustomizeExceptionResolver implements ErrorViewResolver {
             } else if (e instanceof LoginException) {
                 message = e.getMessage();
             } else {
+                e.printStackTrace();
                 message = CustomizeErrorCode.SYSTEM_ERROR.getMessage();
             }
             model.addAttribute("message", message);

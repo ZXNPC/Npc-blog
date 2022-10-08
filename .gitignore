@@ -2,6 +2,7 @@ logs/
 src/main/resources/application.properties
 src/main/java/com/example/blognpc/MybatisPlusGenerator.java
 src/test/java/com/example/blognpc/BlogNpcApplicationTestsCopy.java
+src/main/java/com/example/blognpc/tools/DSP
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

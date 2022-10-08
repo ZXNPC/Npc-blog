@@ -7,11 +7,22 @@ import lombok.Data;
 @Data
 public class UserDTO {
     private Long id;
+
+    private String accountId;
+
     private String name;
+
+    private String email;
+
+    private String password;
+
     private String bio;
+
     private String avatarUrl;
+
     private String token;
+
     private Long gmtCreate;
+
     private Long gmtModified;
-    private Boolean complete;
 }

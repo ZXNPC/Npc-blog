@@ -1,6 +1,8 @@
 package com.example.blognpc;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.example.blognpc.dto.PaginationDTO;
 import com.example.blognpc.dto.QuestionDTO;
 import com.example.blognpc.mapper.ArticleMapper;
@@ -11,12 +13,14 @@ import com.example.blognpc.model.Article;
 import com.example.blognpc.model.Question;
 import com.example.blognpc.model.User;
 import com.example.blognpc.service.QuestionService;
+import com.example.blognpc.utils.ServiceUtils;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.auth.AnonymousCOSCredentials;
 import com.qcloud.cos.auth.COSCredentials;
 import com.qcloud.cos.http.HttpProtocol;
 import com.qcloud.cos.region.Region;
+import nl.flotsam.xeger.Xeger;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,6 +43,7 @@ import java.lang.reflect.ParameterizedType;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @SpringBootTest
@@ -322,5 +327,58 @@ class BlogNpcApplicationTestsCopy {
         System.out.println(i);
     }
 
+    @Test
+    public void queryTest() {
+        QueryWrapper<Question> queryWrapper = new QueryWrapper<Question>().gt("id", 100).le("id", 110);
+        List<Question> questions = questionMapper.selectList(queryWrapper);
+        for (Question question : questions) {
+            System.out.println(question);
+        }
+    }
 
+    @Test
+    public void updateTest() {
+        UpdateWrapper<Question> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("id", 107);
+        updateWrapper.setSql("like_count = like_count + 1");
+        int update = questionMapper.update(null, updateWrapper);
+        System.out.println(update);
+    }
+
+    @Test
+    public void setTest() {
+        Set<Long> set = new HashSet<>();
+        set.add(1L);
+        set.add(2L);
+        set.add(2L);
+        List<Long> list = new ArrayList<>();
+        list.addAll(set);
+        System.out.println(list);
+    }
+
+    @Test
+    public void inTest() {
+        List<Long> list = new ArrayList<>();
+        list.add(107L);
+        List<Question> questions = questionMapper.selectList(new QueryWrapper<Question>().in("id", list));
+        for (Question question : questions) {
+            System.out.println(question);
+        }
+    }
+
+    @Test
+    public void regexpTest() {
+        String content = "tag:\"(java,)|(java$)|(bash,)|(bash$)|(centos,)|(centos$)|(maven,)|(maven$)\"";
+        String pattern = "(\\w+:\".+\")((\\s+(and)|(or)|(AND)|(OR)\\s+)(\\w+:\".+\"))*";
+
+        if (Pattern.matches(pattern, content))
+            System.out.println("yes");
+        else
+            System.out.println("no");
+    }
+
+    @Test
+    public void getColumnNameTest() {
+
+    }
 }

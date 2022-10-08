@@ -18,7 +18,7 @@
         </if>
         ${column} regexp '${val}'
         <if test="desc == 1">
-            order by '${orderColumn}'
+            order by '${orderColumn}' desc
         </if>
         limit ${offset}, ${size}
     </select>

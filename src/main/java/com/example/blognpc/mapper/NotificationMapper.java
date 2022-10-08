@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author NPC
- * @since 2022-09-27
+ * @since 2022-10-08
  */
 @Mapper
 public interface NotificationMapper extends BaseMapper<Notification> {

@@ -8,18 +8,49 @@
     <link rel="stylesheet" href="/css/blog.css"/>
     <script src="/js/jquery-3.6.0.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/blog.js" type="application/javascript"></script>
 </head>
 <body>
 <div th:insert="~{fragment :: navigation}"></div>
 <div class="container">
     <div class="main">
-        <ul th:insert="~{fragment :: navigation-tabs}"></ul>
+        <div th:insert="~{fragment :: navigation-tabs}"></div>
         <div class="item-list">
-            <h5 th:if="${param.search != '' and param.search != null}">
-                关于 <span th:text="${param.search}"></span> 的搜索结果如下：
-            </h5>
-            <div th:if="${paginationDTO == null || paginationDTO?.getData().size() == 0}">
-                <span class="text-desc">还没做！</span>
+            <div class="list-group left-item">
+                <button type="button" class="list-group-item" name="item-btn" onclick="manageItem(0, this)">文章</button>
+                <button type="button" class="list-group-item" name="item-btn" onclick="manageItem(1, this)">问题</button>
+                <button type="button" class="list-group-item" name="item-btn" onclick="manageItem(2, this)">工具</button>
+            </div>
+            <div class="right-item">
+                <table class="table table-bordered" id="table">
+                    <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>标题</th>
+                        <th>标签</th>
+                        <th>创建人</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <thead th:if="${PaginationDTO != null}" th:each="item:${PaginationDTO?.getData()}">
+                    <tr th:id="'item-' + ${item.getId()}">
+                        <th th:value="${item.getId()}"></th>
+                        <th th:value="${item.getTitle()}"></th>
+                        <th th:value="${item.getTag()}"></th>
+                        <th th:value="${item.getCreator().getName()}"></th>
+                        <th>
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button type="button" class="btn btn-default" th:data-id="${tool.getId()}"
+                                        onclick="modifyTool(this)">修改
+                                </button>
+                                <button type="button" class="btn btn-danger" th:data-id="${tool.getId()}"
+                                        onclick="deleteTool(this)">删除
+                                </button>
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
             </div>
         </div>
         <!--翻页-->

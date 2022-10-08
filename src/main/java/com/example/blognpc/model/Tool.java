@@ -14,23 +14,25 @@ import io.swagger.annotations.ApiModelProperty;
  * @author NPC
  * @since 2022-10-08
  */
-@ApiModel(value = "Draft对象", description = "")
-public class Draft implements Serializable {
+@ApiModel(value = "Tool对象", description = "")
+public class Tool implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private Integer type;
-
     private String title;
 
-    private String description;
+    private String url;
 
     private String tag;
 
+    private Integer viewCount;
+
     private Long creator;
+
+    private Integer likeCount;
 
     private Long gmtCreate;
 
@@ -43,13 +45,6 @@ public class Draft implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
     public String getTitle() {
         return title;
     }
@@ -57,12 +52,12 @@ public class Draft implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
-    public String getDescription() {
-        return description;
+    public String getUrl() {
+        return url;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setUrl(String url) {
+        this.url = url;
     }
     public String getTag() {
         return tag;
@@ -71,12 +66,26 @@ public class Draft implements Serializable {
     public void setTag(String tag) {
         this.tag = tag;
     }
+    public Integer getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
+    }
     public Long getCreator() {
         return creator;
     }
 
     public void setCreator(Long creator) {
         this.creator = creator;
+    }
+    public Integer getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Integer likeCount) {
+        this.likeCount = likeCount;
     }
     public Long getGmtCreate() {
         return gmtCreate;
@@ -95,13 +104,14 @@ public class Draft implements Serializable {
 
     @Override
     public String toString() {
-        return "Draft{" +
+        return "Tool{" +
             "id=" + id +
-            ", type=" + type +
             ", title=" + title +
-            ", description=" + description +
+            ", url=" + url +
             ", tag=" + tag +
+            ", viewCount=" + viewCount +
             ", creator=" + creator +
+            ", likeCount=" + likeCount +
             ", gmtCreate=" + gmtCreate +
             ", gmtModified=" + gmtModified +
         "}";

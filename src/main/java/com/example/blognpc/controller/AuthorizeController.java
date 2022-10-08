@@ -56,7 +56,9 @@ public class AuthorizeController {
         GithubUser githubUser = GithubProvider.getUser(accessToken);
         if (githubUser != null && githubUser.getId() != null) {
             User user = userService.saveOrUpdate(githubUser);
-            response.addCookie(new Cookie("token", user.getToken()));
+            response.addCookie(new Cookie("token", user.getToken()) {{
+                setPath("/");
+            }});
             return "redirect:/";
         } else {
             log.error("callback get github error, {}", githubUser);

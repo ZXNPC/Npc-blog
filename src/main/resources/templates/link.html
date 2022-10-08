@@ -18,7 +18,7 @@
                 <h5 th:if="${param.search != '' and param.search != null}">
                     关于 <span th:text="${param.search}"></span> 的搜索结果如下：
                 </h5>
-                <div th:if="${paginationDTO == null || paginationDTO?.getData().size() == 0}">
+                <div th:if="${paginationDTO == null || paginationDTO?.getData()?.size() == 0}">
                     <span class="text-desc">还没做！</span>
                 </div>
             </div>

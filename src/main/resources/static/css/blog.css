@@ -248,3 +248,15 @@ body {
 .nav-tag {
     margin-top: 7px;
 }
+
+.item-list .left-item {
+    display: inline-block;
+    width: 20%;
+    vertical-align: top;
+}
+
+.item-list .right-item {
+    display: inline-block;
+    width: 75%;
+    vertical-align: top;
+}

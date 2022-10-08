@@ -36,6 +36,7 @@ public class ProfileController {
     public String profile(@PathVariable(name = "section") String section,
                           HttpServletRequest request,
                           Model model,
+                          @RequestParam(name = "searcg", required = false) String search,
                           @RequestParam(name = "page", defaultValue = "1") Long page,
                           @RequestParam(name = "size", defaultValue = "10") Long size) {
         User user = (User) request.getSession().getAttribute("user");
@@ -48,14 +49,14 @@ public class ProfileController {
 
         if ("questions".equals(section)) {
             // 我的问题
-            PaginationDTO<QuestionDTO> paginationDTO = questionService.list(user.getId(), page, size);
+            PaginationDTO<QuestionDTO> paginationDTO = questionService.list(user.getId(), page, size, search, "gmt_create");
             model.addAttribute("paginationDTO", paginationDTO);
         } else if ("articles".equals(section)) {
             // 我的文章
             if (!user.getToken().equals(managerToken)) {
                 throw new CustomizeException(CustomizeErrorCode.NOT_MANAGER);
             }
-            PaginationDTO<ArticleDTO> paginationDTO = articleService.list(user.getId(), page, size);
+            PaginationDTO<ArticleDTO> paginationDTO = articleService.list(user.getId(), page, size, "gmt_create");
             model.addAttribute("paginationDTO", paginationDTO);
         } else if ("replies".equals(section)) {
             // 最新回复
@@ -64,7 +65,7 @@ public class ProfileController {
         }
         else if ("drafts".equals(section)) {
             // 我的草稿
-            PaginationDTO<DraftDTO> paginationDTO = draftService.list(user.getId(), page, size);
+            PaginationDTO<DraftDTO> paginationDTO = draftService.list(user.getId(), page, size, search, "gmt_create");
             model.addAttribute("paginationDTO", paginationDTO);
         }
         else {

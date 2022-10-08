@@ -1,6 +1,7 @@
 package com.example.blognpc.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.example.blognpc.dto.CommentDTO;
 import com.example.blognpc.enums.CommentTypeEnum;
 import com.example.blognpc.enums.CustomizeErrorCode;
@@ -24,19 +25,24 @@ public class CommentService {
     @Autowired
     private CommentMapper commentMapper;
     @Autowired
-    private CommentExtMapper commentExtMapper;
-    @Autowired
     private QuestionMapper questionMapper;
     @Autowired
-    private QuestionExtMapper questionExtMapper;
-    @Autowired
     private ArticleMapper articleMapper;
-    @Autowired
-    private ArticleExtMapper articleExtMapper;
     @Autowired
     private UserMapper userMapper;
     @Autowired
     private NotificationService notificationService;
+    @Autowired
+    private QuestionService questionService;
+    @Autowired
+    private ArticleService articleService;
+
+    public void incComment(Long id) {
+        UpdateWrapper<Comment> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("id", id);
+        updateWrapper.setSql("comment_count = comment_count + 1");
+        commentMapper.update(null, updateWrapper);
+    }
 
     @Transactional
     public void insert(Comment comment) {
@@ -62,7 +68,7 @@ public class CommentService {
             }
 
             commentMapper.insert(comment);
-            questionExtMapper.incComment(dbQuestion.getId());
+            questionService.incCommet(dbQuestion.getId());
 
             // 回复问题创建人
             notificationService.create(comment.getCommentator(), dbQuestion.getCreator(), comment.getId(), dbQuestion.getId(),
@@ -82,7 +88,7 @@ public class CommentService {
             }
 
             commentMapper.insert(comment);
-            commentExtMapper.incComment(dbComment.getId());
+            incComment(dbComment.getId());
 
             // 回复评论创建人
             notificationService.create(comment.getCommentator(), dbComment.getCommentator(), comment.getId(), dbComment.getId(),
@@ -103,7 +109,7 @@ public class CommentService {
             }
 
             commentMapper.insert(comment);
-            articleExtMapper.incComment(dbArticle.getId());
+            articleService.incCommet(dbArticle.getId());
 
             // 回复文章创建人
             notificationService.create(comment.getCommentator(), dbArticle.getCreator(), comment.getId(), dbArticle.getId(),
@@ -123,7 +129,7 @@ public class CommentService {
             }
 
             commentMapper.insert(comment);
-            commentExtMapper.incComment(dbComment.getId());
+            incComment(dbComment.getId());
 
             // 回复评论创建人
             notificationService.create(comment.getCommentator(), dbComment.getCommentator(), comment.getId(), dbComment.getId(),

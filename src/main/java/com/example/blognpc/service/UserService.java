@@ -2,22 +2,18 @@ package com.example.blognpc.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.blognpc.dto.PaginationDTO;
-import com.example.blognpc.dto.QuestionDTO;
 import com.example.blognpc.dto.UserDTO;
-import com.example.blognpc.enums.AccountIdEnum;
-import com.example.blognpc.enums.CustomizeErrorCode;
 import com.example.blognpc.enums.LoginErrorCode;
-import com.example.blognpc.exception.CustomizeException;
 import com.example.blognpc.exception.LoginException;
 import com.example.blognpc.mapper.UserMapper;
-import com.example.blognpc.model.GithubUser;
-import com.example.blognpc.model.Question;
-import com.example.blognpc.model.User;
+import com.example.blognpc.model.*;
+import com.example.blognpc.provider.SearchProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -32,6 +28,8 @@ public class UserService {
     private Long expiration;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private SearchProvider searchProvider;
 
     public User saveOrUpdate(GithubUser githubUser) {
         User user = new User();
@@ -87,9 +85,9 @@ public class UserService {
     }
 
 
-    public PaginationDTO<UserDTO> list(Long page, Long size, String search) {
+    public PaginationDTO<UserDTO> list(Long page, Long size, String search, String orderDesc) {
         if (StringUtils.isBlank(search)) {
-            // 无搜索
+            // 不使用搜索
             Long totalCount = userMapper.selectCount(null);
             PaginationDTO<UserDTO> paginationDTO = new PaginationDTO<UserDTO>();
             paginationDTO.setPagination(totalCount, page, size);
@@ -99,41 +97,43 @@ public class UserService {
             List<User> users = userMapper.selectList(new QueryWrapper<User>()
                     .last(String.format("limit %d, %d", offset, size)));
 
-            List<UserDTO> userDTOS = new ArrayList<>();
-            for (User user : users) {
-                UserDTO userDTO = new UserDTO();
-                BeanUtils.copyProperties(user, userDTO);
-                userDTOS.add(userDTO);
-            }
-
-            paginationDTO.setData(userDTOS);
-            return paginationDTO;
+            return getUserDTOPaginationDTO(paginationDTO, users);
         } else {
-            // 有搜索，对搜索内容进行判断，形式如 "search_type : search_content"
-            // TODO: 前端对搜索的格式进行判断
-            List<String> collect = Arrays.stream(search.split(":")).map(s -> s = s.trim()).collect(Collectors.toList());
-            String searchType = collect.get(0);
-            String searchContent = collect.get(1);
+            // 使用搜索
+            String regexp = searchProvider.generateRegexp(search, "name");
 
-            Long totalCount = userMapper.selectCount(new QueryWrapper<User>().eq(searchType, searchContent));
+            QueryWrapper<User> countWrapper = new QueryWrapper<User>()
+                    .apply(regexp);
+
+            Long totalCount = null;
+            try {
+                totalCount = userMapper.selectCount(countWrapper);
+            } catch (BadSqlGrammarException e) {
+                return null;
+            }
             PaginationDTO<UserDTO> paginationDTO = new PaginationDTO<>();
             paginationDTO.setPagination(totalCount, page, size);
             page = paginationDTO.getPage();
 
             Long offset = (page - 1) * size;
-            List<User> users = userMapper.selectList(new QueryWrapper<User>()
-                    .eq(searchType, searchContent)
-                    .last(String.format("limit %d, %d", offset, size)));
+            QueryWrapper<User> selectWrapper = new QueryWrapper<User>()
+                    .apply(regexp)
+                    .orderByDesc(StringUtils.isNotBlank(orderDesc), orderDesc)
+                    .last(String.format("limit %d, %d", offset, size));
+            List<User> users = userMapper.selectList(selectWrapper);
 
-            List<UserDTO> userDTOS = new ArrayList<>();
-            for (User user : users) {
-                UserDTO userDTO = new UserDTO();
-                BeanUtils.copyProperties(user, userDTO);
-                userDTOS.add(userDTO);
-            }
-
-            paginationDTO.setData(userDTOS);
-            return paginationDTO;
+            return getUserDTOPaginationDTO(paginationDTO, users);
         }
+    }
+
+    private PaginationDTO<UserDTO> getUserDTOPaginationDTO(PaginationDTO<UserDTO> paginationDTO, List<User> users) {
+        List<UserDTO> userDTOS = users.stream().map(user -> {
+            UserDTO userDTO = new UserDTO();
+            BeanUtils.copyProperties(user, userDTO);
+            return userDTO;
+        }).collect(Collectors.toList());
+
+        paginationDTO.setData(userDTOS);
+        return paginationDTO;
     }
 }

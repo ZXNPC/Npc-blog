@@ -1,26 +1,26 @@
 package com.example.blognpc.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.example.blognpc.dto.ArticleDTO;
 import com.example.blognpc.dto.PaginationDTO;
 import com.example.blognpc.dto.QuestionDTO;
 import com.example.blognpc.enums.CustomizeErrorCode;
 import com.example.blognpc.exception.CustomizeException;
-import com.example.blognpc.mapper.ArticleExtMapper;
 import com.example.blognpc.mapper.ArticleMapper;
 import com.example.blognpc.mapper.DraftMapper;
 import com.example.blognpc.mapper.UserMapper;
 import com.example.blognpc.model.Article;
+import com.example.blognpc.provider.SearchProvider;
 import com.example.blognpc.model.User;
+import com.example.blognpc.utils.ServiceUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,11 +28,11 @@ public class ArticleService {
     @Autowired
     private ArticleMapper articleMapper;
     @Autowired
-    private ArticleExtMapper articleExtMapper;
-    @Autowired
     private UserMapper userMapper;
     @Autowired
     private DraftMapper draftMapper;
+    @Autowired
+    private SearchProvider searchProvider;
 
     public void createOrUpdate(Article article, Long draftId) {
         if (article.getId() == null) {
@@ -83,96 +83,99 @@ public class ArticleService {
     }
 
     public void incView(Long id) {
-        articleExtMapper.incView(id);
+        UpdateWrapper<Article> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.setSql("view_count = view_count+1");
+        updateWrapper.eq("id", id);
+        articleMapper.update(null, updateWrapper);
     }
 
-    public PaginationDTO<ArticleDTO> list(Long page, Long size) {
-        return list(null, page, size, null);
+    public void incCommet(Long id) {
+        UpdateWrapper<Article> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.setSql("comment_count = comment_count+1");
+        updateWrapper.eq("id", id);
+        articleMapper.update(null, updateWrapper);
     }
 
-    public PaginationDTO<ArticleDTO> list(Long creator, Long page, Long size) {
-        return list(creator, page, size, null);
+    public PaginationDTO<ArticleDTO> list(Long page, Long size, String orderDesc) {
+        return list(null, page, size, null, orderDesc);
     }
 
-    public PaginationDTO<ArticleDTO> list(Long creator, Long page, Long size, String search) {
-        Long totalCount;
-        String titleRegexp;
+    public PaginationDTO<ArticleDTO> list(Long creator, Long page, Long size, String orderDesc) {
+        return list(creator, page, size, null, orderDesc);
+    }
+
+    public PaginationDTO<ArticleDTO> list(Long creator, Long page, Long size, String search, String orderDesc) {
         if (StringUtils.isBlank(search)) {
-            titleRegexp = "";
-            totalCount = articleMapper.selectCount(new QueryWrapper<Article>().eq(creator != null && creator != 0L, "creator", creator));
-        } else {
-            titleRegexp = Arrays.stream(search.split(" ")).filter(s -> StringUtils.isNotBlank(s)).collect(Collectors.joining("|"));
-            totalCount = articleExtMapper.selectCountRegexp(null, "title", titleRegexp);
-        }
-        PaginationDTO<ArticleDTO> paginationDTO = new PaginationDTO<>();
-        paginationDTO.setPagination(totalCount, page, size);
-        page = paginationDTO.getPage();
+            // 不使用搜索
+            Long totalCount = articleMapper.selectCount(null);
+            PaginationDTO<ArticleDTO> paginationDTO = new PaginationDTO<>();
+            paginationDTO.setPagination(totalCount, page, size);
+            page = paginationDTO.getPage();
 
-        Long offset = (page - 1) * size;
-        List<Article> articles;
-        if (StringUtils.isBlank(titleRegexp)) {
-            articles = articleMapper.selectList(new QueryWrapper<Article>()
-                    .eq(creator != 0L, "creator", creator)
-                    .orderByDesc("gmt_create")
+            Long offset = (page - 1) * size;
+            List<Article> articles = articleMapper.selectList(new QueryWrapper<Article>()
+                    .eq(creator != null && creator != 0, "creator", creator)
+                    .orderByDesc(StringUtils.isNotBlank(orderDesc), orderDesc)
                     .last(String.format("limit %d, %d", offset, size)));
+            return getArticleDTOPaginationDTO(paginationDTO, articles);
         } else {
-            articles = articleExtMapper.selectRegexp(null, "title", titleRegexp, "gmt_create", 1, offset, size);
-        }
+            // 使用搜索
+            String regexp = searchProvider.generateRegexp(search, "title");
 
-        // 生成 key = creator, value = User 的 Map
-        List<Long> creatorList = articles.stream().map(article -> article.getCreator()).collect(Collectors.toList());
-        // 如果用户数量为空，则添加一个 0 ，防止 sql 语句错误
-        if (creatorList.size() == 0) creatorList.add(0L);
-        List<User> userList = userMapper.selectList(new QueryWrapper<User>().in(!creatorList.isEmpty(), "id", creatorList));
-        Map<Long, User> userMap = userList.stream().collect(Collectors.toMap(user -> user.getId(), user -> user));
+            QueryWrapper<Article> countWrapper = new QueryWrapper<Article>()
+                    .eq(creator != null && creator != 0, "creator", creator)
+                    .apply(regexp);
 
-        List<ArticleDTO> articleDTOS = new ArrayList<ArticleDTO>();
-        for (Article article : articles) {
-            User user = userMap.get(article.getCreator());
-            if (user == null) {
-                // 数据库会用外键联系用户和问题创建人，所有是不会存在找不到用户的情况的，但以防万一先抛个异常
-                throw new CustomizeException(CustomizeErrorCode.SYSTEM_ERROR);
+            Long totalCount = null;
+            try {
+                 totalCount = articleMapper.selectCount(countWrapper);
+            } catch (BadSqlGrammarException e) {
+                return null;
             }
+            PaginationDTO<ArticleDTO> paginationDTO = new PaginationDTO<>();
+            paginationDTO.setPagination(totalCount, page, size);
+            page = paginationDTO.getPage();
+
+            Long offset = (page - 1) * size;
+            QueryWrapper<Article> selectWrapper = new QueryWrapper<Article>()
+                    .eq(creator != null && creator != 0, "creator", creator)
+                    .apply(regexp)
+                    .orderByDesc(StringUtils.isNotBlank(orderDesc), orderDesc)
+                    .last(String.format("limit %d, %d", offset, size));
+            List<Article> articles = articleMapper.selectList(selectWrapper);
+            return getArticleDTOPaginationDTO(paginationDTO, articles);
+        }
+    }
+
+    private PaginationDTO<ArticleDTO> getArticleDTOPaginationDTO(PaginationDTO<ArticleDTO> paginationDTO, List<Article> articles) {
+        Set<Long> creatorSet = articles.stream().map(article -> article.getCreator()).collect(Collectors.toSet());
+        Map<Long, User> userMap = ServiceUtils.getUserMap(creatorSet);
+
+        List<ArticleDTO> articleDTOS = articles.stream().map(article -> {
             ArticleDTO articleDTO = new ArticleDTO();
             BeanUtils.copyProperties(article, articleDTO);
-            articleDTO.setUser(user);
-            articleDTOS.add(articleDTO);
-        }
+            articleDTO.setUser(userMap.get(article.getCreator()));
+            return articleDTO;
+        }).collect(Collectors.toList());
         paginationDTO.setData(articleDTOS);
+
         return paginationDTO;
     }
 
     public List<ArticleDTO> selectRelated(ArticleDTO queryDTO, Long size) {
-        if (StringUtils.isBlank(queryDTO.getTag())) {
-            // 正常前端和数据库都会限制该情况的出现，所以我直接抛异常了
-            throw new CustomizeException(CustomizeErrorCode.SYSTEM_ERROR);
-        }
-
-        return selectRelated(queryDTO.getId(), queryDTO.getTag(), size);
-    }
-
-    public List<ArticleDTO> selectRelated(QuestionDTO queryDTO, Long size) {
-        if (StringUtils.isBlank(queryDTO.getTag())) {
-            // 正常前端和数据库都会限制该情况的出现，所以我直接抛异常了
-            throw new CustomizeException(CustomizeErrorCode.SYSTEM_ERROR);
-        }
-
-        return selectRelated(0L, queryDTO.getTag(), size);
-    }
-
-    public List<ArticleDTO> selectRelated(Long id, String tags, Long size) {
-        // id 是用来过滤问题的，防止相关问题搜寻到自己，而文章的相关问题则不需考虑重复，故设置为0
-        String regexp = Arrays.stream(tags.split(",")).map(tag -> {
+        String tags = queryDTO.getTag();
+        String searchContent = Arrays.stream(tags.split(",")).map(tag -> {
             tag = tag.trim();
             return "(" + tag + ",)|(" + tag + "$)";
         }).collect(Collectors.joining("|"));
-        List<Article> articles = articleExtMapper.selectRegexp(null, "tag", regexp, "gmt_create", 1, 0L, size);
-        List<ArticleDTO> articleDTOS = articles.stream().filter(article -> !(article.getId() == id)).map(article -> {
-            ArticleDTO articleDTO = new ArticleDTO();
-            BeanUtils.copyProperties(article, articleDTO);
-            // 这里并没有把 user信息 放到ArticleDTO之中，注意一下
-            return articleDTO;
-        }).collect(Collectors.toList());
-        return articleDTOS;
+        String search = String.format("tag:\"%s\"", searchContent);
+
+        return list(null, 0L, size, search, null).getData();
+    }
+
+    public List<ArticleDTO> selectRelated(QuestionDTO queryDTO, Long size) {
+        ArticleDTO articleDTO = new ArticleDTO();
+        articleDTO.setTag(queryDTO.getTag());
+        return selectRelated(articleDTO, size);
     }
 }
