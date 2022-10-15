@@ -99,9 +99,9 @@
                                  th:each="tagDTO, tagDTOStat: ${tagDTOS}"
                                  th:id="${tagDTO.categoryName}">
                                 <div class="tag-list">
-                                    <span class="label label-info question-tag" th:each="tag: ${tagDTO.tags}">
-                                        <span class="glyphicon glyphicon-tags question-tag" th:text="' ' + ${tag}"
-                                              onclick="selectTag(this)" th:data-tag="${tag}"></span>
+                                    <span th:each="tag: ${tagDTO.tags}">
+                                        <button type="button" class="btn tag-default question-tag" th:text="' ' + ${tag}"
+                                                onclick="selectTag(this)" th:data-tag="${tag}"></button>
                                     </span>
                                 </div>
                             </div>

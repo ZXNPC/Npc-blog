@@ -53,10 +53,10 @@ function checkPassword() {
 // 暂时没用
 function deleteNotification(e) {
     if (confirm("确认删除该提醒？")) {
-        var id = e.getAttribute("data").split("-")[1];
+        var id = e.getAttribute("data");
         $.ajax({
             type: "POST",
-            url: "/notification",
+            url: "/notification/delete",
             contentType: 'application/json',
             data: id,
             success: function (response) {
@@ -175,6 +175,7 @@ function comment2target(targetId, type, content) {
 
 // 展开二级评论
 function collapseComments(e) {
+
     var id = e.getAttribute("data-id");
     var comments = $("#comment-" + id);
 
@@ -190,39 +191,22 @@ function collapseComments(e) {
             $.getJSON("/comment/" + id, function (data) {
                 var items = [];
                 $.each(data.data.reverse(), function (index, comment) {
-
-                    var mediaLeftElement = $("<div/>", {
-                        "class": "media-left"
-                    }).append($("<img/>", {
-                        "class": "media-object img-rounded",
-                        "src": comment.user.avatarUrl
-                    }));
-
-                    var mediaBodyElement = $("<div/>", {
-                        "class": "media-body"
-                    }).append($("<h5/>", {
-                        "class": "media-heading",
-                        "html": comment.user.name
-                    }))
-                        .append($("<div/>", {
-                            "class": "comment-content",
-                            "html": comment.content
-                        }))
-                        .append($("<div/>", {
-                            "class": "menu"
-                        }).append($("<span/>", {
-                            "class": "glyphicon glyphicon-thumbs-up icon"
-                        })).append($("<span/>", {
-                            "class": "pull-right",
-                            "html": moment(comment.gmtCreate).format('YYYY-MM-DD')
-                        })));
-
-                    var mediaElement = $("<div/>", {}).append(mediaLeftElement)
-                        .append(mediaBodyElement);
-
-                    var commentElement = $("<div/>", {
-                        "class": "col-lg-12 col-md-12 col-sm-12 col-xs-12 comments",
-                    }).append(mediaElement);
+                    var manager = document.getElementById("manager").value;
+                    var html = "<div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 comments\">\n" +
+                        "                                    <div>\n" +
+                        "                                        <div class=\"media-left\">\n" +
+                        "                                            <img class=\"media-object img-rounded\"\n" +
+                        "                                                 src=\"https://avatars.githubusercontent.com/u/52725517?v=4\">\n" +
+                        "                                        </div>\n" +
+                        "                                        <div class=\"media-body\"><h5 class=\"media-heading\">" + comment.user.name + (manager == "true" ? "<span class='text-desc'> Cretor-ID: " + comment.commentator + "</span>" : "") + "</h5>\n" +
+                        "                                            <div class=\"comment-content\">" + comment.content + "</div>\n" +
+                        "                                            <div class=\"menu\"><span\n" +
+                        "                                                    class=\"glyphicon glyphicon-thumbs-up icon\" onclick='like(this)'></span><span\n" +
+                        "                                                    class=\"pull-right\">" + moment(comment.gmtCreate).format('YYYY-MM-DD HH:mm') + "</span></div>\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>\n" +
+                        "                                </div>";
+                    var commentElement = html;
                     subCommentContainer.prepend(commentElement);
                 });
                 comments.addClass("in");
@@ -268,21 +252,36 @@ function like(e) {
 
 }
 
-// 展示selectTag
-function showSelectTag() {
-    $("#select-tag").show();
-}
+Array.prototype.remove = function (from, to) {
+    var rest = this.slice((to || from) + 1 || this.length);
+    this.length = from < 0 ? this.length + from : from;
+    return this.push.apply(this, rest);
+};
 
 // 插入tag
 function selectTag(e) {
     var value = e.getAttribute("data-tag");
     var previous = $("#tag").val();
-    if (!previous.split(',').includes(value)) {
+    var clazz = e.getAttribute("class");
+    if (clazz.indexOf("tag-default") > -1) {
         if (previous) {
             $("#tag").val(previous + ',' + value);
         } else {
             $("#tag").val(value);
         }
+        e.classList.remove('tag-default');
+        e.classList.add('tag-active');
+    } else if (clazz.indexOf("tag-active") > -1) {
+        if (value.indexOf("+") > -1) {
+            value = value.replaceAll("+", "\\" + "\\" + "+");
+        }
+        var pattern = new RegExp("," + value + "|" + value);
+        var split = previous.split(",");
+        split.remove(split.indexOf(value));
+        previous = split.join(",");
+        $("#tag").val(previous);
+        e.classList.remove('tag-active');
+        e.classList.add('tag-default');
     }
 }
 
@@ -413,11 +412,10 @@ function addTool() {
     location.href = "/depot/publish";
 }
 
-// TODO: tag 选中为 active
-
 // 选择管理的对象
 function manageItem(type, e) {
-    var item;
+    $("table").children().remove();
+    let item;
     switch (type) {
         case 0: {
             item = "article";
@@ -439,13 +437,93 @@ function manageItem(type, e) {
     document.getElementsByName("item-btn").forEach(b => b.classList.remove('active'));
     e.className += ' active';
 
+    var page = e.getAttribute("page");
+
     $.ajax({
-        type: "GET",
-        url: "/manage/" + item,
-        success: function (response) {
+        url: "/manage/" + item + "?page=" + page,
+        success: function (response, status) {
             if (response.code == 200) {
-                document.getElementById('tool-' + id).remove();
-                console.log(response.data);
+                var data = response.data;
+
+                var ids = new Array();
+                var titles = new Array();
+                var tags = new Array();
+                // TODO: 搜索栏
+                if (data && Object.keys(data[0]).includes("title")) {
+                    // 文章、问题、工具
+                    var title = "<thead>\n" +
+                        "                    <tr>\n" +
+                        "                        <th>编号</th>\n" +
+                        "                        <th>id</th>\n" +
+                        "                        <th>title</th>\n" +
+                        "                        <th>tag</th>\n" +
+                        "                        <th>Creator ID</th>\n" +
+                        "                        <th>操作</th>\n" +
+                        "                    </tr>\n" +
+                        "                    </thead>";
+                    var content = "";
+                    for (let i = 0; i < data.length; i++) {
+                        content += "<thead>\n" +
+                            "                    <tr id=\"item-" + (page * 10 + i) + "\">\n" +
+                            "                        <th style='min-width: 50px;'>" + (page * 10 + i) + "</th>\n" +
+                            "                        <th>" + data[i].id + "</th>\n" +
+                            "                        <th>\"" + data[i].title + "\"</th>\n" +
+                            "                        <th>\"" + data[i].tag + "\"</th>\n" +
+                            "                        <th style='min-width: 90px;'>\"" + data[i].creator + "\"</th>\n" +
+                            "                        <th style='min-width: 125px;'>\n" +
+                            "                            <div class=\"btn-group\" role=\"group\" aria-label=\"...\">\n" +
+                            "                                <button type=\"button\" class=\"btn btn-default\" th:data-id=\"${tool.getId()}\"\n" +
+                            "                                        onclick=\"modifyTool(this)\">修改\n" +
+                            "                                </button>\n" +
+                            "                                <button type=\"button\" class=\"btn btn-danger\" th:data-id=\"${tool.getId()}\"\n" +
+                            "                                        onclick=\"deleteTool(this)\">删除\n" +
+                            "                                </button>\n" +
+                            "                            </div>\n" +
+                            "                        </th>\n" +
+                            "                    </tr>\n" +
+                            "                    </thead>"
+                    }
+                    $("table").append(title);
+                    $("table").append(content);
+
+                } else if (data && Object.keys(data[0]).includes("name")) {
+                    // 用户
+                    var title = "<thead>\n" +
+                        "                    <tr>\n" +
+                        "                        <th>编号</th>\n" +
+                        "                        <th>id</th>\n" +
+                        "                        <th>name</th>\n" +
+                        "                        <th>email</th>\n" +
+                        "                        <th>操作</th>\n" +
+                        "                    </tr>\n" +
+                        "                    </thead>";
+                    var content = "";
+                    for (let i = 0; i < data.length; i++) {
+                        content += "<thead>\n" +
+                            "                    <tr id=\"item-" + (page * 10 + i) + "\">\n" +
+                            "                        <th>" + (page * 10 + i) + "</th>\n" +
+                            "                        <th>" + data[i].id + "</th>\n" +
+                            "                        <th>\"" + data[i].name + "\"</th>\n" +
+                            "                        <th>\"" + data[i].email + "\"</th>\n" +
+                            "                        <th>\n" +
+                            "                            <div class=\"btn-group\" role=\"group\" aria-label=\"...\">\n" +
+                            "                                <button type=\"button\" class=\"btn btn-default\" th:data-id=\"${tool.getId()}\"\n" +
+                            "                                        onclick=\"modifyTool(this)\">修改\n" +
+                            "                                </button>\n" +
+                            "                                <button type=\"button\" class=\"btn btn-danger\" th:data-id=\"${tool.getId()}\"\n" +
+                            "                                        onclick=\"deleteTool(this)\">删除\n" +
+                            "                                </button>\n" +
+                            "                            </div>\n" +
+                            "                        </th>\n" +
+                            "                    </tr>\n" +
+                            "                    </thead>"
+                    }
+                    $("table").append(title);
+                    $("table").append(content);
+
+
+                }
+
             } else {
                 if (response.code == 2003) {
                     if (confirm(response.message)) {
@@ -454,12 +532,10 @@ function manageItem(type, e) {
                 } else if (response.code == 2014) {
                     alert(response.message);
                     location.href = "/";
-                }
-                else {
+                } else {
                     alert(response.message);
                 }
             }
         }
-    })
-
+    });
 }

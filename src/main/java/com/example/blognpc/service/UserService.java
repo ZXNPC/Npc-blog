@@ -34,7 +34,7 @@ public class UserService {
     public User saveOrUpdate(GithubUser githubUser) {
         User user = new User();
         user.setAccountId(githubUser.getId());
-        user.setName(githubUser.getName() == null ? githubUser.getLogin() : githubUser.getName());
+        user.setName(githubUser.getLogin());
         user.setBio(githubUser.getBio());
         user.setAvatarUrl(githubUser.getAvatarUrl());
         List<User> users = userMapper.selectList(new QueryWrapper<User>().eq("account_id", user.getAccountId()));
@@ -49,7 +49,7 @@ public class UserService {
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             userMapper.insert(user);
-            log.info("User created via github: ", user);
+            log.info("User created via github: {}", user);
         } else {
             // 用户存在，更新用户
             user.setId(dbUser.getId());
@@ -59,7 +59,7 @@ public class UserService {
             user.setGmtCreate(dbUser.getGmtCreate());
             user.setGmtModified(System.currentTimeMillis());
             userMapper.updateById(user);
-            log.info("User verified via github: ", user);
+            log.info("User verified via github: {}", user);
         }
         return user;
     }

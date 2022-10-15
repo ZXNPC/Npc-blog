@@ -128,7 +128,9 @@ CSDN： https://blog.csdn.net/qq_43442102/article/details/102743947
 
 <img src="images-for-README/图片2.png" width="500" alt="验证界面" title="验证界面" style="margin-left: 200px">
 
+## 参考资料
 
+- [moment format](http://momentjs.cn/docs/displaying/format.html)
 
 
 

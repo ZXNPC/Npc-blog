@@ -21,6 +21,7 @@ import com.qcloud.cos.auth.COSCredentials;
 import com.qcloud.cos.http.HttpProtocol;
 import com.qcloud.cos.region.Region;
 import nl.flotsam.xeger.Xeger;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.util.DigestUtils;
 
 import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -248,6 +250,13 @@ class BlogNpcApplicationTestsCopy {
 
     @Autowired
     private Environment env;
+
+    private String fromEmail = "your_email@qq.com";
+    private String fromEmailCode = "the_authorization_code";
+    private String toEmail = "email_you_want_to_send_to@qq.com";
+    private String ccEmail = "cc_email_you_want_to_send_to@qq.com";
+    private String bccEmail = "bcc_email_you_want_to_send_to@qq.com";
+
     @Test
     public void emailHtmlTest() {
         Properties props = new Properties();
@@ -256,50 +265,79 @@ class BlogNpcApplicationTestsCopy {
         props.setProperty("mail.smtp.auth", "true");
 
         Session session = Session.getInstance(props);
-
-        MimeMessage message = new MimeMessage(session);
+        session.setDebug(false);    // 关闭 debug
 
         try {
-            message.setFrom(new InternetAddress("2946310156@qq.com", "发件人", "UTF-8"));
-            message.setRecipient(MimeMessage.RecipientType.TO, new InternetAddress("993023569@qq.com", "收件人", "UTF-8"));
+            // 创建邮件
+            MimeMessage message = new MimeMessage(session);
 
-            message.setSubject("test for spring boot");
+            // 设置发件人
+            message.setFrom(new InternetAddress(fromEmail, "发件人", "UTF-8"));
 
-            MimeBodyPart mimeBodyPart = new MimeBodyPart();
-            mimeBodyPart.setContent("<div style='color: red'>red test</div>", "text/html;charset=UTF-8");
+            // 设置收件人、抄送人、密送人
+            if (StringUtils.isBlank(toEmail + ccEmail + bccEmail))
+                throw new MessagingException("收件人，抄送人，密送人不能都为空！");
+            if (StringUtils.isNotBlank(toEmail))
+                message.setRecipient(MimeMessage.RecipientType.TO, new InternetAddress(toEmail, "收件人"));
+            if (StringUtils.isNotBlank(ccEmail))
+                message.setRecipient(MimeMessage.RecipientType.CC, new InternetAddress(ccEmail, "抄送人"));
+            if (StringUtils.isNotBlank(bccEmail))
+                message.setRecipient(MimeMessage.RecipientType.BCC, new InternetAddress(bccEmail, "密送人"));
 
-            MimeMultipart mimeMultipart = new MimeMultipart();
-            mimeMultipart.addBodyPart(mimeBodyPart);
+            // 设置邮件主题
+            message.setSubject("SpringBoot Test", "UTF-8");
 
-            message.setContent(mimeMultipart);
+            // 设置邮件正文
+            MimeMultipart multipart = new MimeMultipart();
+            MimeBodyPart part = new MimeBodyPart();
+            part.setContent("<!DOCTYPE html>\n" +
+                    "<html lang=\"en\">\n" +
+                    "<head>\n" +
+                    "    <meta charset=\"UTF-8\">\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "<div style=\"\n" +
+                    "    display: table;\n" +
+                    "    background: #eee;\n" +
+                    "    width: 800px;\n" +
+                    "    height: 150px;\n" +
+                    "\">\n" +
+                    "    <div style=\"display: table-cell;vertical-align: middle;text-align: center;\">\n" +
+                    "        <span style=\"\n" +
+                    "    font-size: 40px;\n" +
+                    "    color: blue;\n" +
+                    "\">Hello,</span>\n" +
+                    "        <span style=\"\n" +
+                    "    color: white;\n" +
+                    "    font-size: 40px;\n" +
+                    "\">World!</span>\n" +
+                    "    </div>\n" +
+                    "</div>\n" +
+                    "</body>\n" +
+                    "</html>", "text/html;charset=UTF-8");  // 设置邮件内容
+            multipart.addBodyPart(part);
+            message.setContent(multipart);
 
+            // 设置发件时间（立即发送）
             message.setSentDate(new Date());
 
+            // 保存设置
             message.saveChanges();
 
+            // 发送邮件
             Transport transport = session.getTransport();
-
-            transport.connect("2946310156@qq.com", "rakbfhvsosjvddha");
-
+            transport.connect(fromEmail, fromEmailCode);
             transport.sendMessage(message, message.getAllRecipients());
 
+            // 关闭连接
             transport.close();
-
-
         } catch (MessagingException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
-
-
-
-
-//        message.setFrom("2946310156@qq.com");
-//        message.setTo("993023569@qq.com");
-//        message.setSubject("it is a test for spring boot");
-//        message.setText("<div style='color: red'>red test</div>");
-
     }
 
     @Test

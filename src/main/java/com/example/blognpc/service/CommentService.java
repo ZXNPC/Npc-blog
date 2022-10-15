@@ -145,7 +145,6 @@ public class CommentService {
             // 暂时不会有其它情况
         }
 
-        return;
     }
 
     public List<CommentDTO> listByTargetId(Long id, CommentTypeEnum type) {

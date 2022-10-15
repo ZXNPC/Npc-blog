@@ -1,10 +1,7 @@
 package com.example.blognpc.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.blognpc.dto.ArticleDTO;
-import com.example.blognpc.dto.PaginationDTO;
-import com.example.blognpc.dto.ResultDTO;
-import com.example.blognpc.dto.UserDTO;
+import com.example.blognpc.dto.*;
 import com.example.blognpc.enums.CustomizeErrorCode;
 import com.example.blognpc.exception.CustomizeException;
 import com.example.blognpc.mapper.ManagerMapper;
@@ -20,8 +17,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class ManageController {
@@ -78,6 +77,7 @@ public class ManageController {
         return "manage-user";
     }
 
+    @ResponseBody
     @GetMapping("/manage/{section}")
     public ResultDTO manageSection(
             @PathVariable("section") String section,
@@ -94,7 +94,13 @@ public class ManageController {
         }
 
         if ("article".equals(section)) {
-
+            List<ArticleDTO> articleDTOS = articleService.list(0L, 10L, "gmt_create").getData();
+            return ResultDTO.okOf(articleDTOS);
+        } else if ("question".equals(section)) {
+            List<QuestionDTO> questionDTOS = questionService.list(0L, 10L, "gmt_create").getData();
+            return ResultDTO.okOf(questionDTOS);
+        } else if ("tool".equals(section)) {
+            // TODO: tool list()
         }
         return null;
     }

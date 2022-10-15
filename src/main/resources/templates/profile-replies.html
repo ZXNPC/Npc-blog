@@ -81,6 +81,8 @@
                         </span>
                         <span class="text-desc">
                             <span th:text="${#dates.format(notification.getGmtCreate(), 'yyyy-MM-dd HH:mm')}"></span>
+                            <span class="glyphicon glyphicon-trash draft-delete-icon" th:data="${notification.getId()}"
+                                  onclick="deleteNotification(this)"></span>
                         </span>
                     </div>
                 </div>

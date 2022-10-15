@@ -3,6 +3,7 @@ package com.example.blognpc.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.blognpc.dto.DraftDTO;
 import com.example.blognpc.dto.PaginationDTO;
+import com.example.blognpc.dto.ResultDTO;
 import com.example.blognpc.enums.CustomizeErrorCode;
 import com.example.blognpc.enums.DraftTypeEnum;
 import com.example.blognpc.exception.CustomizeException;
@@ -64,7 +65,6 @@ public class DraftService {
             draftMapper.updateById(draft);
         }
 
-        // TODO: 我想让 insert 直接返回该数据的主键 id ，暂时不知道如何实现，只好再次查询
         return draftMapper.selectById(draft).getId();
     }
 
@@ -138,17 +138,17 @@ public class DraftService {
         return draftMapper.selectCount(new QueryWrapper<Draft>().eq("creator", creator));
     }
 
-    public void deleteById(Long id, User user) {
+    public ResultDTO deleteById(Long id, User user) {
         Draft draft = draftMapper.selectById(id);
         if (draft == null) {
-            throw new CustomizeException(CustomizeErrorCode.DRAFT_NOT_FOUND);
+            return ResultDTO.errorOf(CustomizeErrorCode.DRAFT_NOT_FOUND);
         }
 
         if (draft.getCreator() != user.getId()) {
-            throw new CustomizeException(CustomizeErrorCode.ACCOUNT_ERROR);
+            return ResultDTO.errorOf(CustomizeErrorCode.ACCOUNT_ERROR);
         }
 
         draftMapper.deleteById(id);
-        return;
+        return ResultDTO.okOf();
     }
 }

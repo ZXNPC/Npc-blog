@@ -41,8 +41,6 @@
                     <span th:text="${questionDTO.getCommentCount()}"></span> 个回复 ·
                     <span th:text="${questionDTO.getViewCount()}"></span> 次浏览 ·
                     <span th:text="${#dates.format(questionDTO.getGmtCreate(), 'yyyy-MM-dd HH:mm')}"></span>
-                        <span th:if="${session.manager == true}"> · ID:<span
-                                th:text="${questionDTO.getId()}"></span></span>
                 </span>
                 </div>
             </div>

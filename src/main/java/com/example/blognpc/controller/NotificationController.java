@@ -38,7 +38,7 @@ public class NotificationController {
     }
 
     @ResponseBody
-    @PostMapping("/notification")
+    @PostMapping("/notification/delete")
     public ResultDTO delete(@RequestBody Long id,
                             HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");

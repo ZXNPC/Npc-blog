@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 public class DraftController {
     @Autowired
     private DraftService draftService;
-
+    // TODO: 写草稿时内容过长会报错
     @GetMapping("/draft/{id}")
     public String draft(@PathVariable("id") Long id,
                         RedirectAttributes attributes) {
@@ -70,8 +70,8 @@ public class DraftController {
             return ResultDTO.errorOf(CustomizeErrorCode.NO_LOGIN);
         }
 
-        draftService.deleteById(id, user);
+        ResultDTO resultDTO = draftService.deleteById(id, user);
 
-        return ResultDTO.okOf();
+        return resultDTO;
     }
 }

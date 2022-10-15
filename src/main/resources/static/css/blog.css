@@ -34,6 +34,11 @@ body {
     margin: 50px;
 }
 
+.media .media-heading {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 .media .media-object {
     width: 75px;
     height: 75px;
@@ -259,4 +264,13 @@ body {
     display: inline-block;
     width: 75%;
     vertical-align: top;
+}
+
+.tag-list .tag-default {
+
+}
+
+.tag-list .tag-active {
+    background: #499ef3;
+    color: white;
 }
