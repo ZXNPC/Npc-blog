@@ -12,6 +12,7 @@ import com.example.blognpc.mapper.UserUnverifiedMapper;
 import com.example.blognpc.model.User;
 import com.example.blognpc.model.UserUnverified;
 import com.example.blognpc.utils.CalendarUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -99,6 +100,10 @@ public class UserUnverifiedService {
 //    }
 
     public UserUnverified verifyExpiration(String token, String email, Long expirationTime) {
+        if (StringUtils.isBlank(token) || StringUtils.isBlank(email) || expirationTime == null) {
+            throw new VerifyException(LoginErrorCode.LINK_NOT_CORRECT);
+        }
+
         List<UserUnverified> users = userUnverifiedMapper.selectList(new QueryWrapper<UserUnverified>()
                 .eq("token", token)
                 .eq("email", email)

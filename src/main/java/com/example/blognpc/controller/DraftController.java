@@ -11,7 +11,9 @@ import com.example.blognpc.service.DraftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,23 +22,27 @@ import javax.servlet.http.HttpServletRequest;
 public class DraftController {
     @Autowired
     private DraftService draftService;
-    // TODO: 写草稿时内容过长会报错
     @GetMapping("/draft/{id}")
-    public String draft(@PathVariable("id") Long id,
-                        RedirectAttributes attributes) {
+    public ModelAndView draft(@PathVariable("id") Long id,
+                              RedirectAttributes attributes,
+                              ModelMap model) {
         Draft draft = draftService.selectById(id);
-        String redirectUri = "";
+
+        model.addAttribute("draftId", id);
+        model.addAttribute("title", draft.getTitle());
+        model.addAttribute("description", draft.getDescription());
+        model.addAttribute("tag", draft.getTag());
         if (draft.getType() == DraftTypeEnum.QUESTION_DRAFT.getType()) {
-            redirectUri = "/community/publish";
+            return new ModelAndView("redirect:/community/publish", model);
         } else if (draft.getType() == DraftTypeEnum.ARTICLE_DRAFT.getType()) {
-            redirectUri = "/mumbler/publish";
+            return new ModelAndView("redirect:/mumbler/publish", model);
         }
-        attributes.addAttribute("draftId", id);
-        attributes.addAttribute("title", draft.getTitle());
-        attributes.addAttribute("description", draft.getDescription());
-        attributes.addAttribute("tag", draft.getTag());
+        return null;
+//        attributes.addAttribute("draftId", id);
+//        attributes.addAttribute("title", draft.getTitle());
+//        attributes.addAttribute("description", draft.getDescription());
+//        attributes.addAttribute("tag", draft.getTag());
 //        redirectUri += String.format("?draftId=%d&title=%s&description=%s&tag=%s", id, draft.getTitle(), draft.getDescription(), draft.getTag());
-        return "redirect:" + redirectUri;
     }
 
     @ResponseBody

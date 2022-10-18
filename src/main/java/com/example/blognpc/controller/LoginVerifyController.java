@@ -21,10 +21,6 @@ public class LoginVerifyController {
     @Autowired
     private UserUnverifiedService userUnverifiedService;
 
-    @GetMapping("/verify")
-    public String verify() {
-        return "login-verify";
-    }
 
     @GetMapping("/login/verify")
     public String emailVerify(@RequestParam(value = "token") String token,
