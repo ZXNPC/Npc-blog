@@ -478,12 +478,20 @@ function manageItem(type, page, e) {
                 // TODO: 搜索栏
                 // 文章、问题、工具
                 var content = "";
+                var url = "";
+                if (item === "article") {
+                    url = "/mumbler/article";
+                } else if (item === "question") {
+                    url = "/community/question";
+                } else if (item === "tool") {
+                    url = "/depot/tool";
+                }
                 for (let i = 0; i < data.length; i++) {
                     content +=
                         "                    <tr id=\"item-" + ((page - 1) * 10 + i + 1) + "\">\n" +
                         "                        <td style='min-width: 50px;'>" + ((page - 1) * 10 + i + 1) + "</td>\n" +
                         "                        <td>" + data[i].id + "</td>\n" +
-                        "                        <td>" + data[i].title + "</td>\n" +
+                        "                        <td><a target='_blank' href='" + (url + "/" + data[i].id) + "'>" + data[i].title + "</a></td>\n" +
                         "                        <td>" + data[i].tag + "</td>\n" +
                         "                        <td>" + data[i].user.name + "</td>\n" +
                         "                        <td>" + data[i].creator + "</td>\n" +
@@ -563,7 +571,7 @@ function manageModify(e) {
 function manageDelete(e) {
     var id = e.getAttribute("data");
     var section = document.getElementById("table").getAttribute("data");
-    if (confirm("确认要删除此" + (section === "article" ? "文章" : (section === "question" ? "问题":(section === "tool" ? "工具":""))) + "?")) {
+    if (confirm("确认要删除此" + (section === "article" ? "文章" : (section === "question" ? "问题" : (section === "tool" ? "工具" : ""))) + "?")) {
         $.ajax({
             type: "POST",
             url: "/manage/" + section + "/delete?id=" + id,
