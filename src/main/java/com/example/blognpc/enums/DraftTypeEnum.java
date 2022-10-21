@@ -2,7 +2,9 @@ package com.example.blognpc.enums;
 
 public enum DraftTypeEnum {
     QUESTION_DRAFT(0),
-    ARTICLE_DRAFT(1);
+    ARTICLE_DRAFT(1),
+    TOOL_DRAFT(2)
+    ;
 
     private Integer type;
 

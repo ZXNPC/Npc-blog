@@ -23,7 +23,7 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li th:if="${session.user != null}">
-                    <a href="/profile/replies" title="查看通知">
+                    <a href="/profile/notifications" title="查看通知">
                             <span class="badge"
                                   th:text="${session.unreadCount == 0} ? '': ${session.unreadCount}"></span>通知
                     </a>
@@ -73,10 +73,10 @@
     <li th:if="${session.manager == true}" th:class="${#httpServletRequest.getRequestURI() == '/manage'} ? 'active':''">
         <a th:href="@{'/manage' + ${search != null ? '?search=' + search : ''}}">管理</a>
     </li>
-<!--TODO: 资源-->
-<!--    <li th:class="${#httpServletRequest.getRequestURI() == '/resources'} ? 'active':''">-->
-<!--        <a th:href="@{'/resources' + ${search != null ? '?search=' + search : ''}}">资源</a>-->
-<!--    </li>-->
+    <!--TODO: 资源-->
+    <!--    <li th:class="${#httpServletRequest.getRequestURI() == '/resources'} ? 'active':''">-->
+    <!--        <a th:href="@{'/resources' + ${search != null ? '?search=' + search : ''}}">资源</a>-->
+    <!--    </li>-->
 </ul>
 
 <!--翻页按钮-->
@@ -121,6 +121,26 @@
     <div>
         Copyright © 2022 · 服务器提供: Tencent Cloud · 网站程序： Spring Boot · 备案号： 蜀ICP备2022019744号
     </div>
+</div>
+
+<!--profile 右侧边栏-->
+<div th:fragment="profile-list" class="list-group section">
+    <a href="/profile/questions"
+       th:class="${#httpServletRequest.getRequestURI() == '/profile/questions'} ? 'active list-group-item':'list-group-item'">
+        <span class="badge"></span>我的问题
+    </a>
+    <a th:if="${session.manager == true}" href="/profile/articles"
+       th:class="${#httpServletRequest.getRequestURI() == '/profile/articles'} ? 'active list-group-item':'list-group-item'">
+        <span class="badge"></span>我的文章
+    </a>
+    <a href="/profile/notifications"
+       th:class="${#httpServletRequest.getRequestURI() == '/profile/notifications'} ? 'active list-group-item':'list-group-item'">
+        <span class="badge" th:text="${session.unreadCount == 0} ? '': ${session.unreadCount}"></span>关于我的
+    </a>
+    <a href="/profile/drafts"
+       th:class="${#httpServletRequest.getRequestURI() == '/profile/drafts'} ? 'active list-group-item':'list-group-item'">
+        <span class="badge" th:text="${draftCount == 0} ? '' : ${draft}"></span>草稿箱
+    </a>
 </div>
 </body>
 </html>

@@ -151,4 +151,27 @@ public class DraftService {
         draftMapper.deleteById(id);
         return ResultDTO.okOf();
     }
+
+    public Long createFromItem(Question question) {
+        return createFromItem(question.getCreator(), question.getTitle(), question.getDescription(), question.getTag(), DraftTypeEnum.QUESTION_DRAFT.getType());
+    }
+
+    public Long createFromItem(Article article) {
+        return createFromItem(article.getCreator(), article.getTitle(), article.getDescription(), article.getTag(), DraftTypeEnum.ARTICLE_DRAFT.getType());
+    }
+
+    public Long createFromItem(Tool tool) {
+        return createFromItem(tool.getCreator(), tool.getTitle(), tool.getUrl(), tool.getTag(), DraftTypeEnum.TOOL_DRAFT.getType());
+    }
+
+    private Long createFromItem(Long creator, String title, String description, String tag, Integer type) {
+
+        Draft draft = new Draft();
+        draft.setType(type);
+        draft.setTitle(title);
+        draft.setDescription(description);
+        draft.setTag(tag);
+        draft.setCreator(creator);
+        return createOrUpdate(draft);
+    }
 }

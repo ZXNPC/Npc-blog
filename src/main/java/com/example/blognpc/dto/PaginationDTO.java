@@ -57,7 +57,7 @@ public class PaginationDTO<T> {
         }
 
         // 是否显示分页栏
-        if (totalPage == 1) {
+        if (totalPage <= 1) {
             showPageNav = false;
         } else {
             showPageNav = true;

@@ -45,25 +45,8 @@
             <div th:insert="~{fragment :: pagination-buttons}"></div>
         </div>
         <!--右侧边栏-->
-        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-            <div class="list-group section">
-                <a href="/profile/questions"
-                   th:class="${#httpServletRequest.getRequestURI() == '/profile/questions'} ? 'active list-group-item':'list-group-item'">
-                    <span class="badge"></span>我的问题
-                </a>
-                <a th:if="${session.manager == true}" href="/profile/articles"
-                   th:class="${#httpServletRequest.getRequestURI() == '/profile/articles'} ? 'active list-group-item':'list-group-item'">
-                    <span class="badge"></span>我的文章
-                </a>
-                <a href="/profile/replies"
-                   th:class="${#httpServletRequest.getRequestURI() == '/profile/replies'} ? 'active list-group-item':'list-group-item'">
-                    <span class="badge" th:text="${session.unreadCount == 0} ? '': ${session.unreadCount}"></span>最新回复
-                </a>
-                <a href="/profile/drafts"
-                   th:class="${#httpServletRequest.getRequestURI() == '/profile/drafts'} ? 'active list-group-item':'list-group-item'">
-                    <span class="badge" th:text="${draftCount == 0} ? '' : ${draft}"></span>草稿箱
-                </a>
-            </div>
+        <div th:insert="~{fragment :: profile-list}" class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+
         </div>
     </div>
 </div>

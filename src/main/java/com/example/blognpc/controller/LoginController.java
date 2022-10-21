@@ -2,7 +2,6 @@ package com.example.blognpc.controller;
 
 import com.example.blognpc.dto.ResultDTO;
 import com.example.blognpc.enums.LoginErrorCode;
-import com.example.blognpc.exception.CustomizeException;
 import com.example.blognpc.exception.LoginException;
 import com.example.blognpc.model.User;
 import com.example.blognpc.model.UserUnverified;
@@ -20,12 +19,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Date;
@@ -161,7 +158,7 @@ public class LoginController {
 //        redirectAttributes.addFlashAttribute("resultDTO", ResultDTO.okOf(toEmail));
 //        redirectAttributes.addFlashAttribute("fromSignin", false);
 
-        model.addAttribute("resultDTO", ResultDTO.okOf(toEmail));
+        model.addAttribute("resultDTO", ResultDTO.emailOkOf(toEmail));
 
         return "login";
     }

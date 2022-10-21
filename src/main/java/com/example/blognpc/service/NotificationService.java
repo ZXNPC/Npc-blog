@@ -23,6 +23,8 @@ public class NotificationService {
     @Autowired
     private UserMapper userMapper;
     @Autowired
+    private ManagerMapper managerMapper;
+    @Autowired
     private NotificationMapper notificationMapper;
     @Autowired
     private CommentMapper commentMapper;
@@ -30,6 +32,8 @@ public class NotificationService {
     private QuestionMapper questionMapper;
     @Autowired
     private ArticleMapper articleMapper;
+    @Autowired
+    private DraftMapper draftMapper;
 
     public PaginationDTO<NotificationDTO> list(Long receiverId, Long page, Long size) {
         Long totalCount = notificationMapper.selectCount(new QueryWrapper<Notification>().eq(receiverId != null && receiverId != 0L, "receiver", receiverId));
@@ -67,6 +71,36 @@ public class NotificationService {
         notification.setGmtCreate(System.currentTimeMillis());
         notification.setGmtModified(notification.getGmtCreate());
         notificationMapper.insert(notification);
+        return;
+    }
+
+    /**
+     * 管理员处理
+     *
+     * @param notifierId
+     * @param receiverId
+     */
+    public void create(Long notifierId, Long receiverId, Long outerId, Integer type) {
+        if (notifierId == receiverId) {
+            return;
+        }
+
+        List<Manager> managers = managerMapper.selectList(new QueryWrapper<Manager>().eq("user_id", notifierId));
+        if (managers.size() == 0) {
+            throw new CustomizeException(CustomizeErrorCode.NOT_MANAGER);
+        }
+
+        create(notifierId, receiverId, 0L, outerId, type);
+//        Notification notification = new Notification();
+//        notification.setNotifier(notifierId);
+//        notification.setReceiver(receiverId);
+//        notification.setCommentId(0L);
+//        notification.setOuterId(outerId);
+//        notification.setType(type);
+//        notification.setStatus(NotificationStatusEnum.UNREAD.getType());
+//        notification.setGmtCreate(System.currentTimeMillis());
+//        notification.setGmtModified(notification.getGmtCreate());
+//        notificationMapper.insert(notification);
         return;
     }
 
@@ -145,7 +179,8 @@ public class NotificationService {
                 // 总之就是有问题，抛异常就完事了
                 throw new CustomizeException(CustomizeErrorCode.SYSTEM_ERROR);
             }
-        } else {
+        } else if (notification.getType() == NotificationTypeEnum.REPLY_COMMUNITY_QUESTION.getType()
+                || notification.getType() == NotificationTypeEnum.REPLY_MUMBLER_ARTICLE.getType()) {
             // 回复的是文章或问题
             if (notification.getType() == NotificationTypeEnum.REPLY_MUMBLER_ARTICLE.getType()) {
                 // 回复的是文章
@@ -185,8 +220,32 @@ public class NotificationService {
                 // 总之就是有问题，抛异常就完事了
                 throw new CustomizeException(CustomizeErrorCode.SYSTEM_ERROR);
             }
+        } else if (notification.getType() == NotificationTypeEnum.MANAGER_MODIFY_ARTICLE.getType()
+                || notification.getType() == NotificationTypeEnum.MANAGER_DELETE_ARTICLE.getType()) {
+            return getNotificationDTOFromDraft(notification, notifierUser);
+        } else if (notification.getType() == NotificationTypeEnum.MANAGER_MODIFY_QUESTION.getType()
+                || notification.getType() == NotificationTypeEnum.MANAGER_DELETE_QUESTION.getType()) {
+            return getNotificationDTOFromDraft(notification, notifierUser);
+        } else if (notification.getType() == NotificationTypeEnum.MANAGER_MODIFY_TOOL.getType()
+                || notification.getType() == NotificationTypeEnum.MANAGER_DELETE_TOOL.getType()) {
+            return getNotificationDTOFromDraft(notification, notifierUser);
+        } else {
+            return null;
+        }
+    }
+
+    private NotificationDTO getNotificationDTOFromDraft(Notification notification, User notifierUser) {
+        Draft draft = draftMapper.selectById(notification.getOuterId());
+        if (draft == null) {
+            throw new CustomizeException(CustomizeErrorCode.DRAFT_NOT_FOUND);
         }
 
+        NotificationDTO<Draft> notificationDTO = new NotificationDTO<Draft>();
+        BeanUtils.copyProperties(notification, notificationDTO);
+        notificationDTO.setNotifierUser(notifierUser);
+        notificationDTO.setOutMostId(draft.getId());
+        notificationDTO.setOuter(draft);
+        return notificationDTO;
     }
 
     public ResultDTO delete(Long id, User user) {

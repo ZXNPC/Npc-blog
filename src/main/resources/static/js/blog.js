@@ -1,3 +1,17 @@
+Array.prototype.remove = function (from, to) {
+    var rest = this.slice((to || from) + 1 || this.length);
+    this.length = from < 0 ? this.length + from : from;
+    return this.push.apply(this, rest);
+};
+
+String.prototype.format = function () {
+    var formatted = this;
+    for (var arg in arguments) {
+        formatted = formatted.replace("{" + arg + "}", arguments[arg]);
+    }
+    return formatted;
+};
+
 function checkSignin() {
     var email = document.getElementById("signin_email");
     var password = document.getElementById("signin_password");
@@ -21,6 +35,7 @@ function checkSignin() {
     return true;
 }
 
+
 function checkSignup() {
     var email = document.getElementById("signup_email");
     var email_test = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
@@ -38,7 +53,6 @@ function checkSignup() {
     return true;
 }
 
-
 function checkPassword() {
     var password = document.getElementById("password");
     var pwdRegex = /^(?=.*[0-9])(?=.*[a-zA-Z]).{8,30}$/;
@@ -51,6 +65,7 @@ function checkPassword() {
 }
 
 // 暂时没用
+
 function deleteNotification(e) {
     if (confirm("确认删除该提醒？")) {
         var id = e.getAttribute("data");
@@ -80,6 +95,7 @@ function deleteNotification(e) {
 }
 
 // GitHub 登录
+
 function checkGitHub() {
     sessionStorage.removeItem("resultDTO");
 }
@@ -113,6 +129,7 @@ function deleteDraft(e) {
 }
 
 // 提交问题回复
+
 function postQuestionComment() {
     var questionId = $("#question-id").val();
     var content = $("#comment-content").val();
@@ -120,6 +137,7 @@ function postQuestionComment() {
 }
 
 // 提交问题评论回复
+
 function commentQuestionCommemnt(e) {
     var commentId = e.getAttribute("data-id");
     var content = $("#input-" + commentId).val();
@@ -127,6 +145,7 @@ function commentQuestionCommemnt(e) {
 }
 
 // 提交文章回复
+
 function postArticleComment() {
     var articleId = $("#article-id").val();
     var content = $("#comment-content").val();
@@ -134,6 +153,7 @@ function postArticleComment() {
 }
 
 // 提交文章评论回复
+
 function commentArticleComment(e) {
     var commentId = e.getAttribute("data-id");
     var content = $("#input-" + commentId).val();
@@ -174,6 +194,7 @@ function comment2target(targetId, type, content) {
 }
 
 // 展开二级评论
+
 function collapseComments(e) {
 
     var id = e.getAttribute("data-id");
@@ -220,6 +241,7 @@ function collapseComments(e) {
 }
 
 // TODO: 点赞功能需要 redis 辅助，还在学
+
 function like(e) {
     alert("点赞功能还在学捏 QAQ");
     // var id = e.getAttribute("data-id");
@@ -251,12 +273,6 @@ function like(e) {
     // });
 
 }
-
-Array.prototype.remove = function (from, to) {
-    var rest = this.slice((to || from) + 1 || this.length);
-    this.length = from < 0 ? this.length + from : from;
-    return this.push.apply(this, rest);
-};
 
 // 插入tag
 function selectTag(e) {
@@ -407,14 +423,27 @@ function deleteTool(e) {
         return;
 }
 
-// 添加工具
-function addTool() {
-    location.href = "/depot/publish";
-}
+// 选择管理的对象
+$(document).ready(function () {
+    $("#manage-article").on("click", function () {
+        manageItem(0, 1, this);
+    });
+    $("#manage-question").on("click", function () {
+        manageItem(1, 1, this);
+    });
+    $("#manage-tool").on("click", function () {
+        manageItem(2, 1, this);
+    });
+})
 
 // 选择管理的对象
-function manageItem(type, e) {
-    $("table").children().remove();
+function manageItem(type, page, e) {
+    $("tbody").children().remove();
+    var pageNav = document.getElementById("page-nav");
+    if (pageNav)
+        pageNav.remove();
+
+
     let item;
     switch (type) {
         case 0: {
@@ -437,93 +466,78 @@ function manageItem(type, e) {
     document.getElementsByName("item-btn").forEach(b => b.classList.remove('active'));
     e.className += ' active';
 
-    var page = e.getAttribute("page");
-
     $.ajax({
         url: "/manage/" + item + "?page=" + page,
         success: function (response, status) {
             if (response.code == 200) {
-                var data = response.data;
+                var paginationDTO = response.data;
+                var data = paginationDTO.data;
 
-                var ids = new Array();
-                var titles = new Array();
-                var tags = new Array();
+                page = paginationDTO.page;
+
                 // TODO: 搜索栏
-                if (data && Object.keys(data[0]).includes("title")) {
-                    // 文章、问题、工具
-                    var title = "<thead>\n" +
-                        "                    <tr>\n" +
-                        "                        <th>编号</th>\n" +
-                        "                        <th>id</th>\n" +
-                        "                        <th>title</th>\n" +
-                        "                        <th>tag</th>\n" +
-                        "                        <th>Creator ID</th>\n" +
-                        "                        <th>操作</th>\n" +
-                        "                    </tr>\n" +
-                        "                    </thead>";
-                    var content = "";
-                    for (let i = 0; i < data.length; i++) {
-                        content += "<thead>\n" +
-                            "                    <tr id=\"item-" + (page * 10 + i) + "\">\n" +
-                            "                        <th style='min-width: 50px;'>" + (page * 10 + i) + "</th>\n" +
-                            "                        <th>" + data[i].id + "</th>\n" +
-                            "                        <th>\"" + data[i].title + "\"</th>\n" +
-                            "                        <th>\"" + data[i].tag + "\"</th>\n" +
-                            "                        <th style='min-width: 90px;'>\"" + data[i].creator + "\"</th>\n" +
-                            "                        <th style='min-width: 125px;'>\n" +
-                            "                            <div class=\"btn-group\" role=\"group\" aria-label=\"...\">\n" +
-                            "                                <button type=\"button\" class=\"btn btn-default\" th:data-id=\"${tool.getId()}\"\n" +
-                            "                                        onclick=\"modifyTool(this)\">修改\n" +
-                            "                                </button>\n" +
-                            "                                <button type=\"button\" class=\"btn btn-danger\" th:data-id=\"${tool.getId()}\"\n" +
-                            "                                        onclick=\"deleteTool(this)\">删除\n" +
-                            "                                </button>\n" +
-                            "                            </div>\n" +
-                            "                        </th>\n" +
-                            "                    </tr>\n" +
-                            "                    </thead>"
-                    }
-                    $("table").append(title);
-                    $("table").append(content);
+                // 文章、问题、工具
+                var content = "";
+                for (let i = 0; i < data.length; i++) {
+                    content +=
+                        "                    <tr id=\"item-" + ((page - 1) * 10 + i + 1) + "\">\n" +
+                        "                        <td style='min-width: 50px;'>" + ((page - 1) * 10 + i + 1) + "</td>\n" +
+                        "                        <td>" + data[i].id + "</td>\n" +
+                        "                        <td>" + data[i].title + "</td>\n" +
+                        "                        <td>" + data[i].tag + "</td>\n" +
+                        "                        <td>" + data[i].user.name + "</td>\n" +
+                        "                        <td>" + data[i].creator + "</td>\n" +
+                        "                        <td>\n" +
+                        "                            <div class=\"btn-group\" role=\"group\" aria-label=\"...\">\n" +
+                        "                                <button type=\"button\" class=\"btn btn-default\" data='" + (data[i].id) + "'\n" +
+                        "                                        onclick=\"manageModify(this)\">修改\n" +
+                        "                                </button>\n" +
+                        "                                <button type=\"button\" class=\"btn btn-danger\" data='" + (data[i].id) + "' \n" +
+                        "                                        onclick=\"manageDelete(this)\">删除\n" +
+                        "                                </button>\n" +
+                        "                            </div>\n" +
+                        "                        </td>\n" +
+                        "                    </tr>\n";
+                }
+                $("tbody").append(content);
 
-                } else if (data && Object.keys(data[0]).includes("name")) {
-                    // 用户
-                    var title = "<thead>\n" +
-                        "                    <tr>\n" +
-                        "                        <th>编号</th>\n" +
-                        "                        <th>id</th>\n" +
-                        "                        <th>name</th>\n" +
-                        "                        <th>email</th>\n" +
-                        "                        <th>操作</th>\n" +
-                        "                    </tr>\n" +
-                        "                    </thead>";
-                    var content = "";
-                    for (let i = 0; i < data.length; i++) {
-                        content += "<thead>\n" +
-                            "                    <tr id=\"item-" + (page * 10 + i) + "\">\n" +
-                            "                        <th>" + (page * 10 + i) + "</th>\n" +
-                            "                        <th>" + data[i].id + "</th>\n" +
-                            "                        <th>\"" + data[i].name + "\"</th>\n" +
-                            "                        <th>\"" + data[i].email + "\"</th>\n" +
-                            "                        <th>\n" +
-                            "                            <div class=\"btn-group\" role=\"group\" aria-label=\"...\">\n" +
-                            "                                <button type=\"button\" class=\"btn btn-default\" th:data-id=\"${tool.getId()}\"\n" +
-                            "                                        onclick=\"modifyTool(this)\">修改\n" +
-                            "                                </button>\n" +
-                            "                                <button type=\"button\" class=\"btn btn-danger\" th:data-id=\"${tool.getId()}\"\n" +
-                            "                                        onclick=\"deleteTool(this)\">删除\n" +
-                            "                                </button>\n" +
-                            "                            </div>\n" +
-                            "                        </th>\n" +
-                            "                    </tr>\n" +
-                            "                    </thead>"
-                    }
-                    $("table").append(title);
-                    $("table").append(content);
-
-
+                var pages = "";
+                for (let i = 0; i < paginationDTO.pages.length; i++) {
+                    pages +=
+                        "<li class='" + (paginationDTO.pages[i] === page ? ' active' : '') + "'>\n" +
+                        "    <a href='#' onclick='manageItem(" + "{0}, {1}, this".format(type, paginationDTO.pages[i]) + ")'>" + paginationDTO.pages[i] + "</a>\n" +
+                        "</li>\n";
                 }
 
+                var pagi =
+                    "<nav aria-label='Page navigation' id='page-nav'" + (paginationDTO.showPageNav === true ? '' : ' hidden') + ">\n" +
+                    "    <ul class='pagination'>\n" +
+                    "        <li class='" + (paginationDTO.showFirstPage === true ? '' : ' disabled') + "'>\n" +
+                    "            <a href='#' aria-label='First' onclick='manageItem(" + ("{0}, {1}, this".format(type, 1)) + ")'>\n" +
+                    "                <span aria-hidden='true'>&laquo;</span>\n" +
+                    "            </a>\n" +
+                    "        </li>\n" +
+                    "        <li class='" + (paginationDTO.showPrevious === true ? '' : ' disabled') + "'>\n" +
+                    "            <a href='#' aria-label='Previous' onclick='manageItem(" + ("{0}, {1}, this".format(type, page - 1)) + ")'>\n" +
+                    "                <span aria-hidden='true'>&lt;</span>\n" +
+                    "            </a>\n" +
+                    "        </li>\n" +
+                    pages +
+                    "        <li class='" + (paginationDTO.showNext === true ? '' : ' disabled') + "'>\n" +
+                    "            <a href='#' aria-label='Next' onclick='manageItem(" + ("{0}, {1}, this".format(type, page + 1)) + ")'>\n" +
+                    "                <span aria-hidden='true'>&gt;</span>\n" +
+                    "            </a>\n" +
+                    "        </li>\n" +
+                    "        <li class='" + (paginationDTO.showEndPage === true ? '' : ' disabled') + "'>\n" +
+                    "            <a href='#' aria-label='End' onclick='manageItem(" + ("{0}, {1}, this".format(type, paginationDTO.totalPage)) + ")'>\n" +
+                    "                <span aria-hidden='true'>&raquo;</span>\n" +
+                    "            </a>\n" +
+                    "        </li>\n" +
+                    "    </ul>\n" +
+                    "</nav>";
+
+
+                $("table").parent().append(pagi);
             } else {
                 if (response.code == 2003) {
                     if (confirm(response.message)) {
@@ -538,4 +552,39 @@ function manageItem(type, e) {
             }
         }
     });
+}
+
+function manageModify(e) {
+    var id = e.getAttribute("data");
+    var section = document.getElementById("table").getAttribute("data");
+    location.href = "/manage/" + section + "/modify?id=" + id;
+}
+
+function manageDelete(e) {
+    var id = e.getAttribute("data");
+    var section = document.getElementById("table").getAttribute("data");
+    if (confirm("确认要删除此" + (section === "article" ? "文章" : (section === "question" ? "问题":(section === "tool" ? "工具":""))) + "?")) {
+        $.ajax({
+            type: "POST",
+            url: "/manage/" + section + "/delete?id=" + id,
+            contentType: 'application/json',
+            data: id,
+            success: function (response) {
+                if (response.code == 200) {
+                    // response.data 保存的是草稿的 id，通过 js 访问
+                    alert("已删除！")
+                } else {
+                    if (response.code == 2003) {
+                        var isAccepted = confirm(response.message);
+                        if (isAccepted) {
+                            window.open("/login");
+                        }
+                    } else {
+                        alert(response.message);
+                    }
+                }
+            },
+            dataType: "json"
+        })
+    }
 }

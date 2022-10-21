@@ -1,11 +1,10 @@
 package com.example.blognpc.dto;
 
+import com.example.blognpc.enums.CustomizeErrorCode;
 import com.example.blognpc.exception.CustomizeException;
 import com.example.blognpc.exception.ICustomizeErrorCode;
 import com.example.blognpc.exception.LoginException;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class ResultDTO<T> {
@@ -24,6 +23,10 @@ public class ResultDTO<T> {
         return errorOf(errorCode.getCode(), errorCode.getMessage());
     }
 
+    public static ResultDTO errorOf(Exception e) {
+        return errorOf(CustomizeErrorCode.SYSTEM_ERROR.getCode(), e.getMessage());
+    }
+
     public static ResultDTO okOf() {
         ResultDTO resultDTO = new ResultDTO();
         resultDTO.setCode(200);
@@ -31,7 +34,7 @@ public class ResultDTO<T> {
         return resultDTO;
     }
 
-    public static ResultDTO okOf(String email) {
+    public static ResultDTO emailOkOf(String email) {
         ResultDTO resultDTO = new ResultDTO();
         resultDTO.setCode(200);
         resultDTO.setMessage("验证邮件已发送至 " + email + " ，请注意查收");

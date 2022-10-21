@@ -20,8 +20,8 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     ARTICLE_NOT_FOUND(2015, "文章不存在"),
     USER_NOT_FOUND(2016, "用户不存在"),
     DRAFT_TYPE_WRONG(2017, "草稿类型错误或不存在"),
-    DRAFT_NOT_FOUND(2018, "草稿不存在")
-    ;
+    DRAFT_NOT_FOUND(2018, "草稿不存在"),
+    TOOL_NOT_FOUND(2019, "工具不存在");
 
     @Override
     public String getMessage() {

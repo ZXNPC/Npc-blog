@@ -3,7 +3,11 @@ package com.example.blognpc.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.example.blognpc.dto.PaginationDTO;
+import com.example.blognpc.dto.ResultDTO;
 import com.example.blognpc.dto.ToolDTO;
+import com.example.blognpc.enums.CustomizeErrorCode;
+import com.example.blognpc.enums.NotificationTypeEnum;
+import com.example.blognpc.exception.CustomizeException;
 import com.example.blognpc.mapper.ToolMapper;
 import com.example.blognpc.mapper.UserMapper;
 import com.example.blognpc.model.*;
@@ -23,9 +27,13 @@ public class ToolService {
     @Autowired
     private UserMapper userMapper;
     @Autowired
+    private DraftService draftService;
+    @Autowired
     private ToolMapper toolMapper;
     @Autowired
     private SearchProvider searchProvider;
+    @Autowired
+    private NotificationService notificationService;
 
     public void incView(Long id) {
         UpdateWrapper<Tool> updateWrapper = new UpdateWrapper<>();
@@ -34,12 +42,12 @@ public class ToolService {
         toolMapper.update(null, updateWrapper);
     }
 
-    public PaginationDTO<ToolDTO> list(Long page, Long size) {
-        return list(null, page, size, null, null);
+    public PaginationDTO<ToolDTO> list(Long page, Long size, String orderDesc) {
+        return list(null, page, size, null, orderDesc);
     }
 
-    public PaginationDTO<ToolDTO> list(Long creator, Long page, Long size) {
-        return list(creator, page, size, null, null);
+    public PaginationDTO<ToolDTO> list(Long creator, Long page, Long size, String orderDesc) {
+        return list(creator, page, size, null, orderDesc);
     }
 
     /**
@@ -106,5 +114,20 @@ public class ToolService {
         paginationDTO.setData(toolDTOS);
 
         return paginationDTO;
+    }
+
+    public ResultDTO deleteById(Long id, User user) {
+        try {
+            Tool tool = toolMapper.selectById(id);
+            if (tool == null) {
+                throw new CustomizeException(CustomizeErrorCode.TOOL_NOT_FOUND);
+            }
+            Long draftId = draftService.createFromItem(tool);
+            toolMapper.deleteById(id);
+            notificationService.create(user.getId(), tool.getCreator(), draftId, NotificationTypeEnum.MANAGER_DELETE_TOOL.getType());
+        } catch (Exception e) {
+            return ResultDTO.errorOf(e);
+        }
+        return ResultDTO.okOf();
     }
 }

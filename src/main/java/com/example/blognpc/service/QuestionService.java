@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.example.blognpc.dto.ArticleDTO;
 import com.example.blognpc.dto.PaginationDTO;
 import com.example.blognpc.dto.QuestionDTO;
+import com.example.blognpc.dto.ResultDTO;
 import com.example.blognpc.enums.CustomizeErrorCode;
+import com.example.blognpc.enums.NotificationTypeEnum;
 import com.example.blognpc.exception.CustomizeException;
 import com.example.blognpc.mapper.DraftMapper;
 import com.example.blognpc.mapper.QuestionMapper;
@@ -32,7 +34,11 @@ public class QuestionService {
     @Autowired
     private DraftMapper draftMapper;
     @Autowired
+    private DraftService draftService;
+    @Autowired
     private SearchProvider searchProvider;
+    @Autowired
+    private NotificationService notificationService;
 
     public QuestionDTO selectById(Long id) {
         Question question = questionMapper.selectById(id);
@@ -83,7 +89,6 @@ public class QuestionService {
         }
 
     }
-
 
 
     public void incView(Long id) {
@@ -181,5 +186,20 @@ public class QuestionService {
         QuestionDTO questionDTO = new QuestionDTO();
         questionDTO.setTag(queryDTO.getTag());
         return selectRelated(questionDTO, size);
+    }
+
+    public ResultDTO deleteById(Long id, User user) {
+        try {
+            Question question = questionMapper.selectById(id);
+            if (question == null) {
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
+            Long draftId = draftService.createFromItem(question);
+            questionMapper.deleteById(id);
+            notificationService.create(user.getId(), question.getCreator(), draftId, NotificationTypeEnum.MANAGER_DELETE_QUESTION.getType());
+        } catch (Exception e) {
+            return ResultDTO.errorOf(e);
+        }
+        return ResultDTO.okOf();
     }
 }

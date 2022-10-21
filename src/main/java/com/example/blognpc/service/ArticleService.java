@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.example.blognpc.dto.ArticleDTO;
 import com.example.blognpc.dto.PaginationDTO;
 import com.example.blognpc.dto.QuestionDTO;
+import com.example.blognpc.dto.ResultDTO;
 import com.example.blognpc.enums.CustomizeErrorCode;
+import com.example.blognpc.enums.NotificationTypeEnum;
 import com.example.blognpc.exception.CustomizeException;
 import com.example.blognpc.mapper.ArticleMapper;
 import com.example.blognpc.mapper.DraftMapper;
@@ -32,7 +34,11 @@ public class ArticleService {
     @Autowired
     private DraftMapper draftMapper;
     @Autowired
+    private DraftService draftService;
+    @Autowired
     private SearchProvider searchProvider;
+    @Autowired
+    private NotificationService notificationService;
 
     public void createOrUpdate(Article article, Long draftId) {
         if (article.getId() == null) {
@@ -177,5 +183,20 @@ public class ArticleService {
         ArticleDTO articleDTO = new ArticleDTO();
         articleDTO.setTag(queryDTO.getTag());
         return selectRelated(articleDTO, size);
+    }
+
+    public ResultDTO deleteById(Long id, User user) {
+        try {
+            Article article = articleMapper.selectById(id);
+            if (article == null) {
+                throw new CustomizeException(CustomizeErrorCode.ARTICLE_NOT_FOUND);
+            }
+            Long draftId = draftService.createFromItem(article);
+            articleMapper.deleteById(id);
+            notificationService.create(user.getId(), article.getCreator(), draftId, NotificationTypeEnum.MANAGER_DELETE_ARTICLE.getType());
+        } catch (Exception e) {
+            return ResultDTO.errorOf(e);
+        }
+        return ResultDTO.okOf();
     }
 }

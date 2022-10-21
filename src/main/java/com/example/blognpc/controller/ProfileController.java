@@ -58,7 +58,7 @@ public class ProfileController {
             }
             PaginationDTO<ArticleDTO> paginationDTO = articleService.list(user.getId(), page, size, "gmt_create");
             model.addAttribute("paginationDTO", paginationDTO);
-        } else if ("replies".equals(section)) {
+        } else if ("notifications".equals(section)) {
             // 最新回复
             PaginationDTO<NotificationDTO> paginationDTO = notificationService.list(user.getId(), page, size);
             model.addAttribute("paginationDTO", paginationDTO);

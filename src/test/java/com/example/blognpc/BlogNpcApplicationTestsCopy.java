@@ -2,6 +2,8 @@ package com.example.blognpc;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.example.blognpc.dto.PaginationDTO;
 import com.example.blognpc.dto.QuestionDTO;
@@ -416,7 +418,10 @@ class BlogNpcApplicationTestsCopy {
     }
 
     @Test
-    public void getColumnNameTest() {
-
+    public void pageTest() {
+        PageDTO<Question> pageDTO = questionMapper.selectPage(new PageDTO<>(100, 3), null);
+        for (Question record : pageDTO.getRecords()) {
+            System.out.println(record);
+        }
     }
 }

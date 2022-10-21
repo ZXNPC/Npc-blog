@@ -58,12 +58,36 @@
                                             <span>回复了我的评论</span>
                                             <span></span>
                                         </span>
+                                        <span th:case="5">
+                                            <span>编辑了我的文章</span>
+                                            <span th:text="${notification.getOuter().getTitle()}"></span>
+                                        </span>
+                                        <span th:case="6">
+                                            <span>删除了我的文章</span>
+                                            <span th:text="${notification.getOuter().getTitle()}"></span>
+                                        </span>
+                                        <span th:case="7">
+                                            <span>编辑了我的问题</span>
+                                            <span th:text="${notification.getOuter().getTitle()}"></span>
+                                        </span>
+                                        <span th:case="8">
+                                            <span>删除了我的问题</span>
+                                            <span th:text="${notification.getOuter().getTitle()}"></span>
+                                        </span>
+                                        <span th:case="9">
+                                            <span>编辑了我的工具</span>
+                                            <span th:text="${notification.getOuter().getTitle()}"></span>
+                                        </span>
+                                        <span th:case="10">
+                                            <span>删除了我的工具</span>
+                                            <span th:text="${notification.getOuter().getTitle()}"></span>
+                                        </span>
                                     </span>
                                 </div>
                             </a>
                             <span class="label label-danger unread" th:if="${notification.status == 0}">未读</span>
                         </h4>
-                        <span th:text="${notification.getComment().getContent()}"></span>
+                        <span th:text="${notification?.getComment()?.getContent()}"></span>
                         <br>
                         <span th:switch="${notification.getType()}">
                             <span th:case="1"></span>
@@ -76,6 +100,54 @@
                             <span th:case="4">
                                 <span class="original-reply"
                                       th:text="${notification.getOuterComment().getContent()}"></span>
+                                <br>
+                            </span>
+                            <span th:case="5">
+                                <span class="original-reply">
+                                    <a th:href="@{'/draft/' + ${notification.getOuterId()}}">
+                                        点此查看文章草稿
+                                    </a>
+                                </span>
+                                <br>
+                            </span>
+                            <span th:case="6">
+                                <span class="original-reply">
+                                    <a th:href="@{'/draft/' + ${notification.getOuterId()}}">
+                                        点此查看文章草稿
+                                    </a>
+                                </span>
+                                <br>
+                            </span>
+                            <span th:case="7">
+                                <span class="original-reply">
+                                    <a th:href="@{'/draft/' + ${notification.getOuterId()}}">
+                                        点此查看问题草稿
+                                    </a>
+                                </span>
+                                <br>
+                            </span>
+                            <span th:case="8">
+                                <span class="original-reply">
+                                    <a th:href="@{'/draft/' + ${notification.getOuterId()}}">
+                                        点此查看问题草稿
+                                    </a>
+                                </span>
+                                <br>
+                            </span>
+                            <span th:case="9">
+                                <span class="original-reply">
+                                    <a th:href="@{'/draft/' + ${notification.getOuterId()}}">
+                                        点此查看工具草稿
+                                    </a>
+                                </span>
+                                <br>
+                            </span>
+                            <span th:case="10">
+                                <span class="original-reply">
+                                    <a th:href="@{'/draft/' + ${notification.getOuterId()}}">
+                                        点此查看工具草稿
+                                    </a>
+                                </span>
                                 <br>
                             </span>
                         </span>
@@ -92,25 +164,8 @@
             <div th:insert="~{fragment :: pagination-buttons}"></div>
         </div>
         <!--右侧边栏-->
-        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-            <div class="list-group section">
-                <a href="/profile/questions"
-                   th:class="${#httpServletRequest.getRequestURI() == '/profile/questions'} ? 'active list-group-item':'list-group-item'">
-                    <span class="badge"></span>我的问题
-                </a>
-                <a th:if="${session.manager == true}" href="/profile/articles"
-                   th:class="${#httpServletRequest.getRequestURI() == '/profile/articles'} ? 'active list-group-item':'list-group-item'">
-                    <span class="badge"></span>我的文章
-                </a>
-                <a href="/profile/replies"
-                   th:class="${#httpServletRequest.getRequestURI() == '/profile/replies'} ? 'active list-group-item':'list-group-item'">
-                    <span class="badge" th:text="${session.unreadCount == 0} ? '': ${session.unreadCount}"></span>最新回复
-                </a>
-                <a href="/profile/drafts"
-                   th:class="${#httpServletRequest.getRequestURI() == '/profile/drafts'} ? 'active list-group-item':'list-group-item'">
-                    <span class="badge" th:text="${draftCount == 0} ? '' : ${draft}"></span>草稿箱
-                </a>
-            </div>
+        <div th:insert="~{fragment :: profile-list}" class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+
         </div>
     </div>
 </div>

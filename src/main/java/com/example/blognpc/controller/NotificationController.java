@@ -28,13 +28,22 @@ public class NotificationController {
 
         NotificationDTO notificationDTO = notificationService.read(id, user);
         if (NotificationTypeEnum.REPLY_COMMUNITY_QUESTION.getType() == notificationDTO.getType()
-                || NotificationTypeEnum.REPLY_COMMUNITY_COMMENT.getType() == notificationDTO.getType())
+                || NotificationTypeEnum.REPLY_COMMUNITY_COMMENT.getType() == notificationDTO.getType()) {
             return "redirect:/community/question/" + notificationDTO.getOutMostId();
-        else if (NotificationTypeEnum.REPLY_MUMBLER_ARTICLE.getType() == notificationDTO.getType()
-        || NotificationTypeEnum.REPLY_MUMBLER_COMMENT.getType() == notificationDTO.getType()) {
+        } else if (NotificationTypeEnum.REPLY_MUMBLER_ARTICLE.getType() == notificationDTO.getType()
+                || NotificationTypeEnum.REPLY_MUMBLER_COMMENT.getType() == notificationDTO.getType()) {
             return "redirect:/mumbler/article/" + notificationDTO.getOutMostId();
+        } else if (notificationDTO.getType() == NotificationTypeEnum.MANAGER_MODIFY_ARTICLE.getType()
+                || notificationDTO.getType() == NotificationTypeEnum.MANAGER_DELETE_ARTICLE.getType()) {
+            return "redirect:/draft/" + notificationDTO.getOutMostId();
+        } else if (notificationDTO.getType() == NotificationTypeEnum.MANAGER_MODIFY_QUESTION.getType()
+                || notificationDTO.getType() == NotificationTypeEnum.MANAGER_DELETE_QUESTION.getType()) {
+            return "redirect:/draft/" + notificationDTO.getOutMostId();
+        } else if (notificationDTO.getType() == NotificationTypeEnum.MANAGER_MODIFY_TOOL.getType()
+                || notificationDTO.getType() == NotificationTypeEnum.MANAGER_DELETE_TOOL.getType()) {
+            return "redirect:/draft/" + notificationDTO.getOutMostId();
         } else
-            return  "redirect:/";
+            return "redirect:/";
     }
 
     @ResponseBody

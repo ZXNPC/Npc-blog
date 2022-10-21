@@ -274,3 +274,14 @@ body {
     background: #499ef3;
     color: white;
 }
+
+.right-item .table {
+    table-layout: auto;
+}
+
+.right-item .table td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 80px;
+    max-width: 500px;
+}
