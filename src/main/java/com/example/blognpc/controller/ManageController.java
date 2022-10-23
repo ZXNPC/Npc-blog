@@ -1,17 +1,11 @@
 package com.example.blognpc.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.blognpc.cache.TagCache;
 import com.example.blognpc.dto.*;
 import com.example.blognpc.enums.CustomizeErrorCode;
 import com.example.blognpc.exception.CustomizeException;
-import com.example.blognpc.mapper.ManagerMapper;
-import com.example.blognpc.model.Annotation;
-import com.example.blognpc.model.Manager;
-import com.example.blognpc.model.Tool;
 import com.example.blognpc.model.User;
 import com.example.blognpc.service.*;
-import org.bouncycastle.math.raw.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Controller
 public class ManageController {
@@ -135,7 +128,7 @@ public class ManageController {
         if ("article".equals(section)) {
             ArticleDTO articleDTO = articleService.selectById(id);
             ModelAndView modelAndView = new ModelAndView("manage-article");
-            modelAndView.addObject("articleDTO", articleDTO);
+            modelAndView.addObject("questionDTO", articleDTO);
             modelAndView.addObject("draftId", draftId);
             modelAndView.addObject("description", description);
             if (annoId != null)

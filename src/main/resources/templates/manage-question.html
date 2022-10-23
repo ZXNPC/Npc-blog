@@ -16,7 +16,7 @@
 </head>
 <body>
 <div th:insert="~{fragment :: navigation}"></div>
-<div class="container main article">
+<div class="container main question">
     <div class="row">
 
         <!--左页面-->
@@ -35,7 +35,7 @@
                 </span>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-                <form action="/manage/article" method="post">
+                <form action="/manage/question" method="post">
                     <input type="hidden" id="id" name="id" th:value="${questionDTO.getId()}">
                     <input type="hidden" id="draftId" name="id" th:value="${draftId}">
 
@@ -52,25 +52,25 @@
                         </button>
                     </span>
                         <span>
-                        <button type="button" onclick="annoArticleSave()" class="btn btn-default btn-save">
+                        <button type="button" onclick="annoQuestionSave()" class="btn btn-default btn-save">
                             保存为草稿
                         </button>
                     </span>
                     </div>
                 </form>
 
-                <div id="article-view" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div id="question-view" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <textarea style="display:none;" th:text="${questionDTO.getDescription()}"></textarea>
                 </div>
                 <script type="text/javascript">
                     $(function () {
-                        var testView = editormd.markdownToHTML("article-view", {});
+                        var testView = editormd.markdownToHTML("question-view", {});
                     });
                 </script>
 
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <span class="label label-info article-tag" th:each="tag:${questionDTO.getTag().split(',')}">
+                    <span class="label label-info question-tag" th:each="tag:${questionDTO.getTag().split(',')}">
                         <span class="glyphicon glyphicon-tags"></span>
                         <span th:text="${tag}"></span>
                     </span>

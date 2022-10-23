@@ -45,8 +45,12 @@ public class DraftController {
         } else if (draft.getType() == DraftTypeEnum.TOOL_DRAFT.getType()) {
             return new ModelAndView("redirect:/depot/publish", model);
         } else if (draft.getType() == DraftTypeEnum.ANNO_QUESTION_DRAFT.getType()) {
+            model.remove("title");
+            model.remove("tag");
             return new ModelAndView("redirect:/manage/question/modify?id=" + draft.getOuterId(), model);
         }else if (draft.getType() == DraftTypeEnum.ANNO_ARTICLE_DRAFT.getType()) {
+            model.remove("title");
+            model.remove("tag");
             return new ModelAndView("redirect:/manage/article/modify?id=" + draft.getOuterId(), model);
         }
         return null;
