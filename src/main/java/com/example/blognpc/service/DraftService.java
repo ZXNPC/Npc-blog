@@ -30,6 +30,21 @@ public class DraftService {
     @Autowired
     private SearchProvider searchProvider;
 
+    public DraftDTO toDraftDTO(Draft draft, User user) {
+        DraftDTO draftDTO = new DraftDTO();
+        BeanUtils.copyProperties(draft, draftDTO);
+        draftDTO.setUser(user);
+        return draftDTO;
+    }
+
+    public DraftDTO toDraftDTO(Draft draft, Long userId) {
+        User user = userMapper.selectById(userId);
+        if (user == null) {
+            throw new CustomizeException(CustomizeErrorCode.USER_NOT_FOUND);
+        }
+        return toDraftDTO(draft, user);
+    }
+
     public Draft selectById(Long id) {
         Draft draft = draftMapper.selectById(id);
         if (draft == null) {
@@ -124,9 +139,7 @@ public class DraftService {
         Map<Long, User> userMap = ServiceUtils.getUserMap(creatorList);
 
         List<DraftDTO> draftDTOS = drafts.stream().map(draft -> {
-            DraftDTO draftDTO = new DraftDTO();
-            BeanUtils.copyProperties(draft, draftDTO);
-            draftDTO.setUser(userMap.get(draft.getCreator()));
+            DraftDTO draftDTO = toDraftDTO(draft, userMap.get(draft.getCreator()));
             return draftDTO;
         }).collect(Collectors.toList());
         paginationDTO.setData(draftDTOS);

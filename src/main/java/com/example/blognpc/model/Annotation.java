@@ -14,29 +14,25 @@ import io.swagger.annotations.ApiModelProperty;
  * @author NPC
  * @since 2022-10-22
  */
-@ApiModel(value = "Draft对象", description = "")
-public class Draft implements Serializable {
+@ApiModel(value = "Annotation对象", description = "")
+public class Annotation implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private Integer type;
-
-    private String title;
+    private Long outerId;
 
     private String description;
 
-    private String tag;
+    private Integer type;
 
     private Long creator;
 
-    private Long outerId;
-
     private Long gmtCreate;
 
-    private Long gmtModified;
+    private Integer gmtModified;
 
     public Long getId() {
         return id;
@@ -45,19 +41,12 @@ public class Draft implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public Integer getType() {
-        return type;
+    public Long getOuterId() {
+        return outerId;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
-    }
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setOuterId(Long outerId) {
+        this.outerId = outerId;
     }
     public String getDescription() {
         return description;
@@ -66,12 +55,12 @@ public class Draft implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    public String getTag() {
-        return tag;
+    public Integer getType() {
+        return type;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setType(Integer type) {
+        this.type = type;
     }
     public Long getCreator() {
         return creator;
@@ -80,13 +69,6 @@ public class Draft implements Serializable {
     public void setCreator(Long creator) {
         this.creator = creator;
     }
-    public Long getOuterId() {
-        return outerId;
-    }
-
-    public void setOuterId(Long outerId) {
-        this.outerId = outerId;
-    }
     public Long getGmtCreate() {
         return gmtCreate;
     }
@@ -94,24 +76,22 @@ public class Draft implements Serializable {
     public void setGmtCreate(Long gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
-    public Long getGmtModified() {
+    public Integer getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Long gmtModified) {
+    public void setGmtModified(Integer gmtModified) {
         this.gmtModified = gmtModified;
     }
 
     @Override
     public String toString() {
-        return "Draft{" +
+        return "Annotation{" +
             "id=" + id +
-            ", type=" + type +
-            ", title=" + title +
-            ", description=" + description +
-            ", tag=" + tag +
-            ", creator=" + creator +
             ", outerId=" + outerId +
+            ", description=" + description +
+            ", type=" + type +
+            ", creator=" + creator +
             ", gmtCreate=" + gmtCreate +
             ", gmtModified=" + gmtModified +
         "}";

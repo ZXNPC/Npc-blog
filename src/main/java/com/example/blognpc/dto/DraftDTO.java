@@ -13,5 +13,6 @@ public class DraftDTO {
     private Long gmtCreate;
     private Long gmtModified;
     private Long creator;
+    private Long outerId;
     private User user;
 }

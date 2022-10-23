@@ -1,21 +1,23 @@
 package com.example.blognpc.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.blognpc.cache.TagCache;
 import com.example.blognpc.dto.*;
 import com.example.blognpc.enums.CustomizeErrorCode;
 import com.example.blognpc.exception.CustomizeException;
 import com.example.blognpc.mapper.ManagerMapper;
+import com.example.blognpc.model.Annotation;
 import com.example.blognpc.model.Manager;
+import com.example.blognpc.model.Tool;
 import com.example.blognpc.model.User;
-import com.example.blognpc.service.ArticleService;
-import com.example.blognpc.service.QuestionService;
-import com.example.blognpc.service.ToolService;
-import com.example.blognpc.service.UserService;
+import com.example.blognpc.service.*;
 import org.bouncycastle.math.raw.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -25,13 +27,15 @@ public class ManageController {
     @Autowired
     private UserService userService;
     @Autowired
-    private ManagerMapper managerMapper;
+    private ManagerService managerService;
     @Autowired
     private ArticleService articleService;
     @Autowired
     private QuestionService questionService;
     @Autowired
     private ToolService toolService;
+    @Autowired
+    private AnnotationService annotationService;
 
     @GetMapping("/manage")
     public String manage(Model model,
@@ -44,7 +48,7 @@ public class ManageController {
             throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
         }
 
-        if (managerMapper.selectList(new QueryWrapper<Manager>().eq("user_id", user.getId())).size() == 0) {
+        if (!managerService.isManager(user)) {
             // 非管理员
             throw new CustomizeException(CustomizeErrorCode.NOT_MANAGER);
         }
@@ -53,6 +57,7 @@ public class ManageController {
         return "manage";
     }
 
+//    TODO: 添加用户管理员
 //    @GetMapping("/manage/user")
 //    public String getUser(Model model,
 //                          HttpServletRequest request,
@@ -82,13 +87,13 @@ public class ManageController {
             @RequestParam(value = "page", defaultValue = "1") Long page,
             @RequestParam(value = "size", defaultValue = "20") Long size,
             HttpServletRequest request
-            ) {
+    ) {
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             return ResultDTO.errorOf(CustomizeErrorCode.NO_LOGIN);
         }
 
-        if (managerMapper.selectList(new QueryWrapper<Manager>().eq("user_id", user.getId())).size() == 0) {
+        if (!managerService.isManager(user)) {
             // 非管理员
             return ResultDTO.errorOf(CustomizeErrorCode.NOT_MANAGER);
         }
@@ -108,11 +113,59 @@ public class ManageController {
 
     @ResponseBody
     @GetMapping("/manage/{section}/modify")
-    public String modify(
+    public ModelAndView modify(
+            HttpServletRequest request,
+            ModelMap model,
             @RequestParam("id") Long id,
+            @RequestParam(value = "annoId", required = false) Long annoId,
+            @RequestParam(value = "draftId", required = false) Long draftId,
+            @RequestParam(value = "description", required = false) String description,
             @PathVariable("section") String section
     ) {
-        return "temp";
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
+        }
+
+        if (!managerService.isManager(user)) {
+            // 非管理员
+            throw new CustomizeException(CustomizeErrorCode.NOT_MANAGER);
+        }
+
+        if ("article".equals(section)) {
+            ArticleDTO articleDTO = articleService.selectById(id);
+            ModelAndView modelAndView = new ModelAndView("manage-article");
+            modelAndView.addObject("articleDTO", articleDTO);
+            modelAndView.addObject("draftId", draftId);
+            modelAndView.addObject("description", description);
+            if (annoId != null)
+                modelAndView.addObject("description", annotationService.selectById(annoId).getDescription());
+            return modelAndView;
+        } else if ("question".equals(section)) {
+            QuestionDTO questionDTO = questionService.selectById(id);
+            ModelAndView modelAndView = new ModelAndView("manage-question");
+            modelAndView.addObject("questionDTO", questionDTO);
+            modelAndView.addObject("draftId", draftId);
+            modelAndView.addObject("description", description);
+            if (annoId != null)
+                modelAndView.addObject("description", annotationService.selectById(annoId).getDescription());
+            return modelAndView;
+        } else if ("tool".equals(section)) {
+            ToolDTO toolDTO = toolService.selectById(id);
+            model.addAttribute("id", toolDTO.getId());
+            model.addAttribute("title", toolDTO.getTitle());
+            model.addAttribute("description", toolDTO.getUrl());
+            model.addAttribute("tag", toolDTO.getTag());
+            model.addAttribute("tagDTOS", TagCache.get());
+            return new ModelAndView("redirect:/depot/publish", model);
+        }
+        return null;
+    }
+
+    @ResponseBody
+    @PostMapping("/manage/{section}/modify")
+    public String anno() {
+        return null;
     }
 
     @ResponseBody
@@ -127,14 +180,14 @@ public class ManageController {
             return ResultDTO.errorOf(CustomizeErrorCode.NO_LOGIN);
         }
 
-        if (managerMapper.selectList(new QueryWrapper<Manager>().eq("user_id", user.getId())).size() == 0) {
+        if (!managerService.isManager(user)) {
             // 非管理员
             return ResultDTO.errorOf(CustomizeErrorCode.NOT_MANAGER);
         }
 
         ResultDTO resultDTO;
         if ("article".equals(section)) {
-             resultDTO = articleService.deleteById(id, user);
+            resultDTO = articleService.deleteById(id, user);
         } else if ("question".equals(section)) {
             resultDTO = questionService.deleteById(id, user);
         } else if ("tool".equals(section)) {

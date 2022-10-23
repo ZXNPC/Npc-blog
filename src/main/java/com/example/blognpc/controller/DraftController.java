@@ -2,9 +2,12 @@ package com.example.blognpc.controller;
 
 import com.example.blognpc.dto.DraftCreateDTO;
 import com.example.blognpc.dto.ResultDTO;
+import com.example.blognpc.enums.AnnotationTypeEnum;
 import com.example.blognpc.enums.CustomizeErrorCode;
 import com.example.blognpc.enums.DraftTypeEnum;
 import com.example.blognpc.exception.CustomizeException;
+import com.example.blognpc.mapper.AnnotationMapper;
+import com.example.blognpc.model.Annotation;
 import com.example.blognpc.model.Draft;
 import com.example.blognpc.model.User;
 import com.example.blognpc.service.DraftService;
@@ -22,6 +25,9 @@ import javax.servlet.http.HttpServletRequest;
 public class DraftController {
     @Autowired
     private DraftService draftService;
+    @Autowired
+    private AnnotationMapper annotationMapper;
+
     @GetMapping("/draft/{id}")
     public ModelAndView draft(@PathVariable("id") Long id,
                               RedirectAttributes attributes,
@@ -36,6 +42,12 @@ public class DraftController {
             return new ModelAndView("redirect:/community/publish", model);
         } else if (draft.getType() == DraftTypeEnum.ARTICLE_DRAFT.getType()) {
             return new ModelAndView("redirect:/mumbler/publish", model);
+        } else if (draft.getType() == DraftTypeEnum.TOOL_DRAFT.getType()) {
+            return new ModelAndView("redirect:/depot/publish", model);
+        } else if (draft.getType() == DraftTypeEnum.ANNO_QUESTION_DRAFT.getType()) {
+            return new ModelAndView("redirect:/manage/question/modify?id=" + draft.getOuterId(), model);
+        }else if (draft.getType() == DraftTypeEnum.ANNO_ARTICLE_DRAFT.getType()) {
+            return new ModelAndView("redirect:/manage/article/modify?id=" + draft.getOuterId(), model);
         }
         return null;
 //        attributes.addAttribute("draftId", id);
@@ -61,6 +73,7 @@ public class DraftController {
         draft.setDescription(draftCreateDTO.getDescription());
         draft.setTag(draftCreateDTO.getTag());
         draft.setCreator(user.getId());
+        draft.setOuterId(draftCreateDTO.getOuterId());
 
         Long id = draftService.createOrUpdate(draft);
 

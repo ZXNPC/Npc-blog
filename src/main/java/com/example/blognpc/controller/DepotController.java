@@ -24,4 +24,6 @@ public class DepotController {
         model.addAttribute("paginationDTO", paginationDTO);
         return "depot";
     }
+
+
 }

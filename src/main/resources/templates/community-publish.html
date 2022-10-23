@@ -77,7 +77,8 @@
                             saveHTMLToTextarea: true,
                             imageUpload: true,
                             imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-                            imageUploadURL: "/file/upload"
+                            imageUploadURL: "/file/upload",
+                            htmlDecode: true
                         });
                     });
                 </script>
@@ -85,7 +86,7 @@
                 <div class="form-group should-hide">
                     <label for="title">添加标签：</label>
                     <input type="text" class="form-control" th:value="${tag}" id="tag" name="tag"
-                           placeholder="输入标签，以”,“分割">
+                           placeholder="从以下菜单中选择合适的标签">
                     <div id="select-tag" class="nav-tag" style="display: block">
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" th:each="tagDTO, tagDTOStat: ${tagDTOS}"
@@ -127,7 +128,7 @@
             <h3>问题发起指南</h3>
             · 问题标题：请用简洁的语言描述你发布的问题，不超过25字<br>
             · 问题补充：详细补充你的问题内容，并确保问题描述清晰直观，并提供一些相关的资料<br>
-            · 选择标签：选择一个或者多个合适的标签，用逗号隔开，每个标签不超过10个字<br>
+            · 选择标签：选择一个或者多个合适的标签<br>
             <hr>
             <h3>你的问题将展示在论坛的最新问题中</h3>
             <s>所以不要在主页文章里面找自己的问题了</s>

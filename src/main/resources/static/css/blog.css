@@ -200,6 +200,13 @@ body {
     white-space: inherit;
 }
 
+.tool-tag {
+    margin-top: 8px;
+    margin-right: 8px;
+    cursor: pointer;
+    white-space: inherit;
+}
+
 .comments {
     margin-bottom: 15px;
     border-bottom: 1px solid #EEEEEE;

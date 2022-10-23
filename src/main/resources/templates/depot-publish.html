@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>发布</title>
+    <title>添加工具</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
@@ -39,52 +39,21 @@
             <h2 class="should-hide"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 发起</h2>
             <hr>
 
-            <form action="/mumbler/publish" method="post">
+            <form action="/depot/publish" method="post">
                 <input type="hidden" name="id" th:value="${id}">
                 <input type="hidden" id="draftId" name="draftId" th:value="${draftId}">
                 <div class="form-group should-hide">
-                    <label for="title">文章标题：</label>
+                    <label for="title">工具名称：</label>
                     <input type="text" th:value="${title}" class="form-control" id="title" name="title"
-                           placeholder="文章标题...">
+                           placeholder="工具名称···">
                 </div>
-
-                <div class="form-group" id="question-editor">
-                    <label for="description">文章内容：</label>
-                    <textarea name="description" th:text="${description}" id="description" style="display: none;"
+                <div class="form-group">
+                    <label for="title">工具链接：</label>
+                    <textarea name="description" th:text="${description}" id="description"
                               class="form-control"></textarea>
                 </div>
-                <script type="text/javascript">
-                    $(function () {
-                        var editor = editormd("question-editor", {
-                            width: "100%",
-                            height: "640px",
-                            onfullscreen: function () {
-                                var elements = document.getElementsByClassName("should-hide");
-                                for (let i = 0; i < elements.length; i++) {
-                                    elements[i].setAttribute("hidden", true);
-                                }
-                            },
-                            onfullscreenExit: function () {
-                                var elements = document.getElementsByClassName("should-hide");
-                                for (let i = 0; i < elements.length; i++) {
-                                    elements[i].removeAttribute("hidden");
-                                }
-                            },
-                            path: "/js/lib/",
-                            delay: 0,
-                            watch: false,
-                            placeholder: "请输入文章内容",
-                            saveHTMLToTextarea: true,
-                            imageUpload: true,
-                            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-                            imageUploadURL: "/file/upload",
-                            htmlDecode: true
-                        });
-                    });
-                </script>
-
                 <div class="form-group should-hide">
-                    <label for="tag">添加标签：</label>
+                    <label for="title">添加标签：</label>
                     <input type="text" class="form-control" th:value="${tag}" id="tag" name="tag"
                            placeholder="从以下菜单中选择合适的标签">
                     <div id="select-tag" class="nav-tag" style="display: block">
@@ -101,14 +70,15 @@
                                  th:id="${tagDTO.categoryName}">
                                 <div class="tag-list">
                                     <span th:each="tag: ${tagDTO.tags}">
-                                        <button type="button" class="btn tag-default article-tag" th:text="' ' + ${tag}"
-                                              onclick="selectTag(this)" th:data-tag="${tag}"></button>
+                                        <button type="button" class="btn tag-default tool-tag" th:text="' ' + ${tag}"
+                                                onclick="selectTag(this)" th:data-tag="${tag}"></button>
                                     </span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="form-group should-hide">
                     <span>
                         <button type="submit" onclick="return publishCheck()" class="btn btn-success btn-publish">
@@ -116,7 +86,7 @@
                         </button>
                     </span>
                     <span>
-                        <button type="button" onclick="articleSave()" class="btn btn-default btn-save">
+                        <button type="button" onclick="toolSave()" class="btn btn-default btn-save">
                             保存为草稿
                         </button>
                     </span>
@@ -124,9 +94,9 @@
             </form>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 should-hide">
-            <h3>文章发起指南</h3>
-            · 文章标题：请用简洁的语言描述文章的主要内容<br>
-            · 文章内容：详细描述文章内容，并提供一些相关的资料<br>
+            <h3>工具发布指南</h3>
+            · 工具名称：嗯，工具名称<br>
+            · 工具链接：嗯，工具链接，不超过256个字符（数据库开的 varchar(256)）；如果不够的话联系管理员邮箱 993023569@qq.com<br>
             · 选择标签：选择一个或者多个合适的标签
         </div>
     </div>

@@ -17,16 +17,16 @@ function checkSignin() {
     var password = document.getElementById("signin_password");
     var email_test = /^([a-z0-9]|\.)+@([a-z0-9]|\.)+$/;
 
-    if ("" == email.value) {
+    if ("" === email.value) {
         alert("邮箱为空");
         email.focus();
         return false;
-    } else if (email_test.test(email.value) == false) {
+    } else if (email_test.test(email.value) === false) {
         alert("邮箱格式错误")
         email.focus();
         return false;
     }
-    if ("" == password.value) {
+    if ("" === password.value) {
         alert("密码为空");
         password.focus();
         return false;
@@ -40,11 +40,11 @@ function checkSignup() {
     var email = document.getElementById("signup_email");
     var email_test = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
 
-    if ("" == email.value) {
+    if ("" === email.value) {
         alert("邮箱为空");
         email.focus();
         return false;
-    } else if (email_test.test(email.value) == false) {
+    } else if (email_test.test(email.value) === false) {
         alert("邮箱格式错误");
         email.focus();
         return false;
@@ -56,7 +56,7 @@ function checkSignup() {
 function checkPassword() {
     var password = document.getElementById("password");
     var pwdRegex = /^(?=.*[0-9])(?=.*[a-zA-Z]).{8,30}$/;
-    if (pwdRegex.test(password.value) == false) {
+    if (pwdRegex.test(password.value) === false) {
         alert("您的密码复杂度太低（密码中必须包含字母、数字），且字数在8-30字");
         password.focus();
         return false;
@@ -75,10 +75,10 @@ function deleteNotification(e) {
             contentType: 'application/json',
             data: id,
             success: function (response) {
-                if (response.code == 200) {
+                if (response.code === 200) {
                     document.getElementById("notification-" + id).remove();
                 } else {
-                    if (response.code == 2003) {
+                    if (response.code === 2003) {
                         var isAccepted = confirm(response.message);
                         if (isAccepted) {
                             window.open("/login");
@@ -109,10 +109,10 @@ function deleteDraft(e) {
             contentType: 'application/json',
             data: id,
             success: function (response) {
-                if (response.code == 200) {
+                if (response.code === 200) {
                     location.reload();
                 } else {
-                    if (response.code == 2003) {
+                    if (response.code === 2003) {
                         var isAccepted = confirm(response.message);
                         if (isAccepted) {
                             window.open("/login");
@@ -176,10 +176,10 @@ function comment2target(targetId, type, content) {
             "type": type
         }),
         success: function (response) {
-            if (response.code == 200) {
+            if (response.code === 200) {
                 location.reload();
             } else {
-                if (response.code == 2003) {
+                if (response.code === 2003) {
                     var isAccepted = confirm(response.message);
                     if (isAccepted) {
                         window.open("/login");
@@ -208,7 +208,7 @@ function collapseComments(e) {
     //收起状态
     else {
         var subCommentContainer = $("#comment-" + id);
-        if (subCommentContainer.children().length == 1) {
+        if (subCommentContainer.children().length === 1) {
             $.getJSON("/comment/" + id, function (data) {
                 var items = [];
                 $.each(data.data.reverse(), function (index, comment) {
@@ -219,7 +219,7 @@ function collapseComments(e) {
                         "                                            <img class=\"media-object img-rounded\"\n" +
                         "                                                 src=\"https://avatars.githubusercontent.com/u/52725517?v=4\">\n" +
                         "                                        </div>\n" +
-                        "                                        <div class=\"media-body\"><h5 class=\"media-heading\">" + comment.user.name + (manager == "true" ? "<span class='text-desc'> Cretor-ID: " + comment.commentator + "</span>" : "") + "</h5>\n" +
+                        "                                        <div class=\"media-body\"><h5 class=\"media-heading\">" + comment.user.name + (manager === "true" ? "<span class='text-desc'> Cretor-ID: " + comment.commentator + "</span>" : "") + "</h5>\n" +
                         "                                            <div class=\"comment-content\">" + comment.content + "</div>\n" +
                         "                                            <div class=\"menu\"><span\n" +
                         "                                                    class=\"glyphicon glyphicon-thumbs-up icon\" onclick='like(this)'></span><span\n" +
@@ -256,10 +256,10 @@ function like(e) {
     //     contentType: 'application/json',
     //     data: id,
     //     success: function (response) {
-    //         if (response.code == 200) {
+    //         if (response.code === 200) {
     //             document.getElementById("comment-" + id);
     //         } else {
-    //             if (response.code == 2003) {
+    //             if (response.code === 2003) {
     //                 var isAccepted = confirm(response.message);
     //                 if (isAccepted) {
     //                     window.open("/login");
@@ -307,36 +307,20 @@ function publishCheck() {
     var description = document.getElementById("description");
     var tag = document.getElementById("tag");
 
-    if ("" == title.value) {
+    if (title && "" === title.value) {
         alert("标题不能为空");
         return false;
     }
-    if ("" == description.value) {
+    if (description && "" === description.value) {
         alert("内容不能为空");
         return false;
     }
-    if ("" == tag.value) {
+    if (tag && "" === tag.value) {
         alert("标签不能为空");
         return false;
     }
     sessionStorage.removeItem("resultDTO");
     return true;
-}
-
-function articleSave() {
-    var id = document.getElementById("draftId").value;
-    var title = document.getElementById("title").value;
-    var description = document.getElementById("description").value;
-    var tag = document.getElementById("tag").value;
-    var type = 1;
-
-    if ("" == title && "" == description && "" == tag) {
-        alert("标题 内容 标签 不能都为空");
-        return false;
-    }
-    sessionStorage.removeItem("resultDTO");
-
-    saveAsDraft(id, title, description, tag, type);
 }
 
 function questionSave() {
@@ -345,18 +329,87 @@ function questionSave() {
     var description = document.getElementById("description").value;
     var tag = document.getElementById("tag").value;
     var type = 0;
+    var outerId = 0;
 
-    if ("" == title && "" == description && "" == tag) {
+    if ("" === title && "" === description && "" === tag) {
         alert("标题 内容 标签 不能都为空");
         return false;
     }
     sessionStorage.removeItem("resultDTO");
 
-    saveAsDraft(id, title, description, tag, type);
+    saveAsDraft(id, title, description, tag, type, outerId);
+}
+
+function articleSave() {
+    var id = document.getElementById("draftId").value;
+    var title = document.getElementById("title").value;
+    var description = document.getElementById("description").value;
+    var tag = document.getElementById("tag").value;
+    var type = 1;
+    var outerId = 0;
+
+    if ("" === title && "" === description && "" === tag) {
+        alert("标题 内容 标签 不能都为空");
+        return false;
+    }
+    sessionStorage.removeItem("resultDTO");
+
+    saveAsDraft(id, title, description, tag, type, outerId);
+}
+
+function toolSave() {
+    var id = document.getElementById("draftId").value;
+    var title = document.getElementById("title").value;
+    var description = document.getElementById("description").value;
+    var tag = document.getElementById("tag").value;
+    var type = 2;
+    var outerId = 0;
+
+    if ("" === title && "" === description && "" === tag) {
+        alert("标题 内容 标签 不能都为空");
+        return false;
+    }
+    sessionStorage.removeItem("resultDTO");
+
+    saveAsDraft(id, title, description, tag, type, outerId);
+}
+
+function annoQuestionSave() {
+    var id = document.getElementById("draftId").value;
+    var title = "";
+    var description = document.getElementById("description").value;
+    var tag = "";
+    var type = 3;
+    var outerId = document.getElementById("id").value;
+
+    if (description === "") {
+        alert("内容不能为空");
+        return false;
+    }
+    sessionStorage.removeItem("resultDTO");
+
+    saveAsDraft(id, title, description, tag, type, outerId);
+}
+
+function annoArticleSave() {
+    var id = document.getElementById("draftId").value;
+    var title = "";
+    var description = document.getElementById("description").value;
+    var tag = "";
+    var type = 4;
+    var outerId = document.getElementById("id").value;
+
+    if (description === "") {
+        alert("内容不能为空");
+        return false;
+    }
+    sessionStorage.removeItem("resultDTO");
+
+    saveAsDraft(id, title, description, tag, type, outerId);
 }
 
 // community-publish.html 保存草稿处理
-function saveAsDraft(id, title, description, tag, type) {
+function saveAsDraft(id, title, description, tag, type, outerId) {
     $.ajax({
         type: "POST",
         url: "/draft",
@@ -366,15 +419,16 @@ function saveAsDraft(id, title, description, tag, type) {
             "title": title,
             "description": description,
             "tag": tag,
-            "type": type
+            "type": type,
+            "outerId": outerId
         }),
         success: function (response) {
-            if (response.code == 200) {
+            if (response.code === 200) {
                 // response.data 保存的是草稿的 id，通过 js 访问
                 alert("已保存为草稿，可在 '我的草稿' 中查看并编辑！")
                 location.href = "/draft/" + response.data;
             } else {
-                if (response.code == 2003) {
+                if (response.code === 2003) {
                     var isAccepted = confirm(response.message);
                     if (isAccepted) {
                         window.open("/login");
@@ -405,10 +459,10 @@ function deleteTool(e) {
             contentType: 'application/json',
             data: id,
             success: function (response) {
-                if (response.code == 200) {
+                if (response.code === 200) {
                     document.getElementById('tool-' + id).remove();
                 } else {
-                    if (response.code == 2003) {
+                    if (response.code === 2003) {
                         var isAccepted = confirm(response.message);
                         if (isAccepted) {
                             window.open("/login");
@@ -442,6 +496,9 @@ function manageItem(type, page, e) {
     var pageNav = document.getElementById("page-nav");
     if (pageNav)
         pageNav.remove();
+    var addBtn = document.getElementById("add-btn");
+    if (addBtn)
+        addBtn.remove();
 
 
     let item;
@@ -469,7 +526,7 @@ function manageItem(type, page, e) {
     $.ajax({
         url: "/manage/" + item + "?page=" + page,
         success: function (response, status) {
-            if (response.code == 200) {
+            if (response.code === 200) {
                 var paginationDTO = response.data;
                 var data = paginationDTO.data;
 
@@ -477,21 +534,25 @@ function manageItem(type, page, e) {
 
                 // TODO: 搜索栏
                 // 文章、问题、工具
-                var content = "";
-                var url = "";
+                var tableContent = "";
+                var redirectUrl = "";
+                var parentUrl = "";
                 if (item === "article") {
-                    url = "/mumbler/article";
+                    redirectUrl = "/mumbler/article";
+                    parentUrl = "/mumbler";
                 } else if (item === "question") {
-                    url = "/community/question";
+                    redirectUrl = "/community/question";
+                    parentUrl = "/community";
                 } else if (item === "tool") {
-                    url = "/depot/tool";
+                    redirectUrl = "/depot/tool";
+                    parentUrl = "/depot";
                 }
                 for (let i = 0; i < data.length; i++) {
-                    content +=
+                    tableContent +=
                         "                    <tr id=\"item-" + ((page - 1) * 10 + i + 1) + "\">\n" +
                         "                        <td style='min-width: 50px;'>" + ((page - 1) * 10 + i + 1) + "</td>\n" +
                         "                        <td>" + data[i].id + "</td>\n" +
-                        "                        <td><a target='_blank' href='" + (url + "/" + data[i].id) + "'>" + data[i].title + "</a></td>\n" +
+                        "                        <td><a target='_blank' href='" + (redirectUrl + "/" + data[i].id) + "'>" + data[i].title + "</a></td>\n" +
                         "                        <td>" + data[i].tag + "</td>\n" +
                         "                        <td>" + data[i].user.name + "</td>\n" +
                         "                        <td>" + data[i].creator + "</td>\n" +
@@ -507,7 +568,11 @@ function manageItem(type, page, e) {
                         "                        </td>\n" +
                         "                    </tr>\n";
                 }
-                $("tbody").append(content);
+
+                var btnContent = "<div id='add-btn'><a href='" + (parentUrl + '/publish') + "'><button type='button' class='btn btn-success' style='float: right;margin-right: 20px;'>添加</button></a></div>";
+
+                $("table").parent().append(btnContent);
+                $("tbody").append(tableContent);
 
                 var pages = "";
                 for (let i = 0; i < paginationDTO.pages.length; i++) {
@@ -544,14 +609,13 @@ function manageItem(type, page, e) {
                     "    </ul>\n" +
                     "</nav>";
 
-
                 $("table").parent().append(pagi);
             } else {
-                if (response.code == 2003) {
+                if (response.code === 2003) {
                     if (confirm(response.message)) {
                         window.open("/login");
                     }
-                } else if (response.code == 2014) {
+                } else if (response.code === 2014) {
                     alert(response.message);
                     location.href = "/";
                 } else {
@@ -578,11 +642,10 @@ function manageDelete(e) {
             contentType: 'application/json',
             data: id,
             success: function (response) {
-                if (response.code == 200) {
-                    // response.data 保存的是草稿的 id，通过 js 访问
-                    alert("已删除！")
+                if (response.code === 200) {
+                    // console.log("已删除");
                 } else {
-                    if (response.code == 2003) {
+                    if (response.code === 2003) {
                         var isAccepted = confirm(response.message);
                         if (isAccepted) {
                             window.open("/login");

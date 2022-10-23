@@ -8,6 +8,7 @@ import com.example.blognpc.dto.ToolDTO;
 import com.example.blognpc.enums.CustomizeErrorCode;
 import com.example.blognpc.enums.NotificationTypeEnum;
 import com.example.blognpc.exception.CustomizeException;
+import com.example.blognpc.mapper.DraftMapper;
 import com.example.blognpc.mapper.ToolMapper;
 import com.example.blognpc.mapper.UserMapper;
 import com.example.blognpc.model.*;
@@ -28,6 +29,8 @@ public class ToolService {
     private UserMapper userMapper;
     @Autowired
     private DraftService draftService;
+    @Autowired
+    private DraftMapper draftMapper;
     @Autowired
     private ToolMapper toolMapper;
     @Autowired
@@ -129,5 +132,44 @@ public class ToolService {
             return ResultDTO.errorOf(e);
         }
         return ResultDTO.okOf();
+    }
+
+    public void createOrUpdate(Tool tool, Long draftId) {
+        if (tool.getId() == null) {
+            // 创建工具
+            tool.setGmtCreate(System.currentTimeMillis());
+            tool.setGmtModified(tool.getGmtCreate());
+            tool.setViewCount(0);
+            tool.setLikeCount(0);
+            toolMapper.insert(tool);
+            if (draftId != null)
+                draftMapper.deleteById(draftId);
+        } else {
+            // 更新工具
+            Tool dbTool = toolMapper.selectById(tool.getId());
+            if (dbTool == null) {
+                // 工具不存在
+                throw new CustomizeException(CustomizeErrorCode.TOOL_NOT_FOUND);
+            } else  {
+                // 工具存在
+                tool.setGmtCreate(dbTool.getGmtCreate());
+                tool.setGmtModified(System.currentTimeMillis());
+                tool.setViewCount(dbTool.getViewCount());
+                tool.setLikeCount(dbTool.getLikeCount());
+                toolMapper.updateById(tool);
+            }
+        }
+    }
+
+    /**
+     * 不带 user 的返回
+     * @param id
+     * @return
+     */
+    public ToolDTO selectById(Long id) {
+        Tool tool = toolMapper.selectById(id);
+        ToolDTO toolDTO = new ToolDTO();
+        BeanUtils.copyProperties(tool, toolDTO);
+        return toolDTO;
     }
 }

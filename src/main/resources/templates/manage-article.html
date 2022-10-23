@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${articleDTO.getTitle()}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/blog.css"/>
+    <link rel="stylesheet" href="/css/editormd.min.css"/>
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/blog.js" type="application/javascript"></script>
+    <script src="/js/editormd.min.js" type="application/javascript"></script>
+    <script src="/js/lib/marked.min.js" type="application/javascript"></script>
+    <script src="/js/lib/prettify.min.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:insert="~{fragment :: navigation}"></div>
+<div class="container main article">
+    <div class="row">
+
+        <!--左页面-->
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <!--问题主体-->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 18px;">
+                <h4><span th:text="${articleDTO.getTitle()}"></span></h4>
+                <span class="text-desc">
+                作者：<span th:text="${articleDTO.getUser().getName()}"></span> |
+                发布时间：<span th:text="${#dates.format(articleDTO.getGmtCreate(), 'yyyy-MM-dd HH:mm')}"></span>
+                    <span th:if="${articleDTO.getGmtCreate() != articleDTO.getGmtModified()}"> |
+                        上次修改于：<span th:text="${#dates.format(articleDTO.getGmtModified(), 'yyyy-MM-dd HH:mm')}"></span>
+                    </span> |
+                阅读数：<span th:text="${articleDTO.getViewCount()}"></span>
+                    <span th:if="${session.manager == true}"> · ID: <span th:text="${articleDTO.getId()}"></span></span>
+                </span>
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                <form action="/manage/article" method="post">
+                    <input type="hidden" id="id" name="id" th:value="${articleDTO.getId()}">
+                    <input type="hidden" id="draftId" name="id" th:value="${draftId}">
+
+                    <div class="form-group" id="annotation-editor">
+                        <label for="description">注释内容：</label>
+                        <textarea rows="10" placeholder="输入注释内容" name="description" th:text="${description}" id="description"
+                                  class="form-control"></textarea>
+                    </div>
+
+                    <div class="form-group should-hide">
+                    <span>
+                        <button type="submit" onclick="return publishCheck()" class="btn btn-success btn-publish">
+                            添加注释
+                        </button>
+                    </span>
+                        <span>
+                        <button type="button" onclick="annoArticleSave()" class="btn btn-default btn-save">
+                            保存为草稿
+                        </button>
+                    </span>
+                    </div>
+                </form>
+
+                <div id="article-view" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <textarea style="display:none;" th:text="${articleDTO.getDescription()}"></textarea>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        var testView = editormd.markdownToHTML("article-view", {});
+                    });
+                </script>
+
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <span class="label label-info article-tag" th:each="tag:${articleDTO.getTag().split(',')}">
+                        <span class="glyphicon glyphicon-tags"></span>
+                        <span th:text="${tag}"></span>
+                    </span>
+                </div>
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            </div>
+        </div>
+
+
+        <!--右页面-->
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h3>发起人</h3>
+            </div>
+            <div class="media col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-circle"
+                             th:src="${articleDTO.getUser().getAvatarUrl()}">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <span th:text="${articleDTO.getUser().getName()}"></span>
+                    </h4>
+                    <div th:if="${session.manager == true}" class="text-desc">
+                        Creator-ID: <span th:text="${articleDTO.getCreator()}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:insert="~{fragment :: footer}"></div>
+</body>
+</html>

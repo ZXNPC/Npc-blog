@@ -8,6 +8,7 @@ import com.example.blognpc.mapper.UserMapper;
 import com.example.blognpc.model.Manager;
 import com.example.blognpc.model.Notification;
 import com.example.blognpc.model.User;
+import com.example.blognpc.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class SessionInterceptor implements HandlerInterceptor {
     @Autowired
     private NotificationMapper notificationMapper;
     @Autowired
-    private ManagerMapper managerMapper;
+    private ManagerService managerService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -42,8 +43,7 @@ public class SessionInterceptor implements HandlerInterceptor {
                     if (users.size() != 0) {
                         User user = users.get(0);
                         request.getSession().setAttribute("user", user);
-                        List<Manager> managers = managerMapper.selectList(new QueryWrapper<Manager>().eq("user_id", user.getId()));
-                        request.getSession().setAttribute("manager", managers.size() != 0);
+                        request.getSession().setAttribute("manager", managerService.isManager(user));
                         Long unreadCount = notificationMapper.selectCount(new QueryWrapper<Notification>()
                                 .eq("receiver", user.getId())
                                 .eq("status", NotificationStatusEnum.UNREAD));

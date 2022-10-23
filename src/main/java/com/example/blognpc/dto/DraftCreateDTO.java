@@ -9,4 +9,5 @@ public class DraftCreateDTO {
     private String description;
     private String tag;
     private Integer type;
+    private Long outerId;
 }

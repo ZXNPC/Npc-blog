@@ -1,6 +1,6 @@
 package com.example.blognpc.mapper;
 
-import com.example.blognpc.model.Question;
+import com.example.blognpc.model.Annotation;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2022-10-22
  */
 @Mapper
-public interface QuestionMapper extends BaseMapper<Question> {
+public interface AnnotationMapper extends BaseMapper<Annotation> {
 
 }
