@@ -50,20 +50,20 @@ public class ServiceUtils {
         return Pattern.matches(pattern, search);
     }
 
-    public static void doSearch(List<String> searchType, List<String> searchContent, String search, String defaultType) {
-        if (matchesSearchPattern(search)) {
-            // 使用高级搜索
-            List<String> searchList = Arrays.stream(search.split("(and)|(or)|(AND)|(OR)")).map(s -> s = s.trim()).collect(Collectors.toList());
-            for (String sss : searchList) {
-                List<String> ss = Arrays.stream(sss.split(":")).map(s -> s = s.trim()).collect(Collectors.toList());
-                searchType.add(ss.get(0));
-                searchContent.add(ss.get(1).replace("\"", ""));
-            }
-
-        } else {
-            // 使用普通搜索
-            searchType.add(defaultType);
-            searchContent.add(search);
-        }
-    }
+//    public static void doSearch(List<String> searchType, List<String> searchContent, String search, String defaultType) {
+//        if (matchesSearchPattern(search)) {
+//            // 使用高级搜索
+//            List<String> searchList = Arrays.stream(search.split("(and)|(or)|(AND)|(OR)")).map(s -> s = s.trim()).collect(Collectors.toList());
+//            for (String sss : searchList) {
+//                List<String> ss = Arrays.stream(sss.split(":")).map(s -> s = s.trim()).collect(Collectors.toList());
+//                searchType.add(ss.get(0));
+//                searchContent.add(ss.get(1).replace("\"", ""));
+//            }
+//
+//        } else {
+//            // 使用普通搜索
+//            searchType.add(defaultType);
+//            searchContent.add(search);
+//        }
+//    }
 }

@@ -1,6 +1,7 @@
 package com.example.blognpc.provider;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.blognpc.cache.TagCache;
 import com.example.blognpc.mapper.UserMapper;
 import com.example.blognpc.model.User;
 import lombok.Data;
