@@ -20,7 +20,7 @@
             <hr>
             <!--最新回复-->
             <div class="sections-section-list">
-                <div th:if="${paginationDTO == null || paginationDTO?.getData().size() == 0}">
+                <div th:if="${(paginationDTO == null || paginationDTO?.getData().size() == 0) && !paginationDTO?.showPageNav}">
                     <span class="text-desc">你还没有收到（相关）回复捏</span>
                 </div>
                 <!--case 1: 回复问题-->

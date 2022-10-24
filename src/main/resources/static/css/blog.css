@@ -189,11 +189,16 @@ body {
 .article-tag {
     margin-top: 8px;
     margin-right: 8px;
-    cursor: pointer;
     white-space: inherit;
 }
 
 .question-tag {
+    margin-top: 8px;
+    margin-right: 8px;
+    white-space: inherit;
+}
+
+.tagDTO-list {
     margin-top: 8px;
     margin-right: 8px;
     cursor: pointer;
@@ -291,4 +296,14 @@ body {
     text-overflow: ellipsis;
     min-width: 80px;
     max-width: 500px;
+}
+
+.anno-description {
+    color: red;
+}
+
+.anno-hr {
+    border: none;
+    border-top: 1px dashed;
+    color: red;
 }

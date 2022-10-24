@@ -94,7 +94,7 @@ public class DraftService {
     public PaginationDTO<DraftDTO> list(Long creator, Long page, Long size, String search, String orderDesc) {
         if (StringUtils.isBlank(search)) {
             // 不使用搜索
-            Long totalCount = draftMapper.selectCount(null);
+            Long totalCount = draftMapper.selectCount(new QueryWrapper<Draft>().eq(creator != null && creator != 0L, "creator", creator));
             PaginationDTO<DraftDTO> paginationDTO = new PaginationDTO<>();
             paginationDTO.setPagination(totalCount, page, size);
             page = paginationDTO.getPage();

@@ -6,9 +6,11 @@ import com.example.blognpc.dto.ArticleDTO;
 import com.example.blognpc.dto.PaginationDTO;
 import com.example.blognpc.dto.QuestionDTO;
 import com.example.blognpc.dto.ResultDTO;
+import com.example.blognpc.enums.CommentTypeEnum;
 import com.example.blognpc.enums.CustomizeErrorCode;
 import com.example.blognpc.enums.NotificationTypeEnum;
 import com.example.blognpc.exception.CustomizeException;
+import com.example.blognpc.mapper.AnnotationMapper;
 import com.example.blognpc.mapper.ArticleMapper;
 import com.example.blognpc.mapper.DraftMapper;
 import com.example.blognpc.mapper.UserMapper;
@@ -39,6 +41,10 @@ public class ArticleService {
     private SearchProvider searchProvider;
     @Autowired
     private NotificationService notificationService;
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private AnnotationService annotationService;
 
     public void createOrUpdate(Article article, Long draftId) {
         if (article.getId() == null) {
@@ -192,6 +198,8 @@ public class ArticleService {
                 throw new CustomizeException(CustomizeErrorCode.ARTICLE_NOT_FOUND);
             }
             Long draftId = draftService.createFromItem(article);
+            commentService.deleteByParentId(id, CommentTypeEnum.MUMBLER_ARTICLE.getType());
+            annotationService.deleteByOuterId(id);
             articleMapper.deleteById(id);
             notificationService.create(user.getId(), article.getCreator(), draftId, NotificationTypeEnum.MANAGER_DELETE_ARTICLE.getType());
         } catch (Exception e) {

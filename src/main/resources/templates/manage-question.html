@@ -31,13 +31,14 @@
                         上次修改于：<span th:text="${#dates.format(questionDTO.getGmtModified(), 'yyyy-MM-dd HH:mm')}"></span>
                     </span> |
                 阅读数：<span th:text="${questionDTO.getViewCount()}"></span>
-                    <span th:if="${session.manager == true}"> · ID: <span th:text="${questionDTO.getId()}"></span></span>
+                    <span th:if="${session.manager == true}"> | ID: <span th:text="${questionDTO.getId()}"></span></span>
                 </span>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
                 <form action="/manage/question" method="post">
                     <input type="hidden" id="id" name="id" th:value="${questionDTO.getId()}">
-                    <input type="hidden" id="draftId" name="id" th:value="${draftId}">
+                    <input type="hidden" id="draftId" name="draftId" th:value="${draftId}">
+                    <input type="hidden" id="annoId" name="annoId" th:value="${annotationDTO?.getId()}">
 
                     <div class="form-group" id="annotation-editor">
                         <label for="description">注释内容：</label>
@@ -100,6 +101,13 @@
                         Creator-ID: <span th:text="${questionDTO.getCreator()}"></span>
                     </div>
                 </div>
+            </div>
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h3>注释添加须知：</h3>
+                · 注释将以红色字体显示在该文章的上方<br>
+                · 每篇文章的注释只能由一名管理员发起并修改<br>
+                ` 暂时就想到这么多
             </div>
         </div>
     </div>

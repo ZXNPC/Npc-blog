@@ -6,12 +6,15 @@ import com.example.blognpc.dto.ArticleDTO;
 import com.example.blognpc.dto.PaginationDTO;
 import com.example.blognpc.dto.QuestionDTO;
 import com.example.blognpc.dto.ResultDTO;
+import com.example.blognpc.enums.CommentTypeEnum;
 import com.example.blognpc.enums.CustomizeErrorCode;
 import com.example.blognpc.enums.NotificationTypeEnum;
 import com.example.blognpc.exception.CustomizeException;
+import com.example.blognpc.mapper.AnnotationMapper;
 import com.example.blognpc.mapper.DraftMapper;
 import com.example.blognpc.mapper.QuestionMapper;
 import com.example.blognpc.mapper.UserMapper;
+import com.example.blognpc.model.Annotation;
 import com.example.blognpc.model.Question;
 import com.example.blognpc.provider.SearchProvider;
 import com.example.blognpc.model.User;
@@ -39,6 +42,10 @@ public class QuestionService {
     private SearchProvider searchProvider;
     @Autowired
     private NotificationService notificationService;
+    @Autowired
+    private AnnotationService annotationService;
+    @Autowired
+    private CommentService commentService;
 
     public QuestionDTO selectById(Long id) {
         Question question = questionMapper.selectById(id);
@@ -195,6 +202,8 @@ public class QuestionService {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
             Long draftId = draftService.createFromItem(question);
+            commentService.deleteByParentId(id, CommentTypeEnum.COMMUNITY_QUESTION.getType());
+            annotationService.deleteByOuterId(id);
             questionMapper.deleteById(id);
             notificationService.create(user.getId(), question.getCreator(), draftId, NotificationTypeEnum.MANAGER_DELETE_QUESTION.getType());
         } catch (Exception e) {

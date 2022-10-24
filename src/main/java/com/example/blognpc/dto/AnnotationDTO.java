@@ -12,4 +12,5 @@ public class AnnotationDTO {
     private Long creator;
     private Long gmtCreate;
     private Integer gmtModified;
+    private User user;
 }

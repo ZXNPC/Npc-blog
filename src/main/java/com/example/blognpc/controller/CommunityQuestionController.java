@@ -1,10 +1,12 @@
 package com.example.blognpc.controller;
 
 
+import com.example.blognpc.dto.AnnotationDTO;
 import com.example.blognpc.dto.ArticleDTO;
 import com.example.blognpc.dto.CommentDTO;
 import com.example.blognpc.dto.QuestionDTO;
 import com.example.blognpc.enums.CommentTypeEnum;
+import com.example.blognpc.service.AnnotationService;
 import com.example.blognpc.service.ArticleService;
 import com.example.blognpc.service.CommentService;
 import com.example.blognpc.service.QuestionService;
@@ -32,18 +34,22 @@ public class CommunityQuestionController {
     private CommentService commentService;
     @Autowired
     private ArticleService articleService;
+    @Autowired
+    private AnnotationService annotationService;
 
     @GetMapping("/community/question/{id}")
     public String question(@PathVariable(name = "id") Long id,
                            @RequestParam(name = "size", defaultValue = "20") Long size,
                            Model model) {
         QuestionDTO questionDTO = questionService.selectById(id);
+        AnnotationDTO annotationDTO = annotationService.selectByOuterId(id);
         List<CommentDTO> commentDTOS = commentService.listByTargetId(id, CommentTypeEnum.COMMUNITY_QUESTION);
         List<QuestionDTO> relatedQuestions = questionService.selectRelated(questionDTO, size);
         List<ArticleDTO> relatedArticles = articleService.selectRelated(questionDTO, size);
 
         questionService.incView(id);
         model.addAttribute("questionDTO", questionDTO);
+        model.addAttribute("annotationDTO", annotationDTO);
         model.addAttribute("commentDTOS", commentDTOS);
         model.addAttribute("relatedQuestions", relatedQuestions);
         model.addAttribute("relatedArticles", relatedArticles);

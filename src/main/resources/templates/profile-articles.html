@@ -20,7 +20,7 @@
             <hr>
             <!--问题列表-->
             <div class="sections-section-list">
-                <div th:if="${paginationDTO == null || paginationDTO?.getData().size() == 0}">
+                <div th:if="${(paginationDTO == null || paginationDTO?.getData().size() == 0) && !paginationDTO?.showPageNav}">
                     <span class="text-desc">你还没有（相关）文章被提出来捏</span>
                 </div>
                 <div class="media" th:each="article : ${paginationDTO.getData()}">

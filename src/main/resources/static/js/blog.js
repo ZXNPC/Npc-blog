@@ -222,8 +222,12 @@ function collapseComments(e) {
                         "                                        <div class=\"media-body\"><h5 class=\"media-heading\">" + comment.user.name + (manager === "true" ? "<span class='text-desc'> Cretor-ID: " + comment.commentator + "</span>" : "") + "</h5>\n" +
                         "                                            <div class=\"comment-content\">" + comment.content + "</div>\n" +
                         "                                            <div class=\"menu\"><span\n" +
-                        "                                                    class=\"glyphicon glyphicon-thumbs-up icon\" onclick='like(this)'></span><span\n" +
-                        "                                                    class=\"pull-right\">" + moment(comment.gmtCreate).format('YYYY-MM-DD HH:mm') + "</span></div>\n" +
+                        "                                                    class=\"glyphicon glyphicon-thumbs-up icon\" onclick='like(this)'></span>" +
+                        "<span class=\"pull-right\">\n" +
+                        "                                    <span>" + moment(comment.gmtCreate).format('YYYY-MM-DD HH:mm') + "</span>\n" +
+                        (manager == "true" ? "<span>| ID:<span th:if=\"${session.manager == true}\">" + comment.id + "</span></span>" : "") +
+                        "                                </span>" +
+                        "</div>\n" +
                         "                                        </div>\n" +
                         "                                    </div>\n" +
                         "                                </div>";
@@ -537,29 +541,33 @@ function manageItem(type, page, e) {
                 var tableContent = "";
                 var redirectUrl = "";
                 var parentUrl = "";
+                var modifyBtnInnerHtml = "";
                 if (item === "article") {
                     redirectUrl = "/mumbler/article";
                     parentUrl = "/mumbler";
+                    modifyBtnInnerHtml = "添加注释";
                 } else if (item === "question") {
                     redirectUrl = "/community/question";
                     parentUrl = "/community";
+                    modifyBtnInnerHtml = "添加注释";
                 } else if (item === "tool") {
                     redirectUrl = "/depot/tool";
                     parentUrl = "/depot";
+                    modifyBtnInnerHtml = "修改";
                 }
                 for (let i = 0; i < data.length; i++) {
                     tableContent +=
                         "                    <tr id=\"item-" + ((page - 1) * 10 + i + 1) + "\">\n" +
                         "                        <td style='min-width: 50px;'>" + ((page - 1) * 10 + i + 1) + "</td>\n" +
                         "                        <td>" + data[i].id + "</td>\n" +
-                        "                        <td><a target='_blank' href='" + (redirectUrl + "/" + data[i].id) + "'>" + data[i].title + "</a></td>\n" +
+                        "                        <td><a target='_blank' title='" + data[i].title + "' href='" + (redirectUrl + "/" + data[i].id) + "'>" + data[i].title + "</a></td>\n" +
                         "                        <td>" + data[i].tag + "</td>\n" +
                         "                        <td>" + data[i].user.name + "</td>\n" +
                         "                        <td>" + data[i].creator + "</td>\n" +
                         "                        <td>\n" +
                         "                            <div class=\"btn-group\" role=\"group\" aria-label=\"...\">\n" +
                         "                                <button type=\"button\" class=\"btn btn-default\" data='" + (data[i].id) + "'\n" +
-                        "                                        onclick=\"manageModify(this)\">修改\n" +
+                        "                                        onclick=\"manageModify(this)\">" + modifyBtnInnerHtml + "\n" +
                         "                                </button>\n" +
                         "                                <button type=\"button\" class=\"btn btn-danger\" data='" + (data[i].id) + "' \n" +
                         "                                        onclick=\"manageDelete(this)\">删除\n" +
@@ -569,9 +577,11 @@ function manageItem(type, page, e) {
                         "                    </tr>\n";
                 }
 
-                var btnContent = "<div id='add-btn'><a href='" + (parentUrl + '/publish') + "'><button type='button' class='btn btn-success' style='float: right;margin-right: 20px;'>添加</button></a></div>";
+                if (item == "tool") {
+                    var btnContent = "<div id='add-btn'><a href='" + (parentUrl + '/publish') + "'><button type='button' class='btn btn-success' style='float: right;margin-right: 20px;'>添加</button></a></div>";
+                    $("table").parent().append(btnContent);
+                }
 
-                $("table").parent().append(btnContent);
                 $("tbody").append(tableContent);
 
                 var pages = "";
@@ -629,7 +639,7 @@ function manageItem(type, page, e) {
 function manageModify(e) {
     var id = e.getAttribute("data");
     var section = document.getElementById("table").getAttribute("data");
-    location.href = "/manage/" + section + "/modify?id=" + id;
+    window.open("/manage/" + section + "/modify?id=" + id)
 }
 
 function manageDelete(e) {

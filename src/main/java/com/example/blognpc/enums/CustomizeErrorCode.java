@@ -21,14 +21,18 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     USER_NOT_FOUND(2016, "用户不存在"),
     DRAFT_TYPE_WRONG(2017, "草稿类型错误或不存在"),
     DRAFT_NOT_FOUND(2018, "草稿不存在"),
-    TOOL_NOT_FOUND(2019, "工具不存在");
+    TOOL_NOT_FOUND(2019, "工具不存在"),
+    ANNO_NOT_FOUND(2020, "注释不存在");
 
     @Override
     public String getMessage() {
         return message;
     }
+
     @Override
-    public Integer getCode() {return code; }
+    public Integer getCode() {
+        return code;
+    }
 
     private String message;
     private Integer code;

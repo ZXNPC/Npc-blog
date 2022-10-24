@@ -18,7 +18,7 @@
             <h5 th:if="${param.search != '' and param.search != null}">
                 关于 <span th:text="${param.search}"></span> 的搜索结果如下：
             </h5>
-            <div th:if="${paginationDTO == null || paginationDTO?.getData()?.size() == 0}">
+            <div th:if="${(paginationDTO == null || paginationDTO?.getData()?.size() == 0) && !paginationDTO?.showPageNav}">
                 <span class="text-desc">还没有（相关）工具被分享/做出来捏</span>
             </div>
             <div th:unless="${paginationDTO == null || paginationDTO?.getData().size() == 0}"
@@ -31,7 +31,7 @@
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading">
-                        <a target="_blank" th:href="${toolDTO.getUrl()}"
+                        <a th:title="${toolDTO.getTitle()}" target="_blank" th:href="${toolDTO.getUrl()}"
                            th:text="${toolDTO.getTitle()}"></a>
                     </h4>
                     <br>

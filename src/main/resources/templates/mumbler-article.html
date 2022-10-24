@@ -33,9 +33,18 @@
                         上次修改于：<span th:text="${#dates.format(articleDTO.getGmtModified(), 'yyyy-MM-dd HH:mm')}"></span>
                     </span> |
                 阅读数：<span th:text="${articleDTO.getViewCount()}"></span>
-                    <span th:if="${session.manager == true}"> · ID: <span th:text="${articleDTO.getId()}"></span></span>
+                    <span th:if="${session.manager == true}"> | ID: <span th:text="${articleDTO.getId()}"></span></span>
                 </span>
+
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                <!--管理员注释-->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 anno-description" th:if="${annotationDTO != null}">
+                    <h4>管理员 <span th:text="${annotationDTO?.getUser()?.getName()}"></span> 注：</h4>
+                    <span th:text="${annotationDTO?.getDescription()}"></span>
+                </div>
+
+                <hr th:if="${annotationDTO != null}" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 anno-hr">
 
                 <div id="article-view" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <textarea style="display:none;" th:text="${articleDTO.getDescription()}"></textarea>
@@ -54,12 +63,23 @@
                     </span>
                 </div>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
                 <a th:href="@{'/mumbler/publish/'+${articleDTO.getId()}}"
-                   class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mumbler-menu"
+                   class="col-lg-1 col-md-1 col-sm-1 col-xs-1"
                    th:if="${session.user != null && session.user.id == articleDTO.getCreator()}">
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true">编辑</span>
-                    <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <button type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true">编辑</span>
+                    </button>
                 </a>
+                <a th:href="@{'/manage/article/modify'(id=${articleDTO.getId()})}"
+                   class="col-lg-1 col-md-1 col-sm-1 col-xs-1"
+                   th:if="${session.user != null && session.manager == true}">
+                    <button type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true">添加注释</span>
+                    </button>
+                </a>
+                <hr th:if="${session.user != null && (session.user.id == articleDTO.getCreator() || session.manager == true)}"
+                    class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-container">
 
@@ -86,19 +106,27 @@
                         <div class="media-body">
                             <h4 class="media-heading">
                                 <span th:text="${commentDTO.getUser().getName()}"></span>
+                                <span th:if="${session.manager == true}" class="text-desc">Creator-ID: <span
+                                        th:text="${commentDTO.getCommentator()}"></span></span>
                             </h4>
                             <div class="comment-content" th:text="${commentDTO.getContent()}"></div>
                             <div class="menu">
                                 <span class="comment-icon" th:data-id="${commentDTO.getId()}" onclick="like(this)">
                                     <span class="glyphicon glyphicon-thumbs-up"></span>
-                                    <span class="like-count" th:if="${commentDTO.getLikeCount() != 0}" th:text="${commentDTO.getLikeCount()}"></span>
+                                    <span class="like-count" th:if="${commentDTO.getLikeCount() != 0}"
+                                          th:text="${commentDTO.getLikeCount()}"></span>
                                 </span>
-                                <span class="comment-icon" th:data-id="${commentDTO.getId()}" onclick="collapseComments(this)">
+                                <span class="comment-icon" th:data-id="${commentDTO.getId()}"
+                                      onclick="collapseComments(this)">
                                     <span class="glyphicon glyphicon-comment"></span>
-                                    <span class="comment-count" th:if="${commentDTO.getCommentCount() != 0}" th:text="${commentDTO.getCommentCount()}"></span>
+                                    <span class="comment-count" th:if="${commentDTO.getCommentCount() != 0}"
+                                          th:text="${commentDTO.getCommentCount()}"></span>
                                 </span>
-                                <span class="pull-right"
-                                      th:text="${#dates.format(commentDTO.getGmtCreate(), 'yyyy-MM-dd HH:mm')}"></span>
+                                <span class="pull-right">
+                                    <span th:text="${#dates.format(commentDTO.getGmtCreate(), 'yyyy-MM-dd HH:mm')}"></span>
+                                    <span>| ID:<span th:if="${session.manager == true}"
+                                                     th:text="${commentDTO.getId()}"></span></span>
+                                </span>
                             </div>
                             <!--二级评论-->
                             <input type="hidden" th:value="${session.manager}" id="manager">
@@ -169,16 +197,18 @@
                     <h3>相关文章</h3>
                     <ul class="article-related">
                         <li th:each="relatedArticle:${relatedArticles}" class="related-title">
-                            <a th:href="@{'/mumbler/article/' + ${relatedArticle.getId()}}"
+                            <a th:title="${relatedArticle.getTitle()}"
+                               th:href="@{'/mumbler/article/' + ${relatedArticle.getId()}}"
                                th:text="${relatedArticle.getTitle()}">title</a>
                         </li>
                     </ul>
                 </div>
-                <div th:if="${relatedQuestions.size() != 0}">
+                <div th:if="${relatedQuestions.size() != 0}" class="related-title">
                     <h3>相关问题</h3>
                     <ul class="question-related">
-                        <li th:each="relatedQuestion:${relatedQuestions}" class="related-title">
-                            <a th:href="@{'/community/question/' + ${relatedQuestion.getId()}}"
+                        <li th:each="relatedQuestion:${relatedQuestions}">
+                            <a th:title="${relatedQuestion.getTitle()}"
+                               th:href="@{'/community/question/' + ${relatedQuestion.getId()}}"
                                th:text="${relatedQuestion.getTitle()}">title</a>
                         </li>
                     </ul>

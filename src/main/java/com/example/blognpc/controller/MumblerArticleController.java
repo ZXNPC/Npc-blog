@@ -1,12 +1,14 @@
 package com.example.blognpc.controller;
 
 
+import com.example.blognpc.dto.AnnotationDTO;
 import com.example.blognpc.dto.CommentDTO;
 import com.example.blognpc.dto.ArticleDTO;
 import com.example.blognpc.dto.QuestionDTO;
 import com.example.blognpc.enums.CommentTypeEnum;
 import com.example.blognpc.mapper.QuestionMapper;
 import com.example.blognpc.model.Question;
+import com.example.blognpc.service.AnnotationService;
 import com.example.blognpc.service.ArticleService;
 import com.example.blognpc.service.CommentService;
 import com.example.blognpc.service.QuestionService;
@@ -35,18 +37,22 @@ public class MumblerArticleController {
     private CommentService commentService;
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private AnnotationService annotationService;
 
     @GetMapping("/mumbler/article/{id}")
     public String article(@PathVariable(name = "id") Long id,
                            @RequestParam(name = "size", defaultValue = "20") Long size,
                            Model model) {
         ArticleDTO articleDTO = articleService.selectById(id);
+        AnnotationDTO annotationDTO = annotationService.selectByOuterId(id);
         List<ArticleDTO> relatedArticles = articleService.selectRelated(articleDTO, size);    // 这里并没有把 user信息 放到ArticleDTO之中，注意一下
         List<CommentDTO> commentDTOS = commentService.listByTargetId(id, CommentTypeEnum.MUMBLER_ARTICLE);
         List<QuestionDTO> relatedQuestions = questionService.selectRelated(articleDTO, size);
 
         articleService.incView(id);
         model.addAttribute("articleDTO", articleDTO);
+        model.addAttribute("annotationDTO", annotationDTO);
         model.addAttribute("commentDTOS", commentDTOS);
         model.addAttribute("relatedArticles", relatedArticles);
         model.addAttribute("relatedQuestions", relatedQuestions);

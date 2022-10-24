@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author NPC
- * @since 2022-10-22
+ * @since 2022-10-24
  */
 @ApiModel(value = "Annotation对象", description = "")
 public class Annotation implements Serializable {
@@ -32,7 +32,7 @@ public class Annotation implements Serializable {
 
     private Long gmtCreate;
 
-    private Integer gmtModified;
+    private Long gmtModified;
 
     public Long getId() {
         return id;
@@ -76,11 +76,11 @@ public class Annotation implements Serializable {
     public void setGmtCreate(Long gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
-    public Integer getGmtModified() {
+    public Long getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Integer gmtModified) {
+    public void setGmtModified(Long gmtModified) {
         this.gmtModified = gmtModified;
     }
 

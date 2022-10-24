@@ -2,8 +2,10 @@ package com.example.blognpc.controller;
 
 import com.example.blognpc.cache.TagCache;
 import com.example.blognpc.dto.*;
+import com.example.blognpc.enums.AnnotationTypeEnum;
 import com.example.blognpc.enums.CustomizeErrorCode;
 import com.example.blognpc.exception.CustomizeException;
+import com.example.blognpc.model.Annotation;
 import com.example.blognpc.model.User;
 import com.example.blognpc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,13 +106,49 @@ public class ManageController {
         return null;
     }
 
+    @PostMapping("/manage/{section}")
+    public String addAnnotaion(
+            HttpServletRequest request,
+            @PathVariable("section") String section,
+            @RequestParam("id") Long outerId,
+            @RequestParam(value = "draftId", required = false) Long draftId,
+            @RequestParam(value = "annoId", required = false) Long annoId,
+            @RequestParam("description") String description
+    ) {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user == null) {
+            throw new CustomizeException(CustomizeErrorCode.NO_LOGIN);
+        }
+
+        if (!managerService.isManager(user)) {
+            throw new CustomizeException(CustomizeErrorCode.NOT_MANAGER);
+        }
+
+        Annotation annotation = new Annotation();
+        annotation.setId(annoId);
+        annotation.setCreator(user.getId());
+        annotation.setDescription(description);
+        annotation.setOuterId(outerId);
+
+        if ("article".equals(section)) {
+            annotation.setType(AnnotationTypeEnum.ARTICLE_ANNO.getType());
+            annotationService.createOrUpdate(annotation, draftId);
+            return "redirect:/mumbler/article/" + outerId;
+        } else if ("question".equals(section)) {
+            annotation.setType(AnnotationTypeEnum.QUESTION_ANNO.getType());
+            annotationService.createOrUpdate(annotation, draftId);
+            return "redirect:/community/question/" + outerId;
+        }
+
+        return null;
+    }
+
     @ResponseBody
     @GetMapping("/manage/{section}/modify")
     public ModelAndView modify(
             HttpServletRequest request,
             ModelMap model,
-            @RequestParam("id") Long id,
-            @RequestParam(value = "annoId", required = false) Long annoId,
+            @RequestParam("id") Long outerId,
             @RequestParam(value = "draftId", required = false) Long draftId,
             @RequestParam(value = "description", required = false) String description,
             @PathVariable("section") String section
@@ -126,25 +164,31 @@ public class ManageController {
         }
 
         if ("article".equals(section)) {
-            ArticleDTO articleDTO = articleService.selectById(id);
+            ArticleDTO articleDTO = articleService.selectById(outerId);
+            AnnotationDTO annotationDTO = annotationService.selectByOuterId(outerId);
+
             ModelAndView modelAndView = new ModelAndView("manage-article");
             modelAndView.addObject("questionDTO", articleDTO);
             modelAndView.addObject("draftId", draftId);
             modelAndView.addObject("description", description);
-            if (annoId != null)
-                modelAndView.addObject("description", annotationService.selectById(annoId).getDescription());
+            if (annotationDTO != null) {
+                modelAndView.addObject("description", annotationDTO.getDescription());
+            }
             return modelAndView;
         } else if ("question".equals(section)) {
-            QuestionDTO questionDTO = questionService.selectById(id);
+            QuestionDTO questionDTO = questionService.selectById(outerId);
+            AnnotationDTO annotationDTO = annotationService.selectByOuterId(outerId);
+
             ModelAndView modelAndView = new ModelAndView("manage-question");
             modelAndView.addObject("questionDTO", questionDTO);
             modelAndView.addObject("draftId", draftId);
             modelAndView.addObject("description", description);
-            if (annoId != null)
-                modelAndView.addObject("description", annotationService.selectById(annoId).getDescription());
+            if (annotationDTO != null) {
+                modelAndView.addObject("description", annotationDTO.getDescription());
+            }
             return modelAndView;
         } else if ("tool".equals(section)) {
-            ToolDTO toolDTO = toolService.selectById(id);
+            ToolDTO toolDTO = toolService.selectById(outerId);
             model.addAttribute("id", toolDTO.getId());
             model.addAttribute("title", toolDTO.getTitle());
             model.addAttribute("description", toolDTO.getUrl());

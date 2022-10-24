@@ -101,7 +101,7 @@
                                  th:id="${tagDTO.categoryName}">
                                 <div class="tag-list">
                                     <span th:each="tag: ${tagDTO.tags}">
-                                        <button type="button" class="btn tag-default question-tag" th:text="' ' + ${tag}"
+                                        <button type="button" class="btn tag-default tagDTO-list" th:text="' ' + ${tag}"
                                                 onclick="selectTag(this)" th:data-tag="${tag}"></button>
                                     </span>
                                 </div>

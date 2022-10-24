@@ -30,7 +30,6 @@ public class DraftController {
 
     @GetMapping("/draft/{id}")
     public ModelAndView draft(@PathVariable("id") Long id,
-                              RedirectAttributes attributes,
                               ModelMap model) {
         Draft draft = draftService.selectById(id);
 

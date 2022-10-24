@@ -9,6 +9,7 @@ import com.example.blognpc.enums.NotificationTypeEnum;
 import com.example.blognpc.exception.CustomizeException;
 import com.example.blognpc.mapper.*;
 import com.example.blognpc.model.*;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -174,5 +175,29 @@ public class CommentService {
         }).collect(Collectors.toList());
 
         return commentDTOS;
+    }
+
+    public void deleteByParentId(Long parentId, Integer type) {
+        // 获取所有 parent_id 和 type 匹配的评论 id
+        List<Long> commentIds = commentMapper.selectList(new QueryWrapper<Comment>().eq("parent_id", parentId).eq("type", type)).stream().map(comment -> comment.getId()).collect(Collectors.toList());
+
+        // 根据 type 生成 childType
+        Integer childType;
+        if (type == CommentTypeEnum.COMMUNITY_QUESTION.getType()) {
+            childType = CommentTypeEnum.COMMUNITY_COMMENT.getType();
+        } else if (type == CommentTypeEnum.MUMBLER_ARTICLE.getType()) {
+            childType = CommentTypeEnum.MUMBLER_COMMENT.getType();
+        } else {
+            childType = null;
+        }
+
+        // 获取子评论 id
+        if (childType != null) {
+            List<Long> commentChildIds = commentMapper.selectList(new QueryWrapper<Comment>().in("parent_id", commentIds).eq("type", childType)).stream().map(comment -> comment.getId()).collect(Collectors.toList());
+            commentIds.addAll(commentChildIds);
+        }
+
+        // 删除所有相关评论
+        commentMapper.deleteBatchIds(commentIds);
     }
 }

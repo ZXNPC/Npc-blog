@@ -14,13 +14,14 @@
 <div th:insert="~{fragment :: navigation}"></div>
 <div class="container main profile">
     <div class="row">
+<!--        TODO: 批量删除-->
         <!--左侧边栏-->
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h2>草稿箱</h2>
             <hr>
             <!--问题列表-->
             <div class="sections-section-list">
-                <div th:if="${paginationDTO == null || paginationDTO?.getData().size() == 0}">
+                <div th:if="${(paginationDTO == null || paginationDTO?.getData().size() == 0) && !paginationDTO?.showPageNav}">
                     <span class="text-desc">你还没有（相关）草稿被提出来捏</span>
                 </div>
                 <div class="media" th:each="draft : ${paginationDTO.getData()}" th:id="'draft-' + ${draft.getId()}">
@@ -32,7 +33,7 @@
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">
-                            <a th:href="@{'/draft/'+${draft.getId()}}" th:text="${draft.getTitle()}"></a>
+                            <a th:unless="${draft.getTitle() == ''}" th:href="@{'/draft/'+${draft.getId()}}" th:text="${draft.getTitle()}"></a>
                             <a th:if="${draft.getTitle() == ''}"
                                th:href="@{'/draft/'+${draft.getId()}}">&lt;还没有标题捏&gt;</a>
                         </h4>

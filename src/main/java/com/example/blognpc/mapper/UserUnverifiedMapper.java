@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author NPC
- * @since 2022-10-22
+ * @since 2022-10-24
  */
 @Mapper
 public interface UserUnverifiedMapper extends BaseMapper<UserUnverified> {
