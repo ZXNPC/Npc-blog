@@ -180,6 +180,7 @@ public class CommentService {
     public void deleteByParentId(Long parentId, Integer type) {
         // 获取所有 parent_id 和 type 匹配的评论 id
         List<Long> commentIds = commentMapper.selectList(new QueryWrapper<Comment>().eq("parent_id", parentId).eq("type", type)).stream().map(comment -> comment.getId()).collect(Collectors.toList());
+        if (commentIds.size() == 0) commentIds.add(0L);
 
         // 根据 type 生成 childType
         Integer childType;
