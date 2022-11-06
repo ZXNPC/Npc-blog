@@ -535,6 +535,7 @@ function manageItem(type, page, e) {
                 var data = paginationDTO.data;
 
                 page = paginationDTO.page;
+                document.getElementById("table").setAttribute("page", page);
 
                 // TODO: 搜索栏
                 // 文章、问题、工具
@@ -654,6 +655,10 @@ function manageDelete(e) {
             success: function (response) {
                 if (response.code === 200) {
                     // console.log("已删除");
+                    var item = document.getElementById("table").getAttribute("data");
+                    var type = item === "article" ? 0 : (item === "question" ? 1 : (item === "tool" ? 2 : null));
+                    var page = document.getElementById("table").getAttribute("page");
+                    manageItem(type, page, document.getElementById("manage-" + item));
                 } else {
                     if (response.code === 2003) {
                         var isAccepted = confirm(response.message);

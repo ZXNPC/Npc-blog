@@ -33,6 +33,18 @@
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">
+                            <!--QUESTION_DRAFT(0)       -->
+                            <!--ARTICLE_DRAFT(1)        -->
+                            <!--TOOL_DRAFT(2)           -->
+                            <!--ANNO_QUESTION_DRAFT(3)  -->
+                            <!--ANNO_ARTICLE_DRAFT(4)   -->
+                            <span th:switch="${draft.getType()}">
+                                <span class="label label-default draft-label" th:case="0">问题</span>
+                                <span class="label label-default draft-label" th:case="1">文章</span>
+                                <span class="label label-default draft-label" th:case="2">工具</span>
+                                <span class="label label-default draft-label" th:case="3">注释</span>
+                                <span class="label label-default draft-label" th:case="4">注释</span>
+                            </span>
                             <a th:unless="${draft.getTitle() == ''}" th:href="@{'/draft/'+${draft.getId()}}" th:text="${draft.getTitle()}"></a>
                             <a th:if="${draft.getTitle() == ''}"
                                th:href="@{'/draft/'+${draft.getId()}}">&lt;还没有标题捏&gt;</a>

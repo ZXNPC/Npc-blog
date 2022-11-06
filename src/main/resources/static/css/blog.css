@@ -307,3 +307,15 @@ body {
     border-top: 1px dashed;
     color: red;
 }
+
+.draft-label {
+    background-color: #C1C1C1;
+}
+
+.notification-label {
+    background-color: #C1C1C1;
+}
+
+.notification-item {
+    height: auto;
+}

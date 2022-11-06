@@ -27,7 +27,7 @@
                 <!--case 2: 回复问题评论-->
                 <!--case 3: 回复文章-->
                 <!--case 4: 回复文章评论-->
-                <div class="media" th:each="notification : ${paginationDTO.getData()}"
+                <div class="media notification-item" th:each="notification : ${paginationDTO.getData()}"
                      th:id="${'notification-' + notification.getId()}">
                     <div class="media-left">
                         <a th:href="@{'/notification/' + ${notification.getId()}}">
@@ -37,8 +37,20 @@
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">
+                            <span th:switch="${notification.getType()}">
+                                <span class="label label-default notification-label" th:case="1">问题</span>
+                                <span class="label label-default notification-label" th:case="2">评论</span>
+                                <span class="label label-default notification-label" th:case="3">文章</span>
+                                <span class="label label-default notification-label" th:case="4">评论</span>
+                                <span class="label label-default notification-label" th:case="5">文章</span>
+                                <span class="label label-default notification-label" th:case="6">文章</span>
+                                <span class="label label-default notification-label" th:case="7">问题</span>
+                                <span class="label label-default notification-label" th:case="8">问题</span>
+                                <span class="label label-default notification-label" th:case="9">工具</span>
+                                <span class="label label-default notification-label" th:case="10">工具</span>
+                        </span>
                             <a th:href="@{'/notification/' + ${notification.getId()}}">
-                                <div class="media-description">
+                                <span class="media-description">
                                         <span class="notifier-name"
                                               th:text="${notification.getNotifierUser().getName()}"></span>
                                     <span th:switch="${notification.getType()}">
@@ -83,12 +95,12 @@
                                             <span th:text="${notification.getOuter().getTitle()}"></span>
                                         </span>
                                     </span>
-                                </div>
+                                </span>
                             </a>
                             <span class="label label-danger unread" th:if="${notification.status == 0}">未读</span>
                         </h4>
                         <span th:text="${notification?.getComment()?.getContent()}"></span>
-                        <br>
+                        <br th:if="${notification?.getComment() != null}">
                         <span th:switch="${notification.getType()}">
                             <span th:case="1"></span>
                             <span th:case="2">
