@@ -1,6 +1,10 @@
 # NPC Blog
 
----
+## 网址
+
+http://blog.zx2624.co
+
+**以下内容待更新...**
 
 ## MyBatis Plus 使用
 

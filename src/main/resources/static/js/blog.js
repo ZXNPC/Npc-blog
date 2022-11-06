@@ -537,7 +537,7 @@ function manageItem(type, page, e) {
                 page = paginationDTO.page;
                 document.getElementById("table").setAttribute("page", page);
 
-                // TODO: 搜索栏
+                // TODO: 管理搜索栏
                 // 文章、问题、工具
                 var tableContent = "";
                 var redirectUrl = "";

@@ -79,10 +79,6 @@
     <li th:if="${session.manager == true}" th:class="${#httpServletRequest.getRequestURI() == '/manage'} ? 'active':''">
         <a th:href="@{'/manage' + ${search != null ? '?search=' + search : ''}}">管理</a>
     </li>
-    <!--TODO: 资源-->
-    <!--    <li th:class="${#httpServletRequest.getRequestURI() == '/resources'} ? 'active':''">-->
-    <!--        <a th:href="@{'/resources' + ${search != null ? '?search=' + search : ''}}">资源</a>-->
-    <!--    </li>-->
 </ul>
 
 <!--翻页按钮-->
